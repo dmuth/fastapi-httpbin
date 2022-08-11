@@ -1,39 +1,31 @@
 
 from typing import Union
 
-from fastapi import FastAPI, Header, Request
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 
 app = FastAPI()
 
+# TEST
+from apis import get
+
+app.include_router(get.router)
+
 
 #
 # TODO:
 #
-# X HTTP Methods
-# - Push to GitHub private repo
-# 2 Status Codes
+# - Write some unit tests
+# HTTP Methods: delete, patch, post, put
+#		
 # 3 Figure out how to group endpoints in docs (tags?)
 # 4 Make main page go to docs
-# - Write some unit tests
+# Additional content on main page
 # - Deploy to Deta
 # - Next batch of docs
-
-@app.get("/get")
-async def get(request: Request):
-
-	retval = {}
-
-	retval["args"] = request.query_params
-	retval["headers"] = request.headers
-	retval["source"] = {
-		"ip": request.client[0],
-		"port": request.client[1]
-		}
-	retval["url"] = request.url
-
-	return(retval)
+#
+# 2 Status Codes
 
 
 class Item(BaseModel):

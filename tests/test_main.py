@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 
 from unittest.mock import AsyncMock
 
-#from .main import app
 from main import app
 
 client = TestClient(app)

@@ -16,7 +16,7 @@ app.include_router(get.router)
 #
 # TODO:
 #
-# - Write some unit tests
+# X Write some unit tests
 # HTTP Methods: delete, patch, post, put
 #		
 # 3 Figure out how to group endpoints in docs (tags?)

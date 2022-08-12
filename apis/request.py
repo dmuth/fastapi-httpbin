@@ -26,21 +26,21 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/headers")
+@router.get("/headers", tags = ["Request Inspection"])
 async def get(request: Request):
     retval = {}
     retval = request.headers
     return(retval)
 
 
-@router.get("/ip")
+@router.get("/ip", tags = ["Request Inspection"])
 async def ip(request: Request):
     retval = {}
     retval["ip"] = request.client[0]
     return(retval)
 
 
-@router.get("/user-agent")
+@router.get("/user-agent", tags = ["Request Inspection"])
 async def user_agent(request: Request):
     retval = {}
     retval["user-agent"] = request.headers["user-agent"]

@@ -26,31 +26,31 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/get")
+@router.get("/get", tags = ["HTTP Methods"])
 async def get(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.delete("/delete")
+@router.delete("/delete", tags = ["HTTP Methods"])
 async def delete(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.patch("/patch")
+@router.patch("/patch", tags = ["HTTP Methods"])
 async def patch(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.post("/post")
+@router.post("/post", tags = ["HTTP Methods"])
 async def post(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.put("/put")
+@router.put("/put", tags = ["HTTP Methods"])
 async def put(request: Request):
     retval = core(request)
     return(retval)

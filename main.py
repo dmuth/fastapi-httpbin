@@ -5,20 +5,20 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 
+from apis import methods
+from apis import request
+
 app = FastAPI()
-
-# TEST
-from apis import get
-
-app.include_router(get.router)
+app.include_router(methods.router)
+app.include_router(request.router)
 
 
 #
 # TODO:
 #
 # X Write some unit tests
-# HTTP Methods: delete, patch, post, put
-#		
+#X HTTP Methods: delete, patch, post, put
+#
 # 3 Figure out how to group endpoints in docs (tags?)
 # 4 Make main page go to docs
 # Additional content on main page

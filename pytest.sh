@@ -3,6 +3,9 @@
 # Run our unit tests
 #
 
+# Errors are fatal
+set -e
+
 echo "# "
 echo "# Running unit tests..."
 echo "# "

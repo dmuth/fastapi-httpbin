@@ -3,6 +3,7 @@
 *~
 *.swp
 
+*.pid
 
 __pycache__/
 

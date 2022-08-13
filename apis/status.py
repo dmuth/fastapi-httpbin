@@ -11,12 +11,7 @@ from fastapi.responses import RedirectResponse, JSONResponse
 router = APIRouter()
 
 
-
-@router.get("/status/{codes}", tags = ["Status Codes"], 
-    summary = "Return status code or random one if multiple given as comma-delimited list")
-async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
-    ):
+def core(response, codes):
 
     codes = codes.split(",")
 
@@ -37,7 +32,52 @@ async def get(response: Response,
 
     response.status_code = code
 
-    return(None)
+    return(response)
+
+
+@router.get("/status/{codes}", tags = ["Status Codes"], 
+    summary = "Return status code or random one if multiple given as comma-delimited list")
+async def get(response: Response, 
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    ):
+    response = core(response, codes)
+    return(response)
+
+
+@router.delete("/status/{codes}", tags = ["Status Codes"], 
+    summary = "Return status code or random one if multiple given as comma-delimited list")
+async def get(response: Response, 
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    ):
+    response = core(response, codes)
+    return(response)
+
+
+@router.patch("/status/{codes}", tags = ["Status Codes"], 
+    summary = "Return status code or random one if multiple given as comma-delimited list")
+async def get(response: Response, 
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    ):
+    response = core(response, codes)
+    return(response)
+
+
+@router.post("/status/{codes}", tags = ["Status Codes"], 
+    summary = "Return status code or random one if multiple given as comma-delimited list")
+async def get(response: Response, 
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    ):
+    response = core(response, codes)
+    return(response)
+
+
+@router.put("/status/{codes}", tags = ["Status Codes"], 
+    summary = "Return status code or random one if multiple given as comma-delimited list")
+async def get(response: Response, 
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    ):
+    response = core(response, codes)
+    return(response)
 
 
 

@@ -35,12 +35,18 @@ app.include_router(status.router)
 # X Additional content on main page
 #
 # X dev script: Add in process tracking
-# 1 Status Codes
+# X Status Codes
 # 2 Redirects
+#   /redirect/n - max of 20, with value of 1 redirecting to /get
+#   Don't do absolute redirects due to concerns of abuse
 # 3 Anything
+#
 # Content on main page: add a link to GitHub
+#
 # prod script
+#
 # Docker image with dev and prod scripts and requirements.txt
+#
 # Response Inspection
 # Response formats
 # Cookies

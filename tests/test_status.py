@@ -7,9 +7,14 @@ from main import app
 
 client = TestClient(app)
 
-def test_get():
+#
+# This is our main function which performs all of the tests.
+#
+# cb - The callback to the request method.
+#
+def core(cb):
 
-    response = client.get("/status/200")
+    response = cb("/status/200")
     assert response.status_code == 200
 
     response = client.get("/status/204")
@@ -45,15 +50,20 @@ def test_get():
     response = client.get("/status")
     assert response.status_code == 404
 
-# X how to set redirect header?
-# X how to test for redirect header?
-# X write GET endpoint
-# X do multiple statuses with random pick
-# X throw invalid data and test with a regex validator
-# X test min_length
-# X what happens with a code > 3 digits, do I have to check for it?
-# X Catch not having any parameter supplied
-# put tests into function
-# write additional tests
+
+def test_get():
+    core(client.get)
+
+def test_delete():
+    core(client.delete)
+
+def test_patch():
+    core(client.patch)
+
+def test_post():
+    core(client.post)
+
+def test_put():
+    core(client.put)
 
 

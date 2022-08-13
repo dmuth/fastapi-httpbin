@@ -6,25 +6,62 @@
 # Errors are fatal
 set -e
 
-LOCKFILE="uvicorn.pid"
-
-# Chagne to the directory where this script lives
+# Change to the directory where this script lives
 pushd $(dirname $0) > /dev/null
 
+LOCKFILE="uvicorn.pid"
+
+FORCE=""
+if test "$1" == "--force"
+then
+    FORCE=1
+fi
+
+#
+# If we have a lockfile, check to see if the process is still running.
+#
 if test -f ${LOCKFILE}
 then
     PID=$(cat ${LOCKFILE})
-    echo "LOCKFILE FOUND with PID ${PID}"
+    echo "# Lockfile ${LOCKFILE} found with PID ${PID}"
 
-    FOUND=$(pgrep -F ${LOCKFILE} || true)
+    FOUND=$(pgrep -F ${LOCKFILE} 2>/dev/null || true)
 
     if test "${FOUND}"
     then
-        echo "PID ${PID} is still running, bailing out!"
-        exit
+
+        #
+        # If the process was found, just bail out UNLESS --force was specified,
+        # then we'll kill the existing process, wait for it to exit, and then continue here.
+        #
+        if test "${FORCE}"
+        then
+            echo "# PID ${PID} is still running, but --force was specified, so let's kill it."
+            kill ${PID}
+
+            while true
+            do
+                FOUND=$(pgrep -F ${LOCKFILE} 2>/dev/null || true)
+                if test ! "${FOUND}"
+                then
+                    break
+                fi
+                echo "# Waiting for PID ${PID} to exit..."
+                sleep 1
+
+            done
+
+        else
+            echo "# PID ${PID} is still running, bailing out!"
+            echo "# (Re-run with --force if you want to kill the running server and start one here.)"
+            exit 1
+        fi
+
+    else
+        echo "# ...but it was stale.  Continuing!"
+
     fi
 
-    echo "# ...but it was stale.  Continuing!"
 
 fi
 
@@ -54,13 +91,13 @@ echo ${PID} > ${LOCKFILE}
 #
 # Wait for the server to exit.
 #
-wait %1 || true
+wait %1 2>/dev/null || true
 
 #
 # Wait once more, because if ctrl-C is received, execution of this bash script
 # will continue while uvicorn shuts down.
 #
-wait %1 || true
+wait %1 2>/dev/null || true
 
 # Cleaning up
 rm -f ${LOCKFILE}

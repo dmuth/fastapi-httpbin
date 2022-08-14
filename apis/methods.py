@@ -34,19 +34,25 @@ async def get(request: Request):
 
 @router.post("/post", tags = ["HTTP Methods"], summary = "The request's POST parameters.")
 async def post(request: Request):
+    data = await request.json()
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 
 @router.put("/put", tags = ["HTTP Methods"], summary = "The request's PUT parameters.")
 async def put(request: Request):
+    data = await request.json()
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 
 @router.patch("/patch", tags = ["HTTP Methods"], summary = "The request's PATCH parameters.")
 async def patch(request: Request):
+    data = await request.json()
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 

@@ -45,8 +45,8 @@ app.include_router(anything.router)
 # X Anything - include method and args
 #   Also "data" for POST method data!
 #   Unit test for post data
-# 1 Reorder HTTP verbs for consistency
-# 2 Go back and figure out POST method data, return as "data" in POST endpoint
+# X Reorder HTTP verbs for consistency
+# X Go back and figure out POST method data, return as "data" in POST endpoint
 # 3 /get - update syntax diagram to include GET method data!
 #
 # 2 Content on main page: add a link to GitHub

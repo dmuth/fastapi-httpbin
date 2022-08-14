@@ -54,16 +54,16 @@ def core(cb):
 def test_get():
     core(client.get)
 
-def test_delete():
-    core(client.delete)
-
-def test_patch():
-    core(client.patch)
-
 def test_post():
     core(client.post)
 
 def test_put():
     core(client.put)
+
+def test_patch():
+    core(client.patch)
+
+def test_delete():
+    core(client.delete)
 
 

@@ -26,31 +26,37 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/get", tags = ["HTTP Methods"], summary = "The request's GET parameters.")
+@router.get("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
 async def get(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.post("/post", tags = ["HTTP Methods"], summary = "The request's POST parameters.")
+@router.post("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
 async def post(request: Request):
+    data = await request.json()
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 
-@router.put("/put", tags = ["HTTP Methods"], summary = "The request's PUT parameters.")
+@router.put("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
 async def put(request: Request):
+    data = await request.json()
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 
-@router.patch("/patch", tags = ["HTTP Methods"], summary = "The request's PATCH parameters.")
+@router.patch("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
 async def patch(request: Request):
+    data = await request.json()
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 
-@router.delete("/delete", tags = ["HTTP Methods"], summary = "The request's DELETE parameters.")
+@router.delete("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
 async def delete(request: Request):
     retval = core(request)
     return(retval)

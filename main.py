@@ -8,6 +8,9 @@ from pydantic import BaseModel
 from apis import methods
 from apis import request
 from apis import status
+from apis import redirect
+from apis import anything
+
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
@@ -23,6 +26,8 @@ app = FastAPI(docs_url = "/", redoc_url = None,
 app.include_router(methods.router)
 app.include_router(request.router)
 app.include_router(status.router)
+app.include_router(redirect.router)
+app.include_router(anything.router)
 
 
 #
@@ -36,16 +41,22 @@ app.include_router(status.router)
 #
 # X dev script: Add in process tracking
 # X Status Codes
-# 2 Redirects
-#   /redirect/n - max of 20, with value of 1 redirecting to /get
-#   Don't do absolute redirects due to concerns of abuse
-# 3 Anything
+# X Redirects
+# X Anything - include method and args
+#   Also "data" for POST method data!
+#   Unit test for post data
+# 1 Reorder HTTP verbs for consistency
+# 2 Go back and figure out POST method data, return as "data" in POST endpoint
+# 3 /get - update syntax diagram to include GET method data!
 #
-# Content on main page: add a link to GitHub
+# 2 Content on main page: add a link to GitHub
 #
-# prod script
+# 3 prod script
 #
 # Docker image with dev and prod scripts and requirements.txt
+#   - Move scripts into bin/
+#
+# GitHub: Add README, include testing info with Docker
 #
 # Response Inspection
 # Response formats

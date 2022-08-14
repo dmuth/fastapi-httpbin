@@ -26,13 +26,13 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/get", tags = ["HTTP Methods"], summary = "The request's GET parameters.")
+@router.get("/get", summary = "The request's GET parameters.")
 async def get(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.post("/post", tags = ["HTTP Methods"], summary = "The request's POST parameters.")
+@router.post("/post", summary = "The request's POST parameters.")
 async def post(request: Request):
     data = await request.json()
     retval = core(request)
@@ -40,7 +40,7 @@ async def post(request: Request):
     return(retval)
 
 
-@router.put("/put", tags = ["HTTP Methods"], summary = "The request's PUT parameters.")
+@router.put("/put", summary = "The request's PUT parameters.")
 async def put(request: Request):
     data = await request.json()
     retval = core(request)
@@ -48,7 +48,7 @@ async def put(request: Request):
     return(retval)
 
 
-@router.patch("/patch", tags = ["HTTP Methods"], summary = "The request's PATCH parameters.")
+@router.patch("/patch", summary = "The request's PATCH parameters.")
 async def patch(request: Request):
     data = await request.json()
     retval = core(request)
@@ -56,7 +56,7 @@ async def patch(request: Request):
     return(retval)
 
 
-@router.delete("/delete", tags = ["HTTP Methods"], summary = "The request's DELETE parameters.")
+@router.delete("/delete", summary = "The request's DELETE parameters.")
 async def delete(request: Request):
     retval = core(request)
     return(retval)

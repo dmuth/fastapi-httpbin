@@ -35,7 +35,7 @@ def core(response, codes):
     return(response)
 
 
-@router.get("/status/{codes}", tags = ["Status Codes"], 
+@router.get("/status/{codes}",
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
     codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
@@ -44,7 +44,7 @@ async def get(response: Response,
     return(response)
 
 
-@router.post("/status/{codes}", tags = ["Status Codes"], 
+@router.post("/status/{codes}",
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
     codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
@@ -53,7 +53,7 @@ async def get(response: Response,
     return(response)
 
 
-@router.put("/status/{codes}", tags = ["Status Codes"], 
+@router.put("/status/{codes}", 
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
     codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
@@ -62,7 +62,7 @@ async def get(response: Response,
     return(response)
 
 
-@router.patch("/status/{codes}", tags = ["Status Codes"], 
+@router.patch("/status/{codes}", 
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
     codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
@@ -71,7 +71,7 @@ async def get(response: Response,
     return(response)
 
 
-@router.delete("/status/{codes}", tags = ["Status Codes"], 
+@router.delete("/status/{codes}", 
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
     codes: str = Path(min_length = 3, regex = "^[0-9,]+$")

@@ -28,8 +28,7 @@ def core(response, n):
     return RedirectResponse(f"/get", status_code = 302)
 
 
-@router.get("/redirect/{n}", tags = ["Redirects"], 
-    summary = "302 Redirects n times")
+@router.get("/redirect/{n}", summary = "302 Redirects n times")
 async def get(response: Response, 
     n: int
     ):
@@ -37,8 +36,7 @@ async def get(response: Response,
     return(response)
 
 
-@router.post("/redirect/{n}", tags = ["Redirects"], 
-    summary = "302 Redirects n times")
+@router.post("/redirect/{n}", summary = "302 Redirects n times")
 async def post(response: Response, 
     n: int
     ):
@@ -46,8 +44,7 @@ async def post(response: Response,
     return(response)
 
 
-@router.put("/redirect/{n}", tags = ["Redirects"], 
-    summary = "302 Redirects n times")
+@router.put("/redirect/{n}", summary = "302 Redirects n times")
 async def put(response: Response, 
     n: int
     ):
@@ -55,8 +52,7 @@ async def put(response: Response,
     return(response)
 
 
-@router.patch("/redirect/{n}", tags = ["Redirects"], 
-    summary = "302 Redirects n times")
+@router.patch("/redirect/{n}", summary = "302 Redirects n times")
 async def patch(response: Response, 
     n: int
     ):
@@ -64,8 +60,7 @@ async def patch(response: Response,
     return(response)
 
 
-@router.delete("/redirect/{n}", tags = ["Redirects"], 
-    summary = "302 Redirects n times")
+@router.delete("/redirect/{n}", summary = "302 Redirects n times")
 async def delete(response: Response, 
     n: int
     ):

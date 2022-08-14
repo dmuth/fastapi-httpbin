@@ -26,26 +26,24 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/headers", tags = ["Request Inspection"], summary = "Return the headers sent in the request.")
+@router.get("/headers", summary = "Return the headers sent in the request.")
 async def get(request: Request):
     retval = {}
     retval = request.headers
     return(retval)
 
 
-@router.get("/ip", tags = ["Request Inspection"], summary = "Return the user's IP address.")
+@router.get("/ip", summary = "Return the user's IP address.")
 async def ip(request: Request):
     retval = {}
     retval["ip"] = request.client[0]
     return(retval)
 
 
-@router.get("/user-agent", tags = ["Request Inspection"], summary = "Request the User Agent.")
+@router.get("/user-agent", summary = "Request the User Agent.")
 async def user_agent(request: Request):
     retval = {}
     retval["user-agent"] = request.headers["user-agent"]
     return(retval)
-
-
 
 

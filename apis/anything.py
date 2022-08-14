@@ -26,13 +26,13 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
+@router.get("/anything", summary = "Returns anything that is passed into the request.")
 async def get(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.post("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
+@router.post("/anything", summary = "Returns anything that is passed into the request.")
 async def post(request: Request):
     data = await request.json()
     retval = core(request)
@@ -40,7 +40,7 @@ async def post(request: Request):
     return(retval)
 
 
-@router.put("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
+@router.put("/anything", summary = "Returns anything that is passed into the request.")
 async def put(request: Request):
     data = await request.json()
     retval = core(request)
@@ -48,7 +48,7 @@ async def put(request: Request):
     return(retval)
 
 
-@router.patch("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
+@router.patch("/anything", summary = "Returns anything that is passed into the request.")
 async def patch(request: Request):
     data = await request.json()
     retval = core(request)
@@ -56,7 +56,7 @@ async def patch(request: Request):
     return(retval)
 
 
-@router.delete("/anything", tags = ["Anything"], summary = "Returns anything that is passed into the request.")
+@router.delete("/anything", summary = "Returns anything that is passed into the request.")
 async def delete(request: Request):
     retval = core(request)
     return(retval)

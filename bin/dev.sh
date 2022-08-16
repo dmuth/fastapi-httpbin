@@ -6,8 +6,8 @@
 # Errors are fatal
 set -e
 
-# Change to the directory where this script lives
-pushd $(dirname $0) > /dev/null
+# Change to the parent directory of this script
+pushd $(dirname $0)/.. > /dev/null
 
 LOCKFILE="uvicorn.pid"
 
@@ -81,7 +81,8 @@ trap signal_received INT TERM
 #
 # Run the main app and get the PID
 #
-uvicorn main:app --reload &
+#uvicorn main:app --reload &
+uvicorn --host 0.0.0.0 main:app --reload &
 
 PID=$!
 echo "# Server process running as PID ${PID}."

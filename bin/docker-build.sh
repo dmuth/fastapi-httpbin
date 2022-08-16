@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Run our app interactively, in development mode.
+# Build our Docker image.
 #
 
 # Errors are fatal
@@ -9,9 +9,6 @@ set -e
 # Change to the parent directory of this script
 pushd $(dirname $0)/.. > /dev/null
 
-#
-# Run the main app
-#
-uvicorn --host 0.0.0.0 main:app
+docker build -t fastapi-httpbin . -f ./Dockerfile
 
 

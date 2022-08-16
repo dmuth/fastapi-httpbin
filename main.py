@@ -83,21 +83,29 @@ app.include_router(anything.router, tags = ["Anything"])
 # X Keep tags closed by default
 # X Content on main page: add a link to GitHub
 #
-# 1 prod script
-# 2 Docker image with dev and prod scripts and requirements.txt
-#   - Move scripts into bin/
+# X prod script
+# X Docker image with dev and prod scripts and requirements.txt
+#   X Move scripts into bin/
+#   X bin/docker-build.sh - Copy in entire app
+#   X bin/docker-dev.sh - mount code as /app
+#   X bin/docker-prod.sh
 #
 # GitHub: Add README, include testing info with Docker
+#
+# - Deploy to Deta
 #
 # Response Inspection
 # Response formats
 # Cookies
 # Images
 # Dynamic Data
+#
+# About page served statically?
+#
 # k8s support through Minikube
 # Uploads (10 MB max)
 # Uploads with rate-limiting
-
+#
 # - Deploy to Deta
 
 

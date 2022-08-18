@@ -65,7 +65,36 @@ def test_etag():
     assert response.status_code == 200
 
 
-# TODO:
-# /response-headers - Set headers with "headers" array for GET and POST
-# Set possible HTTP codes that can be returned and see if that shows up in the docs
+def test_response_headers():
+
+    headers = {}
+    response = client.get("/response-headers", params = headers)
+    assert response.status_code == 200
+    assert response.json()["message"] == "0 headers set in response"
+    
+
+    headers = {"headers": ["x-cheetah-sound:chirp"]}
+    response = client.get("/response-headers", params = headers)
+    assert response.status_code == 200
+    assert "x-cheetah-sound" in response.headers
+    assert response.json()["message"] == "1 headers set in response"
+
+    headers = {"headers": ["x-cheetah-sound:chirp", "x-goat-sound:bleat"]}
+    response = client.get("/response-headers", params = headers)
+    assert response.status_code == 200
+    assert "x-cheetah-sound" in response.headers
+    assert "x-goat-sound" in response.headers
+    assert response.json()["message"] == "2 headers set in response"
+
+    headers = {"headers": ["x-this-should-fail"]}
+    response = client.get("/response-headers", params = headers)
+    assert response.status_code == 422
+    assert response.json()["detail"]["type"] == "value_error.str.format"
+
+    headers = {"headers": ["x-this:should:fail"]}
+    response = client.get("/response-headers", params = headers)
+    assert response.status_code == 422
+    assert response.json()["detail"]["type"] == "value_error.str.format"
+
+
 

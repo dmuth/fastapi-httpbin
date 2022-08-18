@@ -10,6 +10,7 @@ from apis import request
 from apis import status
 from apis import redirect
 from apis import anything
+from apis import response
 
 
 tags_metadata = [
@@ -20,6 +21,10 @@ tags_metadata = [
     {
         "name": "Request Inspection",
         "description": "Inspect the request data."
+    },
+    {
+        "name": "Responses",
+        "description": "Inspect response data like caching and headers."
     },
     {
         "name": "Status Codes",
@@ -56,8 +61,9 @@ app = FastAPI(docs_url = "/", redoc_url = None,
     )
 
 app.include_router(methods.router, tags = ["HTTP Methods"])
-app.include_router(request.router, tags = ["Request Inspection"])
 app.include_router(status.router, tags = ["Status Codes"])
+app.include_router(request.router, tags = ["Request Inspection"])
+app.include_router(response.router, tags = ["Responses"])
 app.include_router(redirect.router, tags = ["Redirects"])
 app.include_router(anything.router, tags = ["Anything"])
 
@@ -90,15 +96,15 @@ app.include_router(anything.router, tags = ["Anything"])
 #   X bin/docker-dev.sh - mount code as /app
 #   X bin/docker-prod.sh
 #
-# GitHub: Add README, include testing info with Docker
+# X GitHub: Add README, include testing info with Docker
 #
-# - Deploy to Deta
-#
-# Response Inspection
+# X Response Inspection
 # Response formats
 # Cookies
 # Images
 # Dynamic Data
+#
+# - Deploy to Deta
 #
 # About page served statically?
 #

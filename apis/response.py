@@ -2,8 +2,11 @@
 # All responses.
 #
 
-from fastapi import APIRouter
-from fastapi import FastAPI, Header, Request, Response
+import re
+
+from fastapi import APIRouter, Query, Body
+from fastapi import FastAPI, Header, Request, Response, HTTPException
+
 
 router = APIRouter()
 
@@ -36,5 +39,28 @@ async def etag(request: Request, response: Response, etag: str):
     elif "if-match" in request.headers:
         if request.headers["if-match"] != etag:
             response.status_code = 412
+
+
+
+@router.get("/response-headers",
+    summary = "Set arbitrary headers in the response.  Input strings should be in the format of 'header:value'.")
+def response_headers_get(response: Response, headers: list[str] = Query(default = [])):
+
+    #
+    # Sanity check our headers, since we can't use the regex parameter on a list.
+    #
+    for header in headers:
+        if not re.search("^[^:]+:[^:]+$", header):
+            retval = {"type": "value_error.str.format",
+                "message": f"Parameter '{header}' not in format 'header:value"}
+            raise HTTPException(status_code = 422, detail = retval)
+
+    retval = {"message": f"{len(headers)} headers set in response"}
+        
+    for header in headers:
+        key, value = header.split(":")
+        response.headers[key] = value
+    return(retval)
+
 
 

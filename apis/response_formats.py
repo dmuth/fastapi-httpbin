@@ -69,7 +69,10 @@ async def json(response: Response):
             "Reunited",
             "Last Goodbye"
             ],
-        "url": "https://en.wikipedia.org/wiki/Undertale_Soundtrack"
+        "urls": [
+            "https://en.wikipedia.org/wiki/Undertale_Soundtrack",
+            "https://www.youtube.com/watch?v=tz82xbLvK_k&list=OLAK5uy_l6pEkEJgy577R-aDlJ3Gkp5rmlgIOu8bc&index=87"
+            ]
         }
 
     return(retval)

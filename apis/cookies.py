@@ -22,7 +22,10 @@ async def get(request: Request, response: Response):
 
 
 @router.put("/cookies", summary = "Set one or more cookies.")
-async def put(request: Request, response: Response, cookies: dict | None = Body()):
+async def put(request: Request, response: Response, 
+    cookies: dict | None = Body(
+        example = '{"cookie1": "value1", "cookie2": "value2", "cookie3": "value3"}'
+    )):
 
     retval = {}
     for key, value in cookies.items():
@@ -35,7 +38,9 @@ async def put(request: Request, response: Response, cookies: dict | None = Body(
 
 
 @router.delete("/cookies", summary = "Delete one or more cookies.")
-async def delete(request: Request, response: Response, cookies: list | None = Body()):
+async def delete(request: Request, response: Response, cookies: list | None = Body(
+    example = '["cookie1", "cookie2", "cookie3"]'
+    )):
 
     retval = {}
     num_deleted = 0

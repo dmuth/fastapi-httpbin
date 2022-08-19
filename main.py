@@ -12,6 +12,7 @@ from apis import redirect
 from apis import anything
 from apis import response
 from apis import response_formats
+from apis import cookies
 
 
 tags_metadata = [
@@ -28,7 +29,7 @@ tags_metadata = [
         "description": "Inspect response data like caching and headers."
     },
     {
-        "name": "Response Foramts",
+        "name": "Response Formats",
         "description": "Returns responses in different formats."
     },
     {
@@ -42,6 +43,10 @@ tags_metadata = [
     {
         "name": "Anything",
         "description": "Return anything that is passed in on the request."
+    },
+    {
+        "name": "Cookies",
+        "description": "Create, read, and delete cookies."
     },
     ]
 
@@ -72,6 +77,7 @@ app.include_router(response.router, tags = ["Responses"])
 app.include_router(response_formats.router, tags = ["Response Formats"])
 app.include_router(redirect.router, tags = ["Redirects"])
 app.include_router(anything.router, tags = ["Anything"])
+app.include_router(cookies.router, tags = ["Cookies"])
 
 
 #
@@ -106,9 +112,12 @@ app.include_router(anything.router, tags = ["Anything"])
 #
 # X Response Inspection
 # X Response formats
-# Cookies
-# Images
-# Dynamic Data
+# X Cookies
+# 1 Gzip 
+#   - Can I use the gzip module and header and encode a specific reponse on /gzip?
+#   - Can I creage a GzipResponse class that extends the Response class?
+# 2 Images
+# 3 Dynamic Data
 #
 # - Deploy to Deta
 #

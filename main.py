@@ -11,6 +11,7 @@ from apis import status
 from apis import redirect
 from apis import anything
 from apis import response
+from apis import response_formats
 
 
 tags_metadata = [
@@ -25,6 +26,10 @@ tags_metadata = [
     {
         "name": "Responses",
         "description": "Inspect response data like caching and headers."
+    },
+    {
+        "name": "Response Foramts",
+        "description": "Returns responses in different formats."
     },
     {
         "name": "Status Codes",
@@ -64,6 +69,7 @@ app.include_router(methods.router, tags = ["HTTP Methods"])
 app.include_router(status.router, tags = ["Status Codes"])
 app.include_router(request.router, tags = ["Request Inspection"])
 app.include_router(response.router, tags = ["Responses"])
+app.include_router(response_formats.router, tags = ["Response Formats"])
 app.include_router(redirect.router, tags = ["Redirects"])
 app.include_router(anything.router, tags = ["Anything"])
 
@@ -99,7 +105,7 @@ app.include_router(anything.router, tags = ["Anything"])
 # X GitHub: Add README, include testing info with Docker
 #
 # X Response Inspection
-# Response formats
+# X Response formats
 # Cookies
 # Images
 # Dynamic Data

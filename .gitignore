@@ -7,3 +7,7 @@
 
 __pycache__/
 
+# Steve Jobs
+.DS_Store
+
+

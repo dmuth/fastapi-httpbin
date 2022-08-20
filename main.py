@@ -113,9 +113,7 @@ app.include_router(cookies.router, tags = ["Cookies"])
 # X Response Inspection
 # X Response formats
 # X Cookies
-# 1 Gzip 
-#   - Can I use the gzip module and header and encode a specific reponse on /gzip?
-#   - Can I creage a GzipResponse class that extends the Response class?
+# X Gzip - had no luck with middleware--I was able to Gzip content, but the decoded content kept coming back with content-type set to JSON. :-/
 # 2 Images
 # 3 Dynamic Data
 #

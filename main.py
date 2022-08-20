@@ -13,6 +13,7 @@ from apis import anything
 from apis import response
 from apis import response_formats
 from apis import cookies
+from apis import images
 
 
 tags_metadata = [
@@ -48,6 +49,10 @@ tags_metadata = [
         "name": "Cookies",
         "description": "Create, read, and delete cookies."
     },
+    {
+        "name": "Images",
+        "description": "Return different image formats."
+    },
     ]
 
 description = """
@@ -78,6 +83,7 @@ app.include_router(response_formats.router, tags = ["Response Formats"])
 app.include_router(redirect.router, tags = ["Redirects"])
 app.include_router(anything.router, tags = ["Anything"])
 app.include_router(cookies.router, tags = ["Cookies"])
+app.include_router(images.router, tags = ["Images"])
 
 
 #
@@ -114,7 +120,7 @@ app.include_router(cookies.router, tags = ["Cookies"])
 # X Response formats
 # X Cookies
 # X Gzip - had no luck with middleware--I was able to Gzip content, but the decoded content kept coming back with content-type set to JSON. :-/
-# 2 Images
+# X Images
 # 3 Dynamic Data
 #
 # - Deploy to Deta

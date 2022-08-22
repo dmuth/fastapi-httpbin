@@ -8,7 +8,9 @@ A clone of [Httpbin](https://httpbin.org/) written using the [FastAPI Framework 
 
 - 100% unit test coverage of all endpoints.
 - Ensured that documentation 100% matches the responses returned.
-- I fixed a few bugs found in the implementation of the `/cache` endpoints in Httpbin.
+- Ensured that all values are now sanity checked
+- All endpoints with mandatory parameters now have examples in the documentation in order to reduce friction for test usage.
+- Fixed a few bugs found in the implementation of the `/cache` endpoints in Httpbin.
 - Several endpoints have `GET` version only, as I did not see the point to supporting every possible HTTP verb--I felt that this just made the Swagger documentation unwieldly. (This is subject to change based on usage patters and demand)
 
 

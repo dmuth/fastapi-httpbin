@@ -38,7 +38,7 @@ def core(response, codes):
 @router.get("/status/{codes}",
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
@@ -47,7 +47,7 @@ async def get(response: Response,
 @router.post("/status/{codes}",
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
@@ -56,7 +56,7 @@ async def get(response: Response,
 @router.put("/status/{codes}", 
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
@@ -65,7 +65,7 @@ async def get(response: Response,
 @router.patch("/status/{codes}", 
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
@@ -74,7 +74,7 @@ async def get(response: Response,
 @router.delete("/status/{codes}", 
     summary = "Return status code or random one if multiple given as comma-delimited list")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$")
+    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)

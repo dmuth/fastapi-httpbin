@@ -4,7 +4,7 @@
 
 import re
 
-from fastapi import APIRouter, Query, Body
+from fastapi import APIRouter, Query, Body, Path
 from fastapi import FastAPI, Header, Request, Response, HTTPException
 
 
@@ -23,13 +23,13 @@ async def cache(request: Request, response: Response):
 
 
 @router.get("/cache/{seconds}", summary = "Sets a Cache-Control header for n seconds.")
-async def cache_seconds(request: Request, response: Response, seconds: int):
+async def cache_seconds(request: Request, response: Response, seconds: int = Path(example = 3)):
     response.headers["cache-control"] = f"public, max-age={seconds}"
 
 
 @router.get("/etag/{etag}", 
     summary = "Assumes the resource has the given etag and responds to If-None-Match and If-Match headers appropriately.")
-async def etag(request: Request, response: Response, etag: str):
+async def etag(request: Request, response: Response, etag: str = Path(example = "test-etag")):
     response.headers["etag"] = etag
 
     if "if-none-match" in request.headers:

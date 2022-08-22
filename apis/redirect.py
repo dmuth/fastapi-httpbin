@@ -25,44 +25,50 @@ def core(response, n):
     if n > 1:
         return RedirectResponse(f"/redirect/{n - 1}", status_code = 302)
 
-    return RedirectResponse(f"/get", status_code = 302)
+    retval = {"message": "Reached the end of our redirects!"}
+    return(retval)
 
 
-@router.get("/redirect/{n}", summary = "302 Redirects n times")
+@router.get("/redirect/{n}", 
+    summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.")
 async def get(response: Response, 
-    n: int
+    n: int = Path(example = 3)
     ):
     response = core(response, n)
     return(response)
 
 
-@router.post("/redirect/{n}", summary = "302 Redirects n times")
+@router.post("/redirect/{n}", 
+    summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.")
 async def post(response: Response, 
-    n: int
+    n: int = Path(example = 3)
     ):
     response = core(response, n)
     return(response)
 
 
-@router.put("/redirect/{n}", summary = "302 Redirects n times")
+@router.put("/redirect/{n}", 
+    summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.")
 async def put(response: Response, 
-    n: int
+    n: int = Path(example = 3)
     ):
     response = core(response, n)
     return(response)
 
 
-@router.patch("/redirect/{n}", summary = "302 Redirects n times")
+@router.patch("/redirect/{n}", 
+    summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.")
 async def patch(response: Response, 
-    n: int
+    n: int = Path(example = 3)
     ):
     response = core(response, n)
     return(response)
 
 
-@router.delete("/redirect/{n}", summary = "302 Redirects n times")
+@router.delete("/redirect/{n}", 
+    summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.")
 async def delete(response: Response, 
-    n: int
+    n: int = Path(example = 3)
     ):
     response = core(response, n)
     return(response)

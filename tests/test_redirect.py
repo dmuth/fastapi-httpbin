@@ -15,8 +15,8 @@ client = TestClient(app)
 def core(cb):
 
     response = client.get("/redirect/1", allow_redirects = False)
-    assert response.status_code == 302
-    assert response.headers["location"] == "/get"
+    assert response.status_code == 200
+    assert response.json()["message"] == "Reached the end of our redirects!"
 
     response = client.get("/redirect/2", allow_redirects = False)
     assert response.status_code == 302

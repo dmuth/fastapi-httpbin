@@ -14,6 +14,7 @@ from apis import response
 from apis import response_formats
 from apis import cookies
 from apis import images
+from apis import dynamic
 
 
 tags_metadata = [
@@ -53,6 +54,10 @@ tags_metadata = [
         "name": "Images",
         "description": "Return different image formats."
     },
+    {
+        "name": "Dynamic Data",
+        "description": "Generate random and dynamic data."
+    },
     ]
 
 description = """
@@ -84,6 +89,7 @@ app.include_router(redirect.router, tags = ["Redirects"])
 app.include_router(anything.router, tags = ["Anything"])
 app.include_router(cookies.router, tags = ["Cookies"])
 app.include_router(images.router, tags = ["Images"])
+app.include_router(dynamic.router, tags = ["Dynamic Data"])
 
 
 #
@@ -121,11 +127,26 @@ app.include_router(images.router, tags = ["Images"])
 # X Cookies
 # X Gzip - had no luck with middleware--I was able to Gzip content, but the decoded content kept coming back with content-type set to JSON. :-/
 # X Images
-# 3 Dynamic Data
+# X Add defaults for endpoints
+#   X /cache/
+#   X /redirect
+#   X /status
+# - Dynamic Data
+#   X GET /uuid
+#   X GET /delay/{delay} - Return a delayed response after max of 10 seconds.
+#   X GET /stream/json/{n} - stream n JSON responses
+#   4 GET /stream/chars/{n}/{rate} - stream n sequentual characters (ASCII 48 through ASCII 122), at rate characters per second (10 K character max, n == 5% of character minimum for a 20 second max)
+#   - GET /stream/chars/complete/{n}/{rate} - like the previous endpoint, but last second streams all remaining characters :-)
+#       - Unit testing with debug paramter
+#
+# 1 Rename /assets-private to /private
+# 2 Move contents of /assets to /private
 #
 # - Deploy to Deta
 #
-# About page served statically?
+# /about page served statically
+#   - Put Docker blurb on front page
+#   - mention the difference between this and httpbin (copy from README)
 #
 # k8s support through Minikube
 # Uploads (10 MB max)

@@ -171,9 +171,7 @@ async def streamer_rate_complete(n, rate, debug):
             #
             buf += chr(i)
             if len (buf) >= rate:
-                buf = list(buf)
-                buf[len(buf) - 1] = "\n"
-                buf = "".join(buf)
+                buf = add_newline(buf)
                 yield(buf)
                 if not debug:
                     sleep(1)
@@ -186,9 +184,7 @@ async def streamer_rate_complete(n, rate, debug):
             num_left -= 1
             if num_left <= 0:
                 if buf:
-                    buf = list(buf)
-                    buf[len(buf) - 1] = "\n"
-                    buf = "".join(buf)
+                    buf = add_newline(buf)
                     yield(buf)
                 done = True
                 break
@@ -213,9 +209,7 @@ async def streamer_rate_complete(n, rate, debug):
 
                 if num_left <= 0:
                     if buf:
-                        buf = list(buf)
-                        buf[len(buf) - 1] = "\n"
-                        buf = "".join(buf)
+                        buf = add_newline(buf)
                     yield(buf)
                     done = True
                     break

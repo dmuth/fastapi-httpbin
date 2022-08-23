@@ -135,8 +135,8 @@ app.include_router(dynamic.router, tags = ["Dynamic Data"])
 #   X GET /uuid
 #   X GET /delay/{delay} - Return a delayed response after max of 10 seconds.
 #   X GET /stream/json/{n} - stream n JSON responses
-#   4 GET /stream/chars/{n}/{rate} - stream n sequentual characters (ASCII 48 through ASCII 122), at rate characters per second (10 K character max, n == 5% of character minimum for a 20 second max)
-#   - GET /stream/chars/complete/{n}/{rate} - like the previous endpoint, but last second streams all remaining characters :-)
+#   X GET /stream/chars/{n}/{rate} - stream n sequentual characters (ASCII 48 through ASCII 122), at rate characters per second (100 K character max, n == 5% of character minimum for a 20 second max)
+#   2 GET /stream/chars/complete/{n}/{rate} - like the previous endpoint, but last second streams all remaining characters :-)
 #       - Unit testing with debug paramter
 #
 # 1 Rename /assets-private to /private

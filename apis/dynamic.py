@@ -197,12 +197,15 @@ async def streamer_rate_complete(n, rate, debug):
             break
 
     #
-    # If we have any chracters left to display, dump them out all at once.
+    # If we have any charcters left to display, dump them out all at once.
     #
     if num_left:
+
         buf = ""
         done = False
+
         while True:
+
             for i in (range(48, 123)):
                 buf += chr(i)
                 num_left -= 1
@@ -210,7 +213,7 @@ async def streamer_rate_complete(n, rate, debug):
                 if num_left <= 0:
                     if buf:
                         buf = add_newline(buf)
-                    yield(buf)
+                        yield(buf)
                     done = True
                     break
 

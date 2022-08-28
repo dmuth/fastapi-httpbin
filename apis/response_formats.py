@@ -154,7 +154,7 @@ async def utf8(response: Response):
 
     retval = ""
 
-    with open("assets/utf8.txt") as f:
+    with open("private/utf8.txt") as f:
         lines = f.readlines()
 
     retval = "".join(lines)

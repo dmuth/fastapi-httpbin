@@ -24,7 +24,7 @@ from fastapi.responses import FileResponse
     }
     )
 async def get(response: Response):
-    return FileResponse("assets-private/cheetah.jpeg")
+    return FileResponse("private/cheetah.jpeg")
 
 
 @router.get("/images/png", summary = "Returns a PNG image.",
@@ -37,7 +37,7 @@ async def get(response: Response):
     }
     )
 async def get(response: Response):
-    return FileResponse("assets-private/cheetah.png")
+    return FileResponse("private/cheetah.png")
 
 
 @router.get("/images/heic", 
@@ -51,7 +51,7 @@ async def get(response: Response):
     }
     )
 async def get(response: Response):
-    return FileResponse("assets-private/cheetah.heic")
+    return FileResponse("private/cheetah.heic")
 
 
 @router.get("/images/webp", summary = "Returns a Webp image.",
@@ -64,7 +64,7 @@ async def get(response: Response):
     }
     )
 async def get(response: Response):
-    return FileResponse("assets-private/cheetah.webp")
+    return FileResponse("private/cheetah.webp")
 
 
 

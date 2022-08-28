@@ -95,8 +95,8 @@ app.include_router(dynamic.router, tags = ["Dynamic Data"])
 #
 # TODO:
 #
-# 1 Rename /assets-private to /private
-# 2 Move contents of /assets to /private
+# X Rename /assets-private to /private
+# X Move contents of /assets to /private
 #
 # 3 Deploy to Deta
 #

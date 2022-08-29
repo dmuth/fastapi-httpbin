@@ -13,6 +13,8 @@ COPY main.py /app
 COPY pytest.sh /app
 COPY apis/ /app/apis/
 COPY tests/ /app/tests/
+COPY private/ /app/private/
+COPY static/ app/static/
 
 
 WORKDIR /app

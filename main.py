@@ -2,6 +2,7 @@
 from typing import Union
 
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 
@@ -63,6 +64,7 @@ tags_metadata = [
 description = """
 A port of httpbin to the FastAPI framework.<p/> 
 
+<a href="/about">About this project</a> - 
 <a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>
 
 """
@@ -71,11 +73,6 @@ app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
     version = "0.0.1",
-    contact = {
-        "name": "Douglas Muth",
-        "url": "https://www.dmuth.org/",
-        "email": "doug.muth@gmail.com"
-        },
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
@@ -91,6 +88,8 @@ app.include_router(cookies.router, tags = ["Cookies"])
 app.include_router(images.router, tags = ["Images"])
 app.include_router(dynamic.router, tags = ["Dynamic Data"])
 
+app.mount("/about", StaticFiles(directory = "static/about", html = True), name = "static")
+
 
 #
 # TODO:
@@ -98,11 +97,7 @@ app.include_router(dynamic.router, tags = ["Dynamic Data"])
 # X Rename /assets-private to /private
 # X Move contents of /assets to /private
 #
-# 3 Deploy to Deta
-#
-# /about page served statically
-#   - Put Docker blurb on front page
-#   - mention the difference between this and httpbin (copy from README)
+# WAITING ON PYTHON 3.10 - Deploy to Deta
 #
 # k8s support through Minikube
 #

@@ -67,6 +67,8 @@ A port of httpbin to the FastAPI framework.<p/>
 <a href="/about">About this project</a> - 
 <a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>
 
+Run locally in Docker: <tt><b>docker run -p 80:8000 dmuth1/fastapi-httpbin</b></tt>
+
 """
 
 app = FastAPI(docs_url = "/", redoc_url = None,
@@ -94,17 +96,13 @@ app.mount("/about", StaticFiles(directory = "static/about", html = True), name =
 #
 # TODO:
 #
-# X Rename /assets-private to /private
-# X Move contents of /assets to /private
-#
-# WAITING ON PYTHON 3.10 - Deploy to Deta
+# Check out hosting providers
 #
 # k8s support through Minikube
 #
 # Uploads (10 MB max)
 # Uploads with rate-limiting
 #
-# - Deploy to Deta
 
 
 

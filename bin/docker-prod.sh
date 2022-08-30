@@ -9,5 +9,5 @@ set -e
 # Change to the parent directory
 pushd $(dirname $0)/.. > /dev/null
 
-docker run --rm -p 8000:8000 fastapi-httpbin 
+docker run --rm -p 80:80 fastapi-httpbin 
 

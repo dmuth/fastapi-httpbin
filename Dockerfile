@@ -19,6 +19,8 @@ COPY static/ app/static/
 
 WORKDIR /app
 
+ENV PORT=80
+
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 

@@ -17,8 +17,15 @@ then
     FORCE=1
 fi
 
+PORT=${PORT:=8000}
+
+
 #
 # If we have a lockfile, check to see if the process is still running.
+# The whole point to this code is that during development, I tried running this same
+# script in different terminals one too many times, and got tired of dealing with that.
+#
+# The prod.sh script doesn't have any crazy logic like this.
 #
 if test -f ${LOCKFILE}
 then
@@ -81,8 +88,7 @@ trap signal_received INT TERM
 #
 # Run the main app and get the PID
 #
-#uvicorn main:app --reload &
-uvicorn --host 0.0.0.0 main:app --reload &
+uvicorn --host 0.0.0.0 main:app --reload --port ${PORT} &
 
 PID=$!
 echo "# Server process running as PID ${PID}."

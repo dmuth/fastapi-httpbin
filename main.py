@@ -67,7 +67,7 @@ A port of httpbin to the FastAPI framework.<p/>
 <a href="/about">About this project</a> - 
 <a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>
 
-Run locally in Docker: <tt><b>docker run -p 80:8000 dmuth1/fastapi-httpbin</b></tt>
+Run locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>
 
 """
 
@@ -95,8 +95,6 @@ app.mount("/about", StaticFiles(directory = "static/about", html = True), name =
 
 #
 # TODO:
-#
-# Check out hosting providers
 #
 # k8s support through Minikube
 #

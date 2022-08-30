@@ -36,7 +36,13 @@ async def get(request: Request):
 @router.get("/ip", summary = "Return the user's IP address.")
 async def ip(request: Request):
     retval = {}
-    retval["ip"] = request.client[0]
+
+    if "x-forwarded-for" in request.headers:
+        retval["ip"] = request.headers["x-forwarded-for"]
+
+    else:
+        retval["ip"] = request.client[0]
+
     return(retval)
 
 

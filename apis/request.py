@@ -37,7 +37,10 @@ async def get(request: Request):
 async def ip(request: Request):
     retval = {}
 
-    if "x-forwarded-for" in request.headers:
+    if "fly-client-ip" in request.headers:
+        retval["ip"] = request.headers["fly-client-ip"]
+
+    elif "x-forwarded-for" in request.headers:
         retval["ip"] = request.headers["x-forwarded-for"]
 
     else:

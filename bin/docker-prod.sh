@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script to run the script in dev mode, which will spawn a shell
+# Script to run the script in prod mode
 #
 
 # Errors are fatal
@@ -9,5 +9,5 @@ set -e
 # Change to the parent directory
 pushd $(dirname $0)/.. > /dev/null
 
-docker run --rm -p 80:80 fastapi-httpbin 
+docker run --rm -d -p 80:80 fastapi-httpbin 
 

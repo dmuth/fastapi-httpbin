@@ -64,7 +64,7 @@ async def get(response: Response):
     }
     )
 async def get(response: Response):
-    return FileResponse("private/cheetah.webp")
+    return FileResponse("private/cheetah.webp", headers = { "content-type": "image/webp"})
 
 
 

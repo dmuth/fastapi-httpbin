@@ -9,6 +9,6 @@ set -e
 # Change to the parent directory
 pushd $(dirname $0)/.. > /dev/null
 
-docker run --rm -it -p 8000:8000 -v $(pwd):/mnt fastapi-httpbin bash
+docker run --rm -it -e PORT=8000 -p 8000:8000 -v $(pwd):/mnt fastapi-httpbin bash
 
 

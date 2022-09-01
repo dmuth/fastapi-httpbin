@@ -68,8 +68,8 @@ Built with the <a href="https://fastapi.tiangolo.com/">FastAPI framework</a>,
 this is heavily based on the original <a href="https://httpbin.org/">Httpbin</a> website.
 
 <a href="/about">About this project</a> - 
-<a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a> -
-<a href="/roadmap">Development Roadmap</a>
+<a href="/roadmap">Development Roadmap</a> -
+<a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>
 
 Run locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>
 

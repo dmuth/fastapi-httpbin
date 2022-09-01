@@ -1,7 +1,12 @@
 
 # FastAPI Httpbin
 
-A clone of [Httpbin](https://httpbin.org/) written using the [FastAPI Framework for Python](https://fastapi.tiangolo.com/).
+
+HTTP Endpoints for easy testing of your app.
+
+Built with the [FastAPI Framework for Python](https://fastapi.tiangolo.com/), this is heavily based on the original [Httpbin](https://httpbin.org/) website.
+
+
 
 
 ## Differences between this app and Httpbin

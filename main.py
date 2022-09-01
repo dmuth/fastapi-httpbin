@@ -84,7 +84,7 @@ Run locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.2",
+    version = "0.0.3",
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )

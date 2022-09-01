@@ -62,19 +62,29 @@ tags_metadata = [
     ]
 
 description = """
-A port of httpbin to the FastAPI framework.<p/> 
+HTTP Endpoints for easy testing of your app.
+
+Built with the <a href="https://fastapi.tiangolo.com/">FastAPI framework</a>, 
+this is heavily based on the original <a href="https://httpbin.org/">Httpbin</a> website.
 
 <a href="/about">About this project</a> - 
-<a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>
+<a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a> -
+<a href="/roadmap">Development Roadmap</a>
 
 Run locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>
+
+
+<a href="https://httpbin.dmuth.org/">Main Site</a> - Mirrors: 
+<a href="https://fly.httpbin.dmuth.org/">Fly</a>
+<a href="https://railway.httpbin.dmuth.org/">Railway</a>
+<a href="https://render.httpbin.dmuth.org/">Render</a>
 
 """
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.1",
+    version = "0.0.2",
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
@@ -91,16 +101,6 @@ app.include_router(images.router, tags = ["Images"])
 app.include_router(dynamic.router, tags = ["Dynamic Data"])
 
 app.mount("/about", StaticFiles(directory = "static/about", html = True), name = "static")
-
-
-#
-# TODO:
-#
-# k8s support through Minikube
-#
-# Uploads (10 MB max)
-# Uploads with rate-limiting
-#
-
+app.mount("/roadmap", StaticFiles(directory = "static/roadmap", html = True), name = "static")
 
 

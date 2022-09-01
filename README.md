@@ -6,7 +6,7 @@ HTTP Endpoints for easy testing of your app.
 
 Built with the [FastAPI Framework for Python](https://fastapi.tiangolo.com/), this is heavily based on the original [Httpbin](https://httpbin.org/) website.
 
-Play with it in production at [https://httpbin.dmuth.org/[(https://httpbin.dmuth.org/)
+Play with it in production at [https://httpbin.dmuth.org/](https://httpbin.dmuth.org/)
 
 
 ## Differences between this app and Httpbin

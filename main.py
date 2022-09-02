@@ -6,16 +6,16 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 
-from apis import methods
-from apis import request
-from apis import status
-from apis import redirect
-from apis import anything
-from apis import response
-from apis import response_formats
-from apis import cookies
-from apis import images
-from apis import dynamic
+from lib.apis import methods
+from lib.apis import request
+from lib.apis import status
+from lib.apis import redirect
+from lib.apis import anything
+from lib.apis import response
+from lib.apis import response_formats
+from lib.apis import cookies
+from lib.apis import images
+from lib.apis import dynamic
 
 from lib.fastapi import tags_metadata, description
 

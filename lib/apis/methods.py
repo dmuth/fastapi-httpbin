@@ -7,6 +7,7 @@ from fastapi import FastAPI, Header, Request
 
 router = APIRouter()
 
+import json
 
 #
 # Our core function to return the same data for each request.
@@ -32,25 +33,46 @@ async def get(request: Request):
     return(retval)
 
 
-@router.post("/post", summary = "The request's POST parameters.")
+@router.post("/post", summary = "The request's POST parameters. (Use -d in curl to specify data in JSON format)")
 async def post(request: Request):
-    data = await request.json()
+
+    data = {}
+
+    try:
+        data = await request.json()
+    except json.decoder.JSONDecodeError as e:
+        print(f"Caught error: {e}")
+
     retval = core(request)
     retval["data"] = data
     return(retval)
 
 
-@router.put("/put", summary = "The request's PUT parameters.")
+@router.put("/put", summary = "The request's PUT parameters. (Use -d in curl to specify data in JSON format)")
 async def put(request: Request):
-    data = await request.json()
+
+    data = {}
+
+    try:
+        data = await request.json()
+    except json.decoder.JSONDecodeError as e:
+        print(f"Caught error: {e}")
+
     retval = core(request)
     retval["data"] = data
     return(retval)
 
 
-@router.patch("/patch", summary = "The request's PATCH parameters.")
+@router.patch("/patch", summary = "The request's PATCH parameters. (Use -d in curl to specify data in JSON format)")
 async def patch(request: Request):
-    data = await request.json()
+
+    data = {}
+
+    try:
+        data = await request.json()
+    except json.decoder.JSONDecodeError as e:
+        print(f"Caught error: {e}")
+
     retval = core(request)
     retval["data"] = data
     return(retval)

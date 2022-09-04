@@ -19,6 +19,22 @@ def test_get():
 
 def test_post():
 
+    data = {}
+    response = client.post("/post", json = json.dumps(data))
+    assert response.status_code == 200
+    assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["headers"]["host"] == "testserver"
+    data = json.loads(response.json()["data"])
+    assert data == {}
+
+    data = "broken json"
+    response = client.post("/post", json = json.dumps(data))
+    assert response.status_code == 200
+    assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["headers"]["host"] == "testserver"
+    data = json.loads(response.json()["data"])
+    assert data == "broken json"
+
     data = { "cheetah": "chirp", "goat": "bleat" }
 
     response = client.post("/post", json = json.dumps(data))
@@ -37,6 +53,22 @@ def test_post():
 
 
 def test_put():
+
+    data = {}
+    response = client.put("/put", json = json.dumps(data))
+    assert response.status_code == 200
+    assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["headers"]["host"] == "testserver"
+    data = json.loads(response.json()["data"])
+    assert data == {}
+
+    data = "broken json"
+    response = client.put("/put", json = json.dumps(data))
+    assert response.status_code == 200
+    assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["headers"]["host"] == "testserver"
+    data = json.loads(response.json()["data"])
+    assert data == "broken json"
 
     data = { "cheetah": "chirp", "goat": "bleat" }
 
@@ -58,6 +90,22 @@ def test_put():
 
 
 def test_patch():
+
+    data = {}
+    response = client.patch("/patch", json = json.dumps(data))
+    assert response.status_code == 200
+    assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["headers"]["host"] == "testserver"
+    data = json.loads(response.json()["data"])
+    assert data == {}
+
+    data = "broken json"
+    response = client.patch("/patch", json = json.dumps(data))
+    assert response.status_code == 200
+    assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["headers"]["host"] == "testserver"
+    data = json.loads(response.json()["data"])
+    assert data == "broken json"
 
     data = { "cheetah": "chirp", "goat": "bleat" }
 

@@ -22,7 +22,7 @@ from lib.fastapi import tags_metadata, description
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.6",
+    version = "0.0.7.1",
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )

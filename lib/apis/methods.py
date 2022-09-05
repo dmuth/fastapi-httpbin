@@ -5,6 +5,8 @@
 from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request
 
+from . import logger
+
 router = APIRouter()
 
 import json
@@ -41,7 +43,7 @@ async def post(request: Request):
     try:
         data = await request.json()
     except json.decoder.JSONDecodeError as e:
-        print(f"Caught error: {e}")
+        logger.warn(f"{__name__}:post(): Caught error deserializing JSON: {e}")
 
     retval = core(request)
     retval["data"] = data
@@ -56,7 +58,7 @@ async def put(request: Request):
     try:
         data = await request.json()
     except json.decoder.JSONDecodeError as e:
-        print(f"Caught error: {e}")
+        logger.warn(f"{__name__}:put(): Caught error deserializing JSON: {e}")
 
     retval = core(request)
     retval["data"] = data
@@ -71,7 +73,7 @@ async def patch(request: Request):
     try:
         data = await request.json()
     except json.decoder.JSONDecodeError as e:
-        print(f"Caught error: {e}")
+        logger.warn(f"{__name__}:patch(): Caught error deserializing JSON: {e}")
 
     retval = core(request)
     retval["data"] = data

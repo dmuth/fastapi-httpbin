@@ -1,13 +1,13 @@
 
 # FastAPI Httpbin
 
-
 HTTP Endpoints for easy testing of your app.
 
 Built with the [FastAPI Framework for Python](https://fastapi.tiangolo.com/), this is heavily based on the original [Httpbin](https://httpbin.org/) website.
 
 Play with it in production at [https://httpbin.dmuth.org/](https://httpbin.dmuth.org/)
 
+[![Fly Deploy](https://github.com/dmuth/fastapi-httpbin/actions/workflows/main.yml/badge.svg)](https://github.com/dmuth/fastapi-httpbin/actions/workflows/main.yml)
 
 ## Differences between this app and Httpbin
 

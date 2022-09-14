@@ -8,6 +8,7 @@ from fastapi import APIRouter, Query, Body
 from fastapi import FastAPI, Header, Request, Response, HTTPException
 from fastapi.responses import PlainTextResponse, HTMLResponse
 
+from . import PrettyJSONResponse
 
 router = APIRouter()
 
@@ -36,7 +37,8 @@ async def html(response: Response):
     return(retval)
 
 
-@router.get("/json", summary = "Returns a JSON document.")
+@router.get("/json", summary = "Returns a JSON document.",
+    response_class=PrettyJSONResponse)
 async def json(response: Response):
 
     retval = {

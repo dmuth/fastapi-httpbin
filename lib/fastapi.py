@@ -7,7 +7,7 @@ tags_metadata = [
     },
     {
         "name": "Request Inspection",
-        "description": "Inspect the request data."
+        "description": "Inspect the request data. (including source IP address)"
     },
     {
         "name": "Responses",

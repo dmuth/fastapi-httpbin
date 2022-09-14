@@ -10,10 +10,13 @@ from fastapi import APIRouter, HTTPException
 from fastapi import FastAPI, Header, Request, Query, Path
 from fastapi.responses import StreamingResponse
 
+from . import PrettyJSONResponse
+
 router = APIRouter()
 
 
-@router.get("/uuid", summary = "Return a type 4 UUID.")
+@router.get("/uuid", summary = "Return a type 4 UUID.",
+    response_class=PrettyJSONResponse)
 async def uuid(request: Request):
     retval = {}
     retval["uuid"] = uuid4()
@@ -21,7 +24,8 @@ async def uuid(request: Request):
     return(retval)
 
 
-@router.get("/delay/{seconds}", summary = "Return a delayed response (max of 10 seconds).")
+@router.get("/delay/{seconds}", summary = "Return a delayed response (max of 10 seconds).",
+    response_class=PrettyJSONResponse)
 async def delay(request: Request, 
     debug: bool | None = None, 
     seconds: int = Path(example = 3)):

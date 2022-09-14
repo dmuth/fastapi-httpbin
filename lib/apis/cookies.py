@@ -5,10 +5,13 @@
 from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request, Response, Query, Body
 
+from . import PrettyJSONResponse
+
 router = APIRouter()
 
 
-@router.get("/cookies", summary = "Show current cookies in the browser.")
+@router.get("/cookies", summary = "Show current cookies in the browser.",
+    response_class=PrettyJSONResponse)
 async def get(request: Request, response: Response):
 
     retval = {}
@@ -21,7 +24,8 @@ async def get(request: Request, response: Response):
     return(retval)
 
 
-@router.put("/cookies", summary = "Set one or more cookies.")
+@router.put("/cookies", summary = "Set one or more cookies.",
+    response_class=PrettyJSONResponse)
 async def put(request: Request, response: Response, 
     cookies: dict | None = Body(
         example = '{"cookie1": "value1", "cookie2": "value2", "cookie3": "value3"}'
@@ -37,7 +41,8 @@ async def put(request: Request, response: Response,
     return(retval)
 
 
-@router.delete("/cookies", summary = "Delete one or more cookies.")
+@router.delete("/cookies", summary = "Delete one or more cookies.",
+    response_class=PrettyJSONResponse)
 async def delete(request: Request, response: Response, cookies: list | None = Body(
     example = '["cookie1", "cookie2", "cookie3"]'
     )):

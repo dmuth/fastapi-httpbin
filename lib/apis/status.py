@@ -7,6 +7,7 @@ import random
 from fastapi import APIRouter, FastAPI, Header, Response, Query, Path, HTTPException
 from fastapi.responses import RedirectResponse, JSONResponse
 
+from . import PrettyJSONResponse
 
 router = APIRouter()
 

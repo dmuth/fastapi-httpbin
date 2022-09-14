@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request
 
 from . import logger
+from . import PrettyJSONResponse
 
 router = APIRouter()
 
@@ -29,13 +30,15 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/get", summary = "The request's GET parameters.")
+@router.get("/get", summary = "The request's GET parameters.",
+    response_class=PrettyJSONResponse)
 async def get(request: Request):
     retval = core(request)
     return(retval)
 
 
-@router.post("/post", summary = "The request's POST parameters. (Use -d in curl to specify data in JSON format)")
+@router.post("/post", summary = "The request's POST parameters. (Use -d in curl to specify data in JSON format)",
+    response_class=PrettyJSONResponse)
 async def post(request: Request):
 
     data = {}
@@ -50,7 +53,8 @@ async def post(request: Request):
     return(retval)
 
 
-@router.put("/put", summary = "The request's PUT parameters. (Use -d in curl to specify data in JSON format)")
+@router.put("/put", summary = "The request's PUT parameters. (Use -d in curl to specify data in JSON format)",
+    response_class=PrettyJSONResponse)
 async def put(request: Request):
 
     data = {}
@@ -65,7 +69,8 @@ async def put(request: Request):
     return(retval)
 
 
-@router.patch("/patch", summary = "The request's PATCH parameters. (Use -d in curl to specify data in JSON format)")
+@router.patch("/patch", summary = "The request's PATCH parameters. (Use -d in curl to specify data in JSON format)",
+    response_class=PrettyJSONResponse)
 async def patch(request: Request):
 
     data = {}
@@ -80,7 +85,8 @@ async def patch(request: Request):
     return(retval)
 
 
-@router.delete("/delete", summary = "The request's DELETE parameters.")
+@router.delete("/delete", summary = "The request's DELETE parameters.",
+    response_class=PrettyJSONResponse)
 async def delete(request: Request):
     retval = core(request)
     return(retval)

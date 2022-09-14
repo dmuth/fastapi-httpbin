@@ -5,6 +5,8 @@
 from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request
 
+from . import PrettyJSONResponse
+
 router = APIRouter()
 
 
@@ -26,14 +28,16 @@ def core(request: Request):
     return(retval)
 
 
-@router.get("/headers", summary = "Return the headers sent in the request.")
+@router.get("/headers", summary = "Return the headers sent in the request.",
+    response_class=PrettyJSONResponse)
 async def get(request: Request):
     retval = {}
     retval = request.headers
     return(retval)
 
 
-@router.get("/ip", summary = "Return the user's IP address.")
+@router.get("/ip", summary = "Return the user's IP address.", 
+    response_class=PrettyJSONResponse)
 async def ip(request: Request):
     retval = {}
 
@@ -49,7 +53,8 @@ async def ip(request: Request):
     return(retval)
 
 
-@router.get("/user-agent", summary = "Request the User Agent.")
+@router.get("/user-agent", summary = "Request the User Agent.",
+    response_class=PrettyJSONResponse)
 async def user_agent(request: Request):
     retval = {}
     retval["user-agent"] = request.headers["user-agent"]

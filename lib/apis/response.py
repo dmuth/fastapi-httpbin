@@ -7,6 +7,7 @@ import re
 from fastapi import APIRouter, Query, Body, Path
 from fastapi import FastAPI, Header, Request, Response, HTTPException
 
+from . import PrettyJSONResponse
 
 router = APIRouter()
 
@@ -43,7 +44,8 @@ async def etag(request: Request, response: Response, etag: str = Path(example = 
 
 
 @router.get("/response-headers",
-    summary = "Set arbitrary headers in the response.  Input strings should be in the format of 'header:value'.")
+    summary = "Set arbitrary headers in the response.  Input strings should be in the format of 'header:value'.",
+    response_class=PrettyJSONResponse)
 def response_headers_get(response: Response, headers: list[str] = Query(default = [])):
 
     #

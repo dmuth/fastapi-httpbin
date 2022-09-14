@@ -2,6 +2,7 @@
 from typing import Union
 
 from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -40,5 +41,11 @@ app.include_router(dynamic.router, tags = ["Dynamic Data"])
 
 app.mount("/about", StaticFiles(directory = "static/about", html = True), name = "static")
 app.mount("/roadmap", StaticFiles(directory = "static/roadmap", html = True), name = "static")
+
+favicon_path = "static/favicon.jpg"
+@app.get('/favicon.ico')
+async def favicon():
+    return FileResponse(favicon_path)
+
 
 

@@ -18,6 +18,10 @@ tags_metadata = [
         "description": "Returns responses in different formats."
     },
     {
+        "name": "Dynamic Data",
+        "description": "Generate random and dynamic data."
+    },
+    {
         "name": "Status Codes",
         "description": "Generate responses with specified status codes."
     },
@@ -36,10 +40,6 @@ tags_metadata = [
     {
         "name": "Images",
         "description": "Return different image formats."
-    },
-    {
-        "name": "Dynamic Data",
-        "description": "Generate random and dynamic data."
     },
     ]
 

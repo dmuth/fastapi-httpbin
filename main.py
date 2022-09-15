@@ -1,7 +1,7 @@
 
 from typing import Union
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -23,7 +23,7 @@ from lib.fastapi import tags_metadata, description
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.8",
+    version = "0.0.9",
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
@@ -43,8 +43,16 @@ app.mount("/about", StaticFiles(directory = "static/about", html = True), name =
 app.mount("/roadmap", StaticFiles(directory = "static/roadmap", html = True), name = "static")
 
 favicon_path = "static/favicon.jpg"
-@app.get('/favicon.ico')
-async def favicon():
+@app.get('/favicon.ico', summary = "Favicon endpoint", tags = ["Images"],
+    response_class = FileResponse,
+    responses={
+        200: {
+            "content": {"image/jpeg": {}},
+            "description": "Return a 32x32 favicon in JPG format.",
+        }
+    }
+    )
+async def favicon(response: Response):
     return FileResponse(favicon_path)
 
 

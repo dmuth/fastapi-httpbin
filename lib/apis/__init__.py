@@ -2,6 +2,8 @@
 import json, typing
 import logging
 
+from fastapi import Query
+
 from starlette.responses import Response
 
 
@@ -27,5 +29,19 @@ class PrettyJSONResponse(Response):
             indent=4,
             separators=(", ", ": "),
         ).encode("utf-8")
+
+
+#
+# Our query parameters for our /redirect endpoints.
+#
+class RedirectQueryParams():
+
+    def __init__(self,
+        code: int | None = Query(
+            default = 302, 
+            description = "Status code passed in from a previous redirect", 
+            example = 399)
+        ):
+        self.code = code
 
 

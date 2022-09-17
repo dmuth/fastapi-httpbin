@@ -4,15 +4,16 @@
 
 import random
 
-from fastapi import APIRouter, FastAPI, Header, Response, Query, Path, HTTPException
+from fastapi import APIRouter, FastAPI, Header, Response, Path, HTTPException, Depends
 from fastapi.responses import RedirectResponse, JSONResponse
 
 from . import PrettyJSONResponse
+from . import RedirectQueryParams
 
 router = APIRouter()
 
 
-def core(response, n):
+def core(response, n, code):
 
     #
     # Do some sanity checking.
@@ -24,9 +25,11 @@ def core(response, n):
         raise HTTPException(status_code = 422, detail = retval)
 
     if n > 1:
-        return RedirectResponse(f"/redirect/{n - 1}", status_code = 302)
+        return RedirectResponse(f"/redirect/{n - 1}?code={code}", status_code = 302)
 
-    retval = {"message": "Reached the end of our redirects!"}
+    if n <= 1:
+        return RedirectResponse(f"/redirect/final?code={code}", status_code = 302)
+
     return(retval)
 
 
@@ -34,9 +37,10 @@ def core(response, n):
     summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.",
     response_class=PrettyJSONResponse)
 async def get(response: Response, 
-    n: int = Path(example = 3)
+    n: int = Path(example = 3, description = "Number of redirects to perform"),
+    params: RedirectQueryParams = Depends()
     ):
-    response = core(response, n)
+    response = core(response, n, params.code)
     return(response)
 
 
@@ -44,9 +48,10 @@ async def get(response: Response,
     summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.",
     response_class=PrettyJSONResponse)
 async def post(response: Response, 
-    n: int = Path(example = 3)
+    n: int = Path(example = 3, description = "Number of redirects to perform"),
+    params: RedirectQueryParams = Depends()
     ):
-    response = core(response, n)
+    response = core(response, n, params.code)
     return(response)
 
 
@@ -54,9 +59,10 @@ async def post(response: Response,
     summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.",
     response_class=PrettyJSONResponse)
 async def put(response: Response, 
-    n: int = Path(example = 3)
+    n: int = Path(example = 3, description = "Number of redirects to perform"),
+    params: RedirectQueryParams = Depends()
     ):
-    response = core(response, n)
+    response = core(response, n, params.code)
     return(response)
 
 
@@ -64,9 +70,10 @@ async def put(response: Response,
     summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.",
     response_class=PrettyJSONResponse)
 async def patch(response: Response, 
-    n: int = Path(example = 3)
+    n: int = Path(example = 3, description = "Number of redirects to perform"),
+    params: RedirectQueryParams = Depends()
     ):
-    response = core(response, n)
+    response = core(response, n, params.code)
     return(response)
 
 
@@ -74,9 +81,10 @@ async def patch(response: Response,
     summary = "302 Redirects n times. (Note that Swagger follows redirects, so use the Curl command to see redirect headers.",
     response_class=PrettyJSONResponse)
 async def delete(response: Response, 
-    n: int = Path(example = 3)
+    n: int = Path(example = 3, description = "Number of redirects to perform"),
+    params: RedirectQueryParams = Depends()
     ):
-    response = core(response, n)
+    response = core(response, n, params.code)
     return(response)
 
 

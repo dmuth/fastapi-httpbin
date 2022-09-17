@@ -14,29 +14,42 @@ client = TestClient(app)
 #
 def core(cb):
 
-    response = client.get("/redirect/1", allow_redirects = False)
+    response = cb("/redirect/final", allow_redirects = False)
     assert response.status_code == 200
     assert response.json()["message"] == "Reached the end of our redirects!"
 
-    response = client.get("/redirect/2", allow_redirects = False)
-    assert response.status_code == 302
-    assert response.headers["location"] == "/redirect/1"
+    response = cb("/redirect/final?code=310", allow_redirects = False)
+    assert response.status_code == 200
+    assert response.json()["message"] == "Reached the end of our redirects!"
+    assert response.json()["code"] == 310
 
-    response = client.get("/redirect/5", allow_redirects = False)
+    response = cb("/redirect/1", allow_redirects = False)
     assert response.status_code == 302
-    assert response.headers["location"] == "/redirect/4"
+    assert response.headers["location"] == "/redirect/final?code=302"
 
-    response = client.get("/redirect", allow_redirects = False)
+    response = cb("/redirect/2", allow_redirects = False)
+    assert response.status_code == 302
+    assert response.headers["location"] == "/redirect/1?code=302"
+
+    response = cb("/redirect/3?code=310", allow_redirects = False)
+    assert response.status_code == 302
+    assert response.headers["location"] == "/redirect/2?code=310"
+
+    response = cb("/redirect/5", allow_redirects = False)
+    assert response.status_code == 302
+    assert response.headers["location"] == "/redirect/4?code=302"
+
+    response = cb("/redirect", allow_redirects = False)
     assert response.status_code == 404
 
-    response = client.get("/redirect/", allow_redirects = False)
+    response = cb("/redirect/", allow_redirects = False)
     assert response.status_code == 404
 
-    response = client.get("/redirect/cheetah", allow_redirects = False)
+    response = cb("/redirect/cheetah", allow_redirects = False)
     assert response.status_code == 422
     assert response.json()["detail"][0]["type"] == "type_error.integer"
 
-    response = client.get("/redirect/21", allow_redirects = False)
+    response = cb("/redirect/21", allow_redirects = False)
     assert response.status_code == 422
     assert response.json()["detail"]["type"] == "value_error.int.max_size"
 

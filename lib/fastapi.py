@@ -18,6 +18,10 @@ tags_metadata = [
         "description": "Returns responses in different formats."
     },
     {
+        "name": "QR Codes",
+        "description": "Generate QR Codes."
+    },
+    {
         "name": "Dynamic Data",
         "description": "Generate random and dynamic data."
     },

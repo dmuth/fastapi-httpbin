@@ -18,23 +18,28 @@ from lib.apis import response_formats
 from lib.apis import cookies
 from lib.apis import images
 from lib.apis import dynamic
+from lib.apis import qrcode
 
 from lib.fastapi import tags_metadata, description
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.10",
+    version = "0.0.11",
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
 
+#
+# Ordering of these in the Swagger docs is set in lib/fastapi.py
+#
 app.include_router(methods.router, tags = ["HTTP Methods"])
 app.include_router(status.router, tags = ["Status Codes"])
 app.include_router(request.router, tags = ["Request Inspection"])
 app.include_router(response.router, tags = ["Responses"])
 app.include_router(response_formats.router, tags = ["Response Formats"])
 app.include_router(redirect_final.router, tags = ["Redirects"])
+app.include_router(qrcode.router, tags = ["QR Codes"])
 app.include_router(redirect.router, tags = ["Redirects"])
 app.include_router(anything.router, tags = ["Anything"])
 app.include_router(cookies.router, tags = ["Cookies"])

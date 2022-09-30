@@ -56,6 +56,7 @@ this is heavily based on the original <a href="https://httpbin.org/">Httpbin</a>
 
 <a href="/about">About this project</a> - 
 <a href="/roadmap">Development Roadmap</a> -
+<a href="/qrcode/">Dead Simple QR Code Generator</a> -
 <a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>
 
 Run locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>

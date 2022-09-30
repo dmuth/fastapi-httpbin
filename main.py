@@ -25,7 +25,7 @@ from lib.fastapi import tags_metadata, description
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.11",
+    version = "0.0.12",
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
@@ -48,6 +48,7 @@ app.include_router(dynamic.router, tags = ["Dynamic Data"])
 
 app.mount("/about", StaticFiles(directory = "static/about", html = True), name = "static")
 app.mount("/roadmap", StaticFiles(directory = "static/roadmap", html = True), name = "static")
+app.mount("/qrcode", StaticFiles(directory = "static/qrcode", html = True), name = "static")
 
 favicon_path = "static/favicon.jpg"
 @app.get('/favicon.ico', summary = "Favicon endpoint", tags = ["Images"],

@@ -1,48 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   <title>FastAPI Httpbin</title>
   <meta name="description" content="FastAPi Httpbin">
   <meta name="author" content="Douglas Muth">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-
-<style>
-/*
-h1 {
-	font-size: 3.6rem;
-}
-h2 {
-	font-size: 3.2rem;
-}
-ul {
-	padding-left: 10px;
-}
-ul ul, ul ol, ol ol, ol ul
-{
-	margin-top: 0;
-	margin-bottom: 0;
-	list-style-position: outside;
-	font-size: 100%;
-}
-li {
-	margin-bottom: .5rem;
-}
-body {
-	font-family: sans-serif;
-}
-*/
-
-</style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
 <meta property="og:title" content="FastAPI Httpbin">
 <meta property="og:site_name" content="FastAPI Httpbin">
@@ -62,11 +29,43 @@ body {
 </head>
 <body>
 
-<a href="https://github.com/dmuth/fastapi-httpbin"><img style="position: absolute; top: 0; right: 0; border: 0;" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_red_aa0000.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+  <!-- I got this sample from https://getbootstrap.com/docs/5.2/examples/navbars/ -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
 
+      <a class="navbar-brand" href="/">FastAPI Httpbin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-<br/>
-<br/>
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/roadmap/">Roadmap</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/qrcode/">QR Code Generator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/dmuth/fastapi-httpbin"
+                ><span class="bi bi-github"></span> Source Code</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/dmuth/fastapi-httpbin/issues"
+                ><span class="bi bi-chat-text"></span> Report an Issue</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<p><p/>
 
 <div class="container" >
 
@@ -112,7 +111,7 @@ Ensured that all values are now sanity checked
 All endpoints with mandatory parameters now have examples in the documentation in order to reduce friction for test usage.
 </li>
 <li>
-Fixed a few bugs found in the implementation of the `/cache` endpoints in Httpbin.
+Fixed a few bugs found in the implementation of the <tt>/cache</tt> endpoints in Httpbin.
 </li>
 <li>
 Several endpoints have the "GET" version only, as I did not see the point to supporting every possible HTTP verb--I felt that this just made the Swagger documentation unwieldly. (This is subject to change based on usage patters and demand)
@@ -184,6 +183,7 @@ or drop me an email: <b>doug.muth AT gmail DOT com</b>.
 
 </div><!-- /container -->
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
 </body>
 </html>

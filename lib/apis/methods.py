@@ -2,6 +2,8 @@
 # All requests
 #
 
+import json
+
 from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request
 
@@ -10,7 +12,10 @@ from . import PrettyJSONResponse
 
 router = APIRouter()
 
-import json
+data_default = {
+    "message": "No JSON/bad JSON supplied.  If you used Swagger, you'll need to use curl on the CLI with the -d option instead for non-GET methods, or GET-method data for GET."
+    }
+
 
 #
 # Our core function to return the same data for each request.
@@ -41,12 +46,12 @@ async def get(request: Request):
     response_class=PrettyJSONResponse)
 async def post(request: Request):
 
-    data = {}
+    data = data_default
 
     try:
         data = await request.json()
     except json.decoder.JSONDecodeError as e:
-        logger.warn(f"{__name__}:post(): Caught error deserializing JSON: {e}")
+        logger.warning(f"{__name__}:post(): Caught error deserializing JSON: {e}")
 
     retval = core(request)
     retval["data"] = data
@@ -57,12 +62,12 @@ async def post(request: Request):
     response_class=PrettyJSONResponse)
 async def put(request: Request):
 
-    data = {}
+    data = data_default
 
     try:
         data = await request.json()
     except json.decoder.JSONDecodeError as e:
-        logger.warn(f"{__name__}:put(): Caught error deserializing JSON: {e}")
+        logger.warning(f"{__name__}:put(): Caught error deserializing JSON: {e}")
 
     retval = core(request)
     retval["data"] = data
@@ -73,12 +78,12 @@ async def put(request: Request):
     response_class=PrettyJSONResponse)
 async def patch(request: Request):
 
-    data = {}
+    data = data_default
 
     try:
         data = await request.json()
     except json.decoder.JSONDecodeError as e:
-        logger.warn(f"{__name__}:patch(): Caught error deserializing JSON: {e}")
+        logger.warning(f"{__name__}:patch(): Caught error deserializing JSON: {e}")
 
     retval = core(request)
     retval["data"] = data
@@ -88,7 +93,9 @@ async def patch(request: Request):
 @router.delete("/delete", summary = "The request's DELETE parameters.",
     response_class=PrettyJSONResponse)
 async def delete(request: Request):
+    data = data_default
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 

@@ -2,12 +2,19 @@
 # All requests
 #
 
+import json
+
 from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request
 
+from . import logger
 from . import PrettyJSONResponse
 
 router = APIRouter()
+
+data_default = {
+    "message": "No JSON/bad JSON supplied.  If you used Swagger, you'll need to use curl on the CLI with the -d option instead for non-GET methods, or GET-method data for GET."
+    }
 
 
 #
@@ -32,13 +39,21 @@ def core(request: Request):
     response_class=PrettyJSONResponse)
 async def get(request: Request):
     retval = core(request)
+    retval["data"] = data_default
     return(retval)
 
 
 @router.post("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
 async def post(request: Request):
-    data = await request.json()
+
+    data = data_default
+
+    try:
+        data = await request.json()
+    except json.decoder.JSONDecodeError as e:
+        logger.warning(f"{__name__}:post(): Caught error deserializing JSON: {e}")
+
     retval = core(request)
     retval["data"] = data
     return(retval)
@@ -47,7 +62,14 @@ async def post(request: Request):
 @router.put("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
 async def put(request: Request):
-    data = await request.json()
+
+    data = data_default
+
+    try:
+        data = await request.json()
+    except json.decoder.JSONDecodeError as e:
+        logger.warning(f"{__name__}:put(): Caught error deserializing JSON: {e}")
+
     retval = core(request)
     retval["data"] = data
     return(retval)
@@ -56,7 +78,14 @@ async def put(request: Request):
 @router.patch("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
 async def patch(request: Request):
-    data = await request.json()
+
+    data = data_default
+
+    try:
+        data = await request.json()
+    except json.decoder.JSONDecodeError as e:
+        logger.warning(f"{__name__}:patch(): Caught error deserializing JSON: {e}")
+
     retval = core(request)
     retval["data"] = data
     return(retval)
@@ -65,7 +94,15 @@ async def patch(request: Request):
 @router.delete("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
 async def delete(request: Request):
+
+    data = data_default
+    try:
+        data = await request.json()
+    except json.decoder.JSONDecodeError as e:
+        logger.warning(f"{__name__}:delete(): Caught error deserializing JSON: {e}")
+
     retval = core(request)
+    retval["data"] = data
     return(retval)
 
 

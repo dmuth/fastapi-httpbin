@@ -97,12 +97,9 @@ Just QR Codes when you want them.
 
 <form method="post" id="form1" action="/qrcode/form" novalidate>
   <div class="mb-3">
-    <label for="url" class="form-label">URL</label>
+    <label for="url" class="form-label">URL:</label>
     <input type="text" class="form-control" name="url" id="url" aria-describedby="urlHelp"
         value="https://www.youtube.com/watch?v=nCEemcXzERk" required>
-    <div class="valid-feedback">
-    Looks good!
-    </div>
     <div class="invalid-feedback">
     URL is required and cannot be over 1,000 characters.
     </div>
@@ -110,7 +107,7 @@ Just QR Codes when you want them.
   </div>
 
   <div class="mb-3">
-    <label for="box_size" class="form-label">Box Size</label><br/>
+    <label for="box_size" class="form-label">Box Size:</label><br/>
     <input type="range" name="box_size" id="box_size" class="range" aria-describedby="box_sizeHelp"
             value="10" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
     <output class="output">10</output>
@@ -118,7 +115,7 @@ Just QR Codes when you want them.
   </div>
 
   <div class="mb-3">
-    <label for="border" class="form-label">Border</label><br/>
+    <label for="border" class="form-label">Border:</label><br/>
     <input type="range" name="border" id="border" class="range" aria-describedby="borderHelp"
             value="2" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
     <output class="output">2</output>
@@ -158,11 +155,11 @@ Your QR code is below.  If you are on a desktop or laptop, right click and choos
 <p>
 I use QR codes regularly and was frustrated by the number of websites with
 QR Code generators that are full of ads, tracking, tiny images, or a requirement that you sign up.  
-QR Codes are fantastically useful and it should be free to generate them.
+QR Codes are fantastically useful and generating them should be free.
 </p>
 
 <p>
-And that's why I built this.  So every person can have QR codes 24/7.  QR codes for days.  QR codes for 100 years.
+That's why I built this.  So every person can have QR codes 24/7.  QR codes for days.  QR codes for 100 years.
 <p/>
 
 <h2>FAQ: Where can I learn more about this or who wrote this?</h2>

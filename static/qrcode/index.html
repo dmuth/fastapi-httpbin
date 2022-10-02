@@ -93,7 +93,7 @@ Just QR Codes when you want them.
 <p/>
 
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-8">
 
 <form method="post" id="form1" action="/qrcode/form" novalidate>
   <div class="mb-3">
@@ -130,19 +130,26 @@ Just QR Codes when you want them.
 </div><!-- /row -->
 
 <div class="row mt-3">
-<div class="col-md-6" id="result">
+<div class="col-md-8" id="result">
 
 <div id="result_text" class="mt-2 mb-2">
 The Generated QR Code will go here.
 </div>
 
-<div id="result_qr_code_text" style="display: none; " class="mt-2">
+<div id="result_qr_code_text" style="display: none; " class="mt-2 alert alert-primary">
 <p>
 Your QR code is below.  If you are on a desktop or laptop, right click and choose "copy" or "save as".  If you are on mobile, try holding down on the image and choose "copy" or "save".
 </p>
 
+<div class="text-center">
 <img id="result_qr_code" />
 </div>
+
+</div>
+
+<div id="result_error" style="display: none;" class="alert alert-danger" role="alert">
+</div>
+
 
 </div><!-- /col -->
 </div><!-- /row -->
@@ -187,7 +194,6 @@ If you just want to show support, please consider
 
 </p>
 
-
 </div><!-- /col -->
 </div><!-- /row -->
 
@@ -207,9 +213,10 @@ If you just want to show support, please consider
     let result_text = document.getElementById("result_text");
     let result_qr_code_text = document.getElementById("result_qr_code_text");
     let result_qr_code = document.getElementById("result_qr_code");
+    let result_error = document.getElementById("result_error");
 
 
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", async function(event) {
 
         let url_value = url.value;
         let url_length = url_value.length;
@@ -252,31 +259,33 @@ If you just want to show support, please consider
         //console.log("REQUEST", request); // Debugging
 
         //
-        // Hit our API, and display an image if we get one, or an error othereise.
+        // Hit our API, and display an image if we get one, or an error otherwise.
+        // Shoutout to Geferon for pointing me in the direction of async/await. :-)
         //
-        fetch(request)
-            .then(function(response) {
-                if (!response.ok) {
-                    return(Promise.reject(
-                        `fetch() from '${action}' returned status ${response.status}`))
-                }
-                return(response.blob());
+        try {
+            let response = await fetch(request);
 
-            }).then(function(blob) {
-                let url = URL.createObjectURL(blob);
-                result_qr_code.src = url;
-                result_text.style.display = "none";
-                result_qr_code_text.style.display = "block";
-                return(blob.text());
+            if (!response.ok) {
+                let text = await response.text();
+                throw new Error(`fetch() from '${action}' returned status ${response.status}: ${text}`)
+            }
 
-            }).then(function(text) {
-                //console.log(text); // Debugging
-                //result.innerHTML = `<pre>${text}</pre>`; // Debugging
+            let blob = await response.blob();
+            let url = URL.createObjectURL(blob);
+            result_qr_code.src = url;
+            result_text.style.display = "none";
+            result_error.style.display = "none";
+            result_qr_code_text.style.display = "block";
 
-            }).catch(function(error) {
-                result.innerHTML = `CAUGHT ERROR: ${error}`;
+            //let text = blob.text(); // Debugging
+            //console.log(text); // Debugging
+            //result.innerHTML = `<pre>${text}</pre>`; // Debugging
 
-            });
+        } catch (error) {
+            result_error.innerHTML = `CAUGHT ERROR: ${error}`;
+            result_error.style.display = "block";
+
+        }
 
 
     });

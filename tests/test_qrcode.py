@@ -28,13 +28,9 @@ def test_qrcode_post():
 
 
 def test_qrcode_get():
-    response = client.get("/qrcode")
-    #
-    # Not really sure what's going on here, because the 302 redirect happens
-    # correctly when I use curl.  I suspect it's something with the testing 
-    # code that's off, but I can't figure out what.
-    #
-    assert response.status_code == 200
+    response = client.get("/qrcode", allow_redirects = False)
+    assert response.status_code == 302
+    assert response.headers["location"] == "/qrcode/"
 
 
 def test_qrcode_form():

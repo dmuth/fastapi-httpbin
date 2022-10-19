@@ -14,8 +14,12 @@ import qrcode
 
 router = APIRouter()
 
+@router.get("/form", include_in_schema = False)
+async def get_form():
+    return RedirectResponse(f"/test-password-manager-form", status_code = 302)
 
-@router.post("/form/post", summary = "Process a sample login",
+
+@router.post("/test-password-manager-form/post", summary = "Process a sample login",
     responses={
         200: {
             "description": "Valid credentials were supplied. (username: dmuth, password: password)",
@@ -26,7 +30,7 @@ router = APIRouter()
     },
     response_class=Response
     )
-async def qrcode_post_form(username: str = Form(),
+async def test_password_manager_form(username: str = Form(),
     password: str = Form()):
 
     retval = {}

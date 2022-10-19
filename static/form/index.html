@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test Password Managers like 1Password, LastPass, and BitWarden here!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+<meta property="og:title" content="Test Password Managers like 1Password, LastPass, and BitWarden here!">
+<meta property="og:site_name" content="Test Password Managers like 1Password, LastPass, and BitWarden here!">
+<meta property="og:url" content="http://httpbin.dmuth.org/form/">
+<meta property="og:description" content="Need a sample form to test the auto-fill capabilities of a password manager?  Look no further.">
+<meta property="og:type" content="article">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@dmuth">
+<meta name="twitter:title" content="Test Password Managers like 1Password, LastPass, and BitWarden here!">
+<meta name="twitter:description" content="Need a sample form to test the auto-fill capabilities of a password manager?  Look no further.">
+
+    <style>
+
+    </style>
+
+  </head>
+  <body>
+
+  <!-- I got this sample from https://getbootstrap.com/docs/5.2/examples/navbars/ -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+
+      <a class="navbar-brand" href="/">FastAPI Httpbin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/roadmap/">Roadmap</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/qrcode/">QR Code Generator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/form/">Form for testing Password Managers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/dmuth/fastapi-httpbin"
+                ><span class="bi bi-github"></span> Source Code</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/dmuth/fastapi-httpbin/issues"
+                ><span class="bi bi-chat-text"></span> Report an Issue</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<div class="container">
+
+<div class="row">
+<div class="col-md-12">
+
+<p/>
+
+<h1>Test Password Managers like 1Password, LastPass, and BitWarden here!</h1>
+
+<p><p/>
+
+What the title says.  Enter a username and password below, and if they are correct, an HTTP 200
+will be returned.  Otherwise, an HTTP 401 will be returned.
+
+</div><!-- /col -->
+</div><!-- /row -->
+<p/>
+
+<div class="row">
+<div class="col-md-4">
+
+<form method="post" id="form1" action="/form/post" novalidate>
+
+  <div class="mb-3">
+    <label for="username" class="form-label">Username:</label>
+    <input type="text" class="form-control" name="username" id="username" aria-describedby="usernameHelp"
+        value="dmuth" required>
+    <div id="usernameHelp" class="form-text">Username.  Enter "dmuth" for an HTTP 200 result, anything else will return an HTTP 401.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password" class="form-label">Password:</label>
+    <input type="password" class="form-control" name="password" id="password" aria-describedby="passwordHelp"
+        value="password" required>
+    <div id="passHelp" class="form-text">Password.  Enter "pass" for an HTTP 200 result, anything else will return an HTTP 401.</div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit Form!</button>
+
+</form>
+
+</div><!-- /col -->
+</div><!-- /row -->
+
+<div class="row mt-3">
+<div class="col-md-10" id="faq">
+
+<h2>FAQ: Why did you write this?</h2>
+
+<p>
+I recently switched password managers, and wanted to test out the autofill capabilities, but
+didn't want to keep logging into Twitter in an Incognito window over and over (and over and over).
+</p>
+
+<p>
+So I built this--a standin for a login form that I can use to test out password managers.
+</p>
+
+<h2>FAQ: Do you have any other thoughts on security?</h2>
+
+<p>
+Oh I got lots and lots of thoughts, seeing that this a space I work in professionally.  Please <a href="https://www.dmuth.org/staying-safe-online-a-guide-for-everyone/">visit my guide on cybersecurity</a> for more on that topic.
+</p>
+
+
+<h2>FAQ: How can I help?</h2>
+
+<p>
+If you wish to support my efforts financially, please consider 
+<a href="https://github.com/sponsors/dmuth">sponsoring me on GitHub</a>.  Monthly tiers start as low as $1!
+</p>
+
+</div><!-- /col -->
+</div><!-- /row -->
+
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script>
+(function () {
+  'use strict'
+
+    //form.addEventListener("submit", async function(event) {
+    //});
+
+
+})()
+</script>
+
+
+  </body>
+</html>

@@ -45,6 +45,10 @@ tags_metadata = [
         "name": "Images",
         "description": "Return different image formats."
     },
+    {
+        "name": "Forms",
+        "description": "Endpoints for testing out forms."
+    },
     ]
 
 
@@ -56,7 +60,8 @@ this is heavily based on the original <a href="https://httpbin.org/">Httpbin</a>
 
 <a href="/about">About this project</a> - 
 <a href="/roadmap">Development Roadmap</a> -
-<a href="/qrcode/">Dead Simple QR Code Generator</a>
+<a href="/qrcode/">Dead Simple QR Code Generator</a> -
+<a href="/form/">Form for testing Password Managers like 1Password, LastPass, and BitWarden</a>
 <p>
 
 <a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>

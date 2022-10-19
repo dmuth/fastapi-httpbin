@@ -19,13 +19,14 @@ from lib.apis import cookies
 from lib.apis import images
 from lib.apis import dynamic
 from lib.apis import qrcode
+from lib.apis import form
 
 from lib.fastapi import tags_metadata, description
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.22",
+    version = "0.0.23",
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
@@ -45,10 +46,13 @@ app.include_router(anything.router, tags = ["Anything"])
 app.include_router(cookies.router, tags = ["Cookies"])
 app.include_router(images.router, tags = ["Images"])
 app.include_router(dynamic.router, tags = ["Dynamic Data"])
+app.include_router(form.router, tags = ["Forms"])
+
 
 app.mount("/about", StaticFiles(directory = "static/about", html = True), name = "static")
 app.mount("/roadmap", StaticFiles(directory = "static/roadmap", html = True), name = "static")
 app.mount("/qrcode", StaticFiles(directory = "static/qrcode", html = True), name = "static")
+app.mount("/form", StaticFiles(directory = "static/form", html = True), name = "static")
 
 favicon_path = "static/favicon.jpg"
 @app.get('/favicon.ico', summary = "Favicon endpoint", tags = ["Images"],

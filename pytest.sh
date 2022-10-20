@@ -17,5 +17,16 @@ echo "# "
 echo "# $0 -k PATTERN"
 echo "# "
 
-python3 -m pytest -s $@
+#
+# The reason we're checking for an argument here is because if we don't,
+# Pytest will "helpfully" scan for all files starting with "test_", which will
+# include file in lib/, which is obviously not a test.
+#
+TESTS=""
+if ! test "$@"
+then
+    TESTS="./tests"
+fi
+
+python3 -m pytest -s ${TESTS} $@
 

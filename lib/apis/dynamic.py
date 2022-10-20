@@ -5,6 +5,7 @@
 import json
 from uuid import uuid4
 from time import sleep
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
 from fastapi import FastAPI, Header, Request, Query, Path
@@ -21,6 +22,7 @@ async def uuid(request: Request):
     retval = {}
     retval["uuid"] = uuid4()
     retval["message"] = "Do NOT use this endpoint as a source of randomness.  Please consider random.org instead."
+    retval["timestamp"] = datetime.now(timezone.utc).isoformat()
     return(retval)
 
 

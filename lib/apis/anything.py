@@ -40,6 +40,7 @@ def core(request: Request):
 async def get(request: Request):
     retval = core(request)
     retval["data"] = data_default
+    retval["verb"] = "GET"
     return(retval)
 
 
@@ -56,6 +57,7 @@ async def post(request: Request):
 
     retval = core(request)
     retval["data"] = data
+    retval["verb"] = "POST"
     return(retval)
 
 
@@ -72,6 +74,7 @@ async def put(request: Request):
 
     retval = core(request)
     retval["data"] = data
+    retval["verb"] = "PUT"
     return(retval)
 
 
@@ -88,6 +91,7 @@ async def patch(request: Request):
 
     retval = core(request)
     retval["data"] = data
+    retval["verb"] = "PATCH"
     return(retval)
 
 
@@ -103,6 +107,7 @@ async def delete(request: Request):
 
     retval = core(request)
     retval["data"] = data
+    retval["verb"] = "DELETE"
     return(retval)
 
 

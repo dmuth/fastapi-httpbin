@@ -102,7 +102,7 @@ Just QR Codes when you want them.
   <div class="mb-3">
     <label for="url" class="form-label">URL:</label>
     <input type="text" class="form-control" name="url" id="url" aria-describedby="urlHelp"
-        value="https://www.youtube.com/watch?v=nCEemcXzERk" required>
+        value="https://www.youtube.com/watch?v=nCEemcXzERk&t=2390" required>
     <div class="invalid-feedback">
     URL is required and cannot be over 1,000 characters.
     </div>
@@ -126,6 +126,8 @@ Just QR Codes when you want them.
   </div>
 
   <button type="submit" class="btn btn-primary">Generate QR Code</button>
+  <a class="btn btn-primary bi-download" role="button" id="download" style="display: none; "
+    > Download QR Code</a>
 
 </form>
 
@@ -135,7 +137,7 @@ Just QR Codes when you want them.
 <div class="row mt-3">
 <div class="col-md-8" id="result">
 
-<div id="result_text" class="mt-2 mb-2">
+<div id="result_text" class="mt-2 mb-2 alert alert-primary">
 The Generated QR Code will go here.
 </div>
 
@@ -204,7 +206,82 @@ If you just want to show support, please consider
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <script>
-(function () {
+
+//
+// Fade in an element
+//
+async function fadeIn(e) {
+
+    let ms = 25;
+    let opacity_step = 0.05;
+
+    //
+    // Make the element be transparent and visible
+    //
+    e.style.opacity = 0;
+    e.style.display = "block";
+
+    let opacity = 0;
+
+    return new Promise( (resolve) => {
+
+        let interval = setInterval(async () =>  {
+
+            if (e.style.opacity < 1) {
+                opacity += opacity_step;
+                e.style.opacity = opacity;
+
+            } else {
+                resolve();
+                clearInterval(interval);
+
+            }
+
+        }, ms);
+
+    });
+
+} // End of fadeIn()
+
+
+//
+// Fade out an element.
+//
+async function fadeOut(e) {
+
+    let ms = 25;
+    let opacity_step = 0.05;
+
+    //
+    // Make the element be transparent
+    // Do NOT make it visible, beacuse if we previously had an error,
+    // this element was not visible, and we therefore don't want to make it
+    // visible when it wasn't already visible.
+    //
+    e.style.opacity = 1;
+
+    let opacity = 1;
+
+    return new Promise( (resolve) => {
+
+        let interval = setInterval(async () =>  {
+
+        if (e.style.opacity > 0) {
+            opacity -= opacity_step;
+            e.style.opacity = opacity;
+
+        } else {
+            resolve();
+            clearInterval(interval);
+
+        }
+
+        }, ms);
+
+    });
+}
+
+(async function () {
   'use strict'
 
     let form = document.getElementById("form1");
@@ -217,7 +294,9 @@ If you just want to show support, please consider
     let result_qr_code_text = document.getElementById("result_qr_code_text");
     let result_qr_code = document.getElementById("result_qr_code");
     let result_error = document.getElementById("result_error");
+    let download = document.getElementById("download");
 
+    let beenhere = 0;
 
     form.addEventListener("submit", async function(event) {
 
@@ -268,23 +347,56 @@ If you just want to show support, please consider
         try {
             let response = await fetch(request);
 
+            //
+            // Scroll to the top of the form so that our QR code is more 
+            // likely to be visible on mobile devices.
+            //
+            form1.scrollIntoView();
+
+            //
+            // If we have previously generated a QR code, fade it out.
+            //
+            if (beenhere) {
+                await fadeOut(result_qr_code_text);
+            }
+
             if (!response.ok) {
                 let text = await response.text();
                 throw new Error(`fetch() from '${action}' returned status ${response.status}: ${text}`)
             }
 
+            //
+            // Get our response and turn it into a URL which gets embedded into the field.
+            //
             let blob = await response.blob();
-            let url = URL.createObjectURL(blob);
-            result_qr_code.src = url;
+            let url_qr_code = URL.createObjectURL(blob);
+            result_qr_code.src = url_qr_code;
             result_text.style.display = "none";
             result_error.style.display = "none";
-            result_qr_code_text.style.display = "block";
+
+            //
+            // Assign the QR code to our download button
+            //
+            download.href = url_qr_code;
+            download.download = "qr-code.png";
+            download.style.display = "inline-block";
+
+            //
+            // Fade in the QR code.
+            //
+            await fadeIn(result_qr_code_text);
 
             //let text = blob.text(); // Debugging
             //console.log(text); // Debugging
             //result.innerHTML = `<pre>${text}</pre>`; // Debugging
 
+            beenhere = 1;
+
         } catch (error) {
+            result_qr_code_text.style.display = "none";
+            result_text.style.display = "none";
+            download.style.display = "none";
+
             result_error.innerHTML = `CAUGHT ERROR: ${error}`;
             result_error.style.display = "block";
 

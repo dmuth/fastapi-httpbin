@@ -74,10 +74,14 @@
 
 <h1>Test Password Managers like 1Password, LastPass, and BitWarden here!</h1>
 
-<p><p/>
+<p>
+What the title says.  Enter a username and password below, click submit, and if they are correct, an HTTP 200
+will be returned.  Otherwise, an HTTP 401 will be returned.  If your password manager is configured correctly, it will prompt you to save the username and password that were entered.
+<p/>
 
-What the title says.  Enter a username and password below, and if they are correct, an HTTP 200
-will be returned.  Otherwise, an HTTP 401 will be returned.
+And for the love of god, DO NOT submit actual usernames or passwords in this form!  
+<a href="https://github.com/dmuth/fastapi-httpbin/blob/main/lib/apis/test_password_manager.py#L22">Even though no data is saved</a>, entering an actual password anywhere other than where it belongs is SUCH a bad idea. Don't do it.
+
 
 </div><!-- /col -->
 </div><!-- /row -->

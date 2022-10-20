@@ -15,11 +15,13 @@ def test_anything_get():
     response = client.get("/anything")
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["verb"] == "GET"
 
     response = client.get("/anything?test=test2")
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"
     assert response.json()["args"]["test"] == "test2"
+    assert response.json()["verb"] == "GET"
 
 
 def test_anything_post():
@@ -30,6 +32,7 @@ def test_anything_post():
     assert response.status_code == 200
     data = json.loads(response.json()["data"])
     assert data["cheetah"] == "chirp"
+    assert response.json()["verb"] == "POST"
 
     data = [ data ]
 
@@ -37,6 +40,7 @@ def test_anything_post():
     assert response.status_code == 200
     data = json.loads(response.json()["data"])
     assert data[0]["cheetah"] == "chirp"
+    assert response.json()["verb"] == "POST"
 
 
 def test_anything_put():
@@ -46,6 +50,7 @@ def test_anything_put():
     assert response.status_code == 200
     data = json.loads(response.json()["data"])
     assert data["cheetah"] == "chirp"
+    assert response.json()["verb"] == "PUT"
 
     data = [ data ]
 
@@ -53,6 +58,7 @@ def test_anything_put():
     assert response.status_code == 200
     data = json.loads(response.json()["data"])
     assert data[0]["cheetah"] == "chirp"
+    assert response.json()["verb"] == "PUT"
 
 
 def test_anything_patch():
@@ -62,6 +68,7 @@ def test_anything_patch():
     assert response.status_code == 200
     data = json.loads(response.json()["data"])
     assert data["cheetah"] == "chirp"
+    assert response.json()["verb"] == "PATCH"
 
     data = [ data ]
 
@@ -69,6 +76,7 @@ def test_anything_patch():
     assert response.status_code == 200
     data = json.loads(response.json()["data"])
     assert data[0]["cheetah"] == "chirp"
+    assert response.json()["verb"] == "PATCH"
 
 
 def test_anything_delete():
@@ -76,6 +84,7 @@ def test_anything_delete():
     response = client.delete("/anything")
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["verb"] == "DELETE"
 
 
 

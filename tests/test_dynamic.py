@@ -16,6 +16,8 @@ def test_uuid():
     assert "uuid" in response.json()
     assert "-4" in response.json()["uuid"]
     assert "random.org" in response.json()["message"]
+    assert "T" in response.json()["timestamp"]
+    assert "+00:00" in response.json()["timestamp"]
 
 
 def test_delay():

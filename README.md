@@ -10,9 +10,6 @@ Play with it in production at [https://httpbin.dmuth.org/](https://httpbin.dmuth
 - [Dead Simple QR Code Generator](https://httpbin.dmuth.org/qrcode/)
 - [Test Password Managers like 1Password, LastPass, and BitWarden here](https://httpbin.dmuth.org/test-password-manager-form/)
 
-
-[![Fly Deploy](https://github.com/dmuth/fastapi-httpbin/actions/workflows/main.yml/badge.svg)](https://github.com/dmuth/fastapi-httpbin/actions/workflows/main.yml)
-
 ## Differences between this app and Httpbin
 
 - 100% unit test coverage of all endpoints.

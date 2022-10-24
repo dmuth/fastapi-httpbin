@@ -34,7 +34,11 @@ are automatically reloaded:
   - `./pytest.sh` - Run all unit tests
 - Or, in Docker if you'd prefer:
   - `./bin/docker-build.sh` - Build the Docker container
-  - `./bin/docker-dev.sh` - Start the Docker container and spawn a bash shell so that scripts can be run
+  - `./bin/docker-dev.sh` - Start the Docker container and spawn a bash shell so that scripts can be run from inside the container
+
+## Deployment
+
+- Run the script `./bin/deploy.sh`.  This will run `fly deploy` to deploy the latest code on Fly.io, and `docker-build` followed by `docker-push` to push the latest Docker image to Docker Hub.
 
 
 ## In production

@@ -120,8 +120,8 @@ Just QR Codes when you want them.
   <div class="mb-3">
     <label for="border" class="form-label">Border:</label><br/>
     <input type="range" name="border" id="border" class="range" aria-describedby="borderHelp"
-            value="2" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
-    <output class="output">2</output>
+            value="4" min="4" max="20" oninput="this.nextElementSibling.value = this.value">
+    <output class="output">4</output>
     <div id="borderHelp" class="form-text">How much space around the QR code? (Max: 20)</div>
   </div>
 
@@ -181,6 +181,25 @@ That's why I built this.  So every person can have QR codes 24/7.  QR codes for 
 <p>
 I have no plans to implmement that at this time, if ever.  If you want to track scans of QR codes
 you create, my recommendation would be to use a service like <a href="https://bitly.com/">Bitly</a> to create short URLs, and feed those URLs into this QR Code creator.  (Bitly allows visits to URLs created with it to be tracked.)
+</p>
+
+
+<h2>FAQ: Can I get random QR Codes?</h2>
+
+<p>
+Yes, you can!  Just head over to <a href="/uuid/qrcode">the /uuid/qrcode endpoint</a> and you'll get a random QR Code that contains <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">a Type 4 UUID</a>.  Refresh that page if you'd like a different random value.
+</p>
+
+
+<h2>FAQ: Why is the minimum border 4?</h2>
+
+<p>
+According to the page for <a href="https://github.com/lincolnloop/python-qrcode">the QR Code generation library I am using</a>, 4 is the minimum according to the QR Code spec.
+</p>
+
+<p>
+While a smaller border MAY work, I do not recommend this.  I personally experienced problems
+<a href="https://github.com/dmuth/fastapi-httpbin/blob/main/tests/test_dynamic.py">parsing QR Codes in my unit tests</a> when I used a smaller border.
 </p>
 
 

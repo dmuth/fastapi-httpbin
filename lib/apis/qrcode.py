@@ -27,8 +27,12 @@ def get_qr_code(url, box_size, border):
         retval = {"type": "value_error.int.min_size", "message": f"Box_size {box_size} is < 0"}
         raise HTTPException(status_code = 422, detail = retval)
 
-    elif border < 0:
-        retval = {"type": "value_error.int.min_size", "message": f"Border {border} is < 0"}
+    elif border < 4:
+        #
+        # According to https://github.com/lincolnloop/python-qrcode, the minimum border is 4
+        # according to the QR Code spec.
+        #
+        retval = {"type": "value_error.int.min_size", "message": f"Border {border} is < 4"}
         raise HTTPException(status_code = 422, detail = retval)
 
     elif box_size > 20:

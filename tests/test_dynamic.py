@@ -1,11 +1,14 @@
 
+
 import json
 from unittest.mock import AsyncMock
+from uuid import UUID
 
 from fastapi.testclient import TestClient
 
-
 from main import app
+
+from . import decode_qrcode
 
 client = TestClient(app)
 
@@ -15,9 +18,39 @@ def test_uuid():
     assert response.status_code == 200
     assert "uuid" in response.json()
     assert "-4" in response.json()["uuid"]
-    assert "random.org" in response.json()["message"]
+    assert "random.org" in response.json()["messages"][0]
     assert "T" in response.json()["timestamp"]
     assert "+00:00" in response.json()["timestamp"]
+
+
+def test_uuid_qrcode():
+
+    uuid = "c42eec28-617c-4333-bf63-9c2b43bbf8d3"
+
+    response = client.get("/uuid/qrcode")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/png"
+    response_body = b""
+    for chunk in response.iter_content():
+        response_body += chunk
+    uuid_decoded = decode_qrcode(response_body)
+    try:
+        UUID(uuid_decoded)
+    except ValueError as e:
+        assert False, f"Decoded value of {uuid_decoded} is not a valid UUID!"
+
+    response = client.get(f"/uuid/qrcode/{uuid}")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/png"
+    response_body = b""
+    for chunk in response.iter_content():
+        response_body += chunk
+    uuid_decoded = decode_qrcode(response_body)
+    assert uuid_decoded == uuid
+
+    response = client.get(f"/uuid/qrcode/testing")
+    assert response.status_code == 422
+    assert response.json()["detail"]["type"] == "value_error.str.validation"
 
 
 def test_delay():

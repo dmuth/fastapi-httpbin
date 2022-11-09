@@ -2,28 +2,95 @@
 # Dynamic data.
 #
 
+from io import BytesIO
 import json
-from uuid import uuid4
+from uuid import uuid4, UUID
 from time import sleep
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
-from fastapi import FastAPI, Header, Request, Query, Path
+from fastapi import FastAPI, Header, Request, Query, Path, Response
 from fastapi.responses import StreamingResponse
+
+import qrcode
 
 from . import PrettyJSONResponse
 
 router = APIRouter()
 
 
+#
+# Worker function to generate our QR Code.
+#
+def get_qr_code(uuid):
+
+    qr = qrcode.QRCode(version = 1, box_size = 10, border = 4)
+    qr.add_data(uuid)
+    qr.make()
+    img = qr.make_image(fill_color = 'black', back_color = 'white')
+
+    #
+    # And put it into a buffer that we'll return
+    #
+    bytes = BytesIO()
+    img.save(bytes, format = "png")
+    retval = bytes.getvalue()
+
+    return(retval)
+
+
 @router.get("/uuid", summary = "Return a type 4 UUID.",
     response_class=PrettyJSONResponse)
 async def uuid(request: Request):
+
+    url = request.url._url
+    uuid = uuid4()
+
     retval = {}
-    retval["uuid"] = uuid4()
-    retval["message"] = "Do NOT use this endpoint as a source of randomness.  Please consider random.org instead."
+    retval["uuid"] = uuid
+    retval["messages"] = [
+        "Do NOT use this endpoint as a source of randomness.  Please consider random.org instead.",
+        f"If you'd like a random QR code instead, try {url}/qrcode",
+        f"If you'd like *this* UUID as a QR code, try {url}/qrcode/{uuid}",
+        ]
     retval["timestamp"] = datetime.now(timezone.utc).isoformat()
     return(retval)
+
+
+@router.get("/uuid/qrcode", summary = "Return a QR code of a type 4 UUID.",
+    responses={
+        200: {
+            "content": {"image/png": {}},
+            "description": "Return a QR Code in PNG format.",
+        }
+    },
+    response_class=Response)
+async def uuid_qrcode():
+    uuid = uuid4()
+    qrcode = get_qr_code(uuid)
+    return Response(content = qrcode, media_type="image/png")
+
+
+@router.get("/uuid/qrcode/{uuid}", summary = "Return a QR code of a *specified* type 4 UUID.",
+    responses={
+        200: {
+            "content": {"image/png": {}},
+            "description": "Return a QR Code in PNG format.",
+        }
+    },
+    response_class=Response)
+async def uuid_qrcode_qrcode(uuid: str):
+
+    try:
+        UUID(uuid)
+
+    except ValueError as e:
+        retval = {"type": "value_error.str.validation", 
+            "message": f"Value '{uuid}' must be a type 4 UUID in the format of 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx' where x is any hexidecimal digit and y is in the set (8, 9, a, b)"}
+        raise HTTPException(status_code = 422, detail = retval)
+
+    qrcode = get_qr_code(uuid)
+    return Response(content = qrcode, media_type="image/png")
 
 
 @router.get("/delay/{seconds}", summary = "Return a delayed response (max of 10 seconds).",

@@ -1,5 +1,4 @@
 
-import hashlib
 import json
 
 from fastapi.testclient import TestClient
@@ -8,23 +7,33 @@ from unittest.mock import AsyncMock
 
 from main import app
 
+from . import decode_qrcode
+
 client = TestClient(app)
 
 
 def test_qrcode_post():
 
+    url = "https://www.youtube.com/watch?v=nCEemcXzERk"
+
     response = client.post("/qrcode/json")
     assert response.status_code == 422
 
-    data = {"url": "https://www.youtube.com/watch?v=nCEemcXzERk", "box_size": 10, "border": 2}
+    data = {"url": url, "box_size": 10, "border": 4}
     response = client.post("/qrcode/json", json = data)
     assert response.status_code == 200
     assert response.headers["content-type"] == "image/png"
     response_body = b""
     for chunk in response.iter_content():
         response_body += chunk
-    hash = hashlib.sha1(response_body).hexdigest()
-    assert hash == "b7f494872858b727905fadc1137a8b3dea596ad9"
+
+    uuid_decoded = decode_qrcode(response_body)
+    assert uuid_decoded == url
+
+    data = {"url": url, "box_size": 10, "border": 2}
+    response = client.post("/qrcode/json", json = data)
+    assert response.status_code == 422
+    assert response.json()["detail"]["type"] == "value_error.int.min_size"
 
 
 def test_qrcode_get():
@@ -34,16 +43,24 @@ def test_qrcode_get():
 
 
 def test_qrcode_form():
-    data = {"url": "https://www.youtube.com/watch?v=nCEemcXzERk", "box_size": 10, "border": 2}
+
+    url = "https://www.youtube.com/watch?v=nCEemcXzERk"
+
+    data = {"url": url, "box_size": 10, "border": 4}
     response = client.post("/qrcode/form", data = data)
     assert response.status_code == 200
     assert response.headers["content-type"] == "image/png"
     response_body = b""
     for chunk in response.iter_content():
         response_body += chunk
-    hash = hashlib.sha1(response_body).hexdigest()
-    assert hash == "b7f494872858b727905fadc1137a8b3dea596ad9"
-   
+
+    uuid_decoded = decode_qrcode(response_body)
+    assert uuid_decoded == url
+
+    data = {"url": url, "box_size": 10, "border": 2}
+    response = client.post("/qrcode/form", data = data)
+    assert response.status_code == 422
+    assert response.json()["detail"]["type"] == "value_error.int.min_size"
 
 def test_qr():
     response = client.post("/qr")

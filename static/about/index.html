@@ -102,7 +102,7 @@ I also noticed that the original Httpbin appears to no longer be maintained, wit
 
 <ul>
 <li>
-100% unit test coverage of all endpoints.
+Unit tests for every endpoint.
 </li>
 <li>
 Ensured that documentation 100% matches the responses returned.
@@ -122,6 +122,56 @@ Several endpoints have the "GET" version only, as I did not see the point to sup
 
 </ul>
 
+
+<h2>I'm new to this site.  What are some good endpoints to start testing?</h2>
+
+<p>
+Here are a few endpoints worth playing around with:
+
+<ul>
+<li>
+<a href="/headers">/headers</a> - Return HTTP request headers that were sent
+</li>
+<li>
+<a href="/response-headers?headers=x-animal%3Acheetah&headers=x-animal-sound%3A%20chirp">/response-headers</a> - Return arbitrary HTTP headers
+</li>
+<li>
+<a href="/uuid">/uuid</a> - Return a UUID
+</li>
+<li>
+<a href="/delay/7">/delay/7</a> - Return a response after 7 seconds (useful for testing timeouts)
+</li>
+<li>
+<a href="/status/200%2C403%2C502">/status/200%2C403%2C502</a> - Return a status randomly chosen between 200, 403, and 502. Useful for testing flapping endpoints.
+</li>
+<li>
+<a href="/redirect/3">/redirect/3</a> - Return 3 HTTP 302 redirects before reaching the final page
+</li>
+<li>
+<a href="/images/png">/images/png</a> - Return an image in PNG format
+</li>
+</ul>
+</p>
+
+
+<h2>How can I test these endpoints?</h2>
+
+<p>
+Many of them you can test right in the web browser in the Swagger documentation on the <a href="/">front page</a> of this site.  But for some of them, you'll need more advanced tools.  Here are a couple that I can recommend:
+
+<ul>
+<li>
+<a href="https://curl.se/">Curl</a> - cUrl is the premier command-line tool for making HTTP requests.
+</li>
+<li>
+<a href="https://requests.readthedocs.io/en/latest/">Python 3 Requests module</a> - This can be used to programatically make requests from Python apps.
+</li>
+<li>
+<a href="https://nodeping.com/">NodePing</a> - Used for monitoring websites, a good way to learn the platform would be to create monitors for one or more endpoints on this site.
+</li>
+</ul>
+
+</p>
 
 <h2>What Comes Next?</h2>
 

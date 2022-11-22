@@ -99,6 +99,11 @@ async def delay(request: Request,
     debug: bool | None = None, 
     seconds: int = Path(example = 3)):
 
+    retval = {}
+    retval["timestamps"] = {}
+    retval["timestamps"]["start"] = datetime.now(timezone.utc).isoformat()
+    
+
     if seconds < 0:
         retval = {"type": "value_error.int.min_size", "message": f"Value {seconds} is < 0"}
         raise HTTPException(status_code = 422, detail = retval)
@@ -110,8 +115,8 @@ async def delay(request: Request,
     if not debug:
         sleep(seconds)
 
-    retval = {}
     retval["message"] = f"Slept for {seconds} seconds before returning!"
+    retval["timestamps"]["end"] = datetime.now(timezone.utc).isoformat()
 
     if debug:
         retval["debug"] = "(Debug mode was on, so no actual sleeping happened.)"

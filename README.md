@@ -29,7 +29,7 @@ are automatically reloaded:
 
 - Directly
   - `pip install -r ./requirements.txt`
-  - `./bin/dev.sh` - Run server in dev mode, so that changes to the Python scripts cause them to be reloaded
+  - `PORT=9000 ./bin/dev.sh` - Run server in dev mode on port 9000, so that changes to the Python scripts cause them to be reloaded
   - `./pytest.sh` - Run all unit tests
 - Or, in Docker if you'd prefer:
   - `./bin/docker-build.sh` - Build the Docker container

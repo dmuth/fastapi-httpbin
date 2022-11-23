@@ -41,6 +41,7 @@ async def get(response: Response,
     params: RedirectQueryParams = Depends()
     ):
     response = core(response, n, params.code)
+    response.headers["x-http-redirect-code"] = str(params.code)
     return(response)
 
 
@@ -52,6 +53,7 @@ async def post(response: Response,
     params: RedirectQueryParams = Depends()
     ):
     response = core(response, n, params.code)
+    response.headers["x-http-redirect-code"] = str(params.code)
     return(response)
 
 
@@ -63,6 +65,7 @@ async def put(response: Response,
     params: RedirectQueryParams = Depends()
     ):
     response = core(response, n, params.code)
+    response.headers["x-http-redirect-code"] = str(params.code)
     return(response)
 
 
@@ -74,6 +77,7 @@ async def patch(response: Response,
     params: RedirectQueryParams = Depends()
     ):
     response = core(response, n, params.code)
+    response.headers["x-http-redirect-code"] = str(params.code)
     return(response)
 
 
@@ -85,6 +89,7 @@ async def delete(response: Response,
     params: RedirectQueryParams = Depends()
     ):
     response = core(response, n, params.code)
+    response.headers["x-http-redirect-code"] = str(params.code)
     return(response)
 
 

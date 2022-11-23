@@ -40,7 +40,7 @@ class RedirectQueryParams():
         code: int | None = Query(
             default = 302, 
             description = "Status code passed in from a previous redirect", 
-            example = 399)
+            example = 301)
         ):
         self.code = code
 

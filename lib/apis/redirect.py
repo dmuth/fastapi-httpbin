@@ -25,10 +25,10 @@ def core(response, n, code):
         raise HTTPException(status_code = 422, detail = retval)
 
     if n > 1:
-        return RedirectResponse(f"/redirect/{n - 1}?code={code}", status_code = 302)
+        return RedirectResponse(f"/redirect/{n - 1}?code={code}", status_code = code)
 
     if n <= 1:
-        return RedirectResponse(f"/redirect/final?code={code}", status_code = 302)
+        return RedirectResponse(f"/redirect/final?code={code}", status_code = code)
 
     return(retval)
 

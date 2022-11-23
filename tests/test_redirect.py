@@ -32,8 +32,12 @@ def core(cb):
     assert response.headers["location"] == "/redirect/1?code=302"
 
     response = cb("/redirect/3?code=310", allow_redirects = False)
-    assert response.status_code == 302
+    assert response.status_code == 310
     assert response.headers["location"] == "/redirect/2?code=310"
+
+    response = cb("/redirect/1?code=399", allow_redirects = False)
+    assert response.status_code == 399
+    assert response.headers["location"] == "/redirect/final?code=399"
 
     response = cb("/redirect/5", allow_redirects = False)
     assert response.status_code == 302

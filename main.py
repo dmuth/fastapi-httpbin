@@ -23,10 +23,13 @@ from lib.apis import test_password_manager
 
 from lib.fastapi import tags_metadata, description
 
+
+app_version = "0.0.33"
+
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
     description = description,
-    version = "0.0.32",
+    version = app_version,
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
@@ -48,10 +51,21 @@ app.include_router(images.router, tags = ["Images"])
 app.include_router(dynamic.router, tags = ["Dynamic Data"])
 app.include_router(test_password_manager.router, tags = ["Forms"])
 
+#
+# Load some static resources
+#
 app.mount("/about", StaticFiles(directory = "static/about", html = True), name = "static")
 app.mount("/roadmap", StaticFiles(directory = "static/roadmap", html = True), name = "static")
 app.mount("/qrcode", StaticFiles(directory = "static/qrcode", html = True), name = "static")
 app.mount("/test-password-manager-form", StaticFiles(directory = "static/password-manager", html = True), name = "static")
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-FastAPI-Httpbin-version"] = app_version
+    response.headers["X-Website"] = "https://httpbin.dmuth.org/"
+    return response
+
 
 favicon_path = "static/favicon.jpg"
 @app.get('/favicon.ico', summary = "Favicon endpoint", tags = ["Images"],

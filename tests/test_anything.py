@@ -17,6 +17,9 @@ def test_anything_get():
     assert response.json()["source"]["ip"] == "testclient"
     assert response.json()["verb"] == "GET"
 
+    assert response.headers["x-fastapi-httpbin-version"] != None
+    assert response.headers["x-website"] == "https://httpbin.dmuth.org/"
+
     response = client.get("/anything?test=test2")
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"

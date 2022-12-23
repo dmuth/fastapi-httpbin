@@ -24,6 +24,8 @@ def test_ip():
     response = client.get("/ip")
     assert response.status_code == 200
     assert response.json()["ip"] == "testclient"
+    assert "v4" in response.json()["message"][0]
+    assert "graph" in response.json()["message"][1]
 
     response = client.get("/ip", headers = {"x-forwarded-for": ipv4_1})
     assert response.status_code == 200

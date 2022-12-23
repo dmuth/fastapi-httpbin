@@ -46,6 +46,16 @@ are automatically reloaded:
 - `./bin/docker-prod.sh` - Run the Docker container in production mode (detached from the console).
 
 
+## FAQ: Are there any bugs?
+
+### Docker-in-Vagrant Issues
+
+If you are [running Docker from Vagrant](https://github.com/dmuth/docker-in-vagrant), the app won't
+behave right when run in Development Mode inside of a container.  Specifically, the functionality of FastAPI to reload itself when a file is changed does not seem to work. For now, the workaround is to restart the FastAPI server when new changes are to be tested, or to not run it in a container in the first place.
+
+Production use is unaffected.
+
+
 ## Get In Touch
 
 If you run into any problems, feel free to [open an issue](https://github.com/dmuth/fastapi-httpbin/issues).

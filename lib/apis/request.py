@@ -62,7 +62,9 @@ async def ip(request: Request):
     ip = get_ip(request.headers, request.client)
     retval["ip"] = ip
 
-    retval["message"] = "If you're looking for v4 or v6 specific endpoints, try /ip/v4 or /ip/v6."
+    retval["message"] = []
+    retval["message"].append("If you're looking for v4 or v6 specific endpoints, try /ip/v4 or /ip/v6.")
+    retval["message"].append("If you want to ping this IP and graph the results, I built an app for that too: https://github.com/dmuth/grafana-network-monitor")
 
     return(retval)
 

@@ -102,7 +102,7 @@ Just QR Codes when you want them.
   <div class="mb-3">
     <label for="url" class="form-label">URL:</label>
     <input type="text" class="form-control" name="url" id="url" aria-describedby="urlHelp"
-        value="https://www.youtube.com/watch?v=nCEemcXzERk&t=2390" required>
+        value="" required>
     <div class="invalid-feedback">
     URL is required and cannot be over 1,000 characters.
     </div>
@@ -333,6 +333,13 @@ async function fadeOut(e) {
     let download = document.getElementById("download");
 
     let beenhere = 0;
+
+    //
+    // Set the default URL to be the URL of this QR Code generator.
+    // The reason being that it makes generating QR Codes for the generator itself
+    // on mobile much easier, and helps me share the QR Code generator at cons. :-)
+    //
+    url.value = window.location.href;
 
     form.addEventListener("submit", async function(event) {
 

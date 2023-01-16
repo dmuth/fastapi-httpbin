@@ -49,6 +49,10 @@ tags_metadata = [
         "name": "Forms",
         "description": "Endpoints for testing out forms."
     },
+    {
+        "name": "Meta",
+        "description": "Endpoints related to this app itself."
+    },
     ]
 
 

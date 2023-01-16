@@ -6,6 +6,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+import config
 
 from lib.apis import methods
 from lib.apis import request
@@ -20,11 +21,12 @@ from lib.apis import images
 from lib.apis import dynamic
 from lib.apis import qrcode
 from lib.apis import test_password_manager
+from lib.apis import meta
 
 from lib.fastapi import tags_metadata, description
 
+app_version = config.app_version
 
-app_version = "0.0.37"
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
@@ -50,6 +52,7 @@ app.include_router(cookies.router, tags = ["Cookies"])
 app.include_router(images.router, tags = ["Images"])
 app.include_router(dynamic.router, tags = ["Dynamic Data"])
 app.include_router(test_password_manager.router, tags = ["Forms"])
+app.include_router(meta.router, tags = ["Meta"])
 
 #
 # Load some static resources

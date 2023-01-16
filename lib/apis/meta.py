@@ -7,14 +7,12 @@ import json
 from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request
 
-import config
+from lib.fastapi import tags_metadata, description, app_version
 
 from . import logger
 from . import PrettyJSONResponse
 
 router = APIRouter()
-
-app_version = config.app_version
 
 
 @router.get("/version", summary = "The version of this app.",

@@ -6,7 +6,6 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-import config
 
 from lib.apis import methods
 from lib.apis import request
@@ -23,9 +22,7 @@ from lib.apis import qrcode
 from lib.apis import test_password_manager
 from lib.apis import meta
 
-from lib.fastapi import tags_metadata, description
-
-app_version = config.app_version
+from lib.fastapi import tags_metadata, description, app_version
 
 
 app = FastAPI(docs_url = "/", redoc_url = None,

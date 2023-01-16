@@ -102,6 +102,7 @@ Just QR Codes when you want them.
   <div class="mb-3">
     <label for="url" class="form-label">URL:</label>
     <input type="text" class="form-control" name="url" id="url" aria-describedby="urlHelp"
+        onfocus="textFocusHandler(this);"
         value="" required>
     <div class="invalid-feedback">
     URL is required and cannot be over 1,000 characters.
@@ -112,7 +113,9 @@ Just QR Codes when you want them.
   <div class="mb-3">
     <label for="box_size" class="form-label">Box Size:</label><br/>
     <input type="range" name="box_size" id="box_size" class="range" aria-describedby="box_sizeHelp"
-            value="10" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
+            value="10" min="1" max="20" 
+            onchange="slideChangeHander(this);"
+            >
     <output class="output">10</output>
     <div id="box_sizeHelp" class="form-text">How big should the QR Code be?  (Max: 20)</div>
   </div>
@@ -120,12 +123,14 @@ Just QR Codes when you want them.
   <div class="mb-3">
     <label for="border" class="form-label">Border:</label><br/>
     <input type="range" name="border" id="border" class="range" aria-describedby="borderHelp"
-            value="4" min="4" max="20" oninput="this.nextElementSibling.value = this.value">
+            value="4" min="4" max="20" 
+            onchange="slideChangeHander(this);"
+            >
     <output class="output">4</output>
     <div id="borderHelp" class="form-text">How much space around the QR code? (Max: 20)</div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Generate QR Code</button>
+  <button type="submit" class="btn btn-primary" id="submit">Generate QR Code</button>
   <a class="btn btn-primary bi-download" role="button" id="download" style="display: none; "
     > Download QR Code</a>
 
@@ -243,6 +248,23 @@ If you just want to show support, please consider
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <script>
 
+'use strict'
+
+let beenhere = 0;
+let form = document.getElementById("form1");
+let url = document.getElementById("url");
+let slider_box_size = document.getElementById("box_size");
+let slider_border = document.getElementById("border");
+let action = form.action;
+let submit = document.getElementById("submit");
+let result = document.getElementById("result");
+let result_text = document.getElementById("result_text");
+let result_qr_code_text = document.getElementById("result_qr_code_text");
+let result_qr_code = document.getElementById("result_qr_code");
+let result_error = document.getElementById("result_error");
+let download = document.getElementById("download");
+
+
 //
 // Fade in an element
 //
@@ -317,22 +339,147 @@ async function fadeOut(e) {
     });
 }
 
+
+//
+// Request a QR Code from our API
+//
+async function apiRequest(request) {
+
+    let response = await fetch(request);
+
+    //
+    // Scroll to the top of the form so that our QR code is more 
+    // likely to be visible on mobile devices.
+    //
+    form.scrollIntoView();
+
+    //
+    // If we have previously generated a QR code, fade it out.
+    //
+    if (beenhere) {
+        await fadeOut(result_qr_code_text);
+    }
+
+    if (!response.ok) {
+        let text = await response.text();
+        throw new Error(`fetch() from '${action}' returned status ${response.status}: ${text}`)
+    }
+
+    //
+    // Get our response and turn it into a URL which gets embedded into the field.
+    //
+    let blob = await response.blob();
+    let url_qr_code = URL.createObjectURL(blob);
+    result_qr_code.src = url_qr_code;
+    result_text.style.display = "none";
+    result_error.style.display = "none";
+
+    //
+    // Assign the QR code to our download button
+    //
+    download.href = url_qr_code;
+    download.download = "qr-code.png";
+    download.style.display = "inline-block";
+
+    //
+    // Fade in the QR code.
+    //
+    await fadeIn(result_qr_code_text);
+
+    //let text = blob.text(); // Debugging
+    //console.log(text); // Debugging
+    //result.innerHTML = `<pre>${text}</pre>`; // Debugging
+
+    beenhere = 1;
+
+} // End of apiRequest()
+
+
+//
+// Highlight the contents of the text field when focused on
+//
+function textFocusHandler(e) {
+    e.select();
+} // End of textfocusHandler()
+
+
+//
+// Logic for the submission of our form.
+//
+async function formSubmitHandler(event) {
+
+    let url_value = url.value;
+    let url_length = url_value.length;
+    let box_size_value = slider_box_size.value;
+    let border_value = slider_border.value;
+
+    //
+    // Don't actually submit the form, because we don't
+    // want to change the page in the browser, we just want to hit the API.
+    //
+    event.preventDefault()
+    event.stopPropagation()
+
+    if (!url_value || url_length > 1000) {
+        url.classList.add("is-invalid");
+        return(false);
+    }
+
+    //
+    // If we got here, we're good to go.
+    //
+    url.classList.remove("is-invalid");
+
+    action = "/qrcode/json"
+    //action = "/post" // Debugging
+
+    let data = {
+        "url": url_value,
+        "box_size": box_size_value,
+        "border": border_value
+        }
+    //console.log("DATA", data); // Debugging
+
+    let request = new Request(action, {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": JSON.stringify(data),
+    });
+    //console.log("REQUEST", request); // Debugging
+
+    //
+    // Hit our API, and display an image if we get one, or an error otherwise.
+    // Shoutout to Geferon for pointing me in the direction of async/await. :-)
+    //
+    try {
+        await apiRequest(request);
+
+    } catch (error) {
+        result_qr_code_text.style.display = "none";
+        result_text.style.display = "none";
+        download.style.display = "none";
+
+        result_error.innerHTML = `CAUGHT ERROR: ${error}`;
+        result_error.style.display = "block";
+
+    }
+
+} // End of formSubmitHandler()
+
+
+//
+// Handle a slider change, which basically just submits the form 
+// so we get a QR Code.
+//
+function slideChangeHander(e) {
+    e.nextElementSibling.value = e.value
+    submit.click();
+}
+
+
 (async function () {
-  'use strict'
-
-    let form = document.getElementById("form1");
-    let url = document.getElementById("url");
-    let box_size = document.getElementById("box_size");
-    let border = document.getElementById("border");
-    let action = form.action;
-    let result = document.getElementById("result");
-    let result_text = document.getElementById("result_text");
-    let result_qr_code_text = document.getElementById("result_qr_code_text");
-    let result_qr_code = document.getElementById("result_qr_code");
-    let result_error = document.getElementById("result_error");
-    let download = document.getElementById("download");
-
-    let beenhere = 0;
 
     //
     // Set the default URL to be the URL of this QR Code generator.
@@ -342,112 +489,10 @@ async function fadeOut(e) {
     url.value = window.location.href;
 
     form.addEventListener("submit", async function(event) {
-
-        let url_value = url.value;
-        let url_length = url_value.length;
-        let box_size_value = box_size.value;
-        let border_value = border.value;
-
-        //
-        // Don't actually submit the form.
-        //
-        event.preventDefault()
-        event.stopPropagation()
-
-        if (!url_value || url_length > 1000) {
-            url.classList.add("is-invalid");
-            return(false);
-        }
-
-        //
-        // If we got here, we're good to go.
-        //
-        url.classList.remove("is-invalid");
-
-        action = "/qrcode/json"
-        //action = "/post" // Debugging
-
-        let data = {
-            "url": url_value,
-            "box_size": box_size_value,
-            "border": border_value
-            }
-        //console.log("DATA", data); // Debugging
-
-        let request = new Request(action, {
-            "method": "POST",
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "body": JSON.stringify(data),
-        });
-        //console.log("REQUEST", request); // Debugging
-
-        //
-        // Hit our API, and display an image if we get one, or an error otherwise.
-        // Shoutout to Geferon for pointing me in the direction of async/await. :-)
-        //
-        try {
-            let response = await fetch(request);
-
-            //
-            // Scroll to the top of the form so that our QR code is more 
-            // likely to be visible on mobile devices.
-            //
-            form1.scrollIntoView();
-
-            //
-            // If we have previously generated a QR code, fade it out.
-            //
-            if (beenhere) {
-                await fadeOut(result_qr_code_text);
-            }
-
-            if (!response.ok) {
-                let text = await response.text();
-                throw new Error(`fetch() from '${action}' returned status ${response.status}: ${text}`)
-            }
-
-            //
-            // Get our response and turn it into a URL which gets embedded into the field.
-            //
-            let blob = await response.blob();
-            let url_qr_code = URL.createObjectURL(blob);
-            result_qr_code.src = url_qr_code;
-            result_text.style.display = "none";
-            result_error.style.display = "none";
-
-            //
-            // Assign the QR code to our download button
-            //
-            download.href = url_qr_code;
-            download.download = "qr-code.png";
-            download.style.display = "inline-block";
-
-            //
-            // Fade in the QR code.
-            //
-            await fadeIn(result_qr_code_text);
-
-            //let text = blob.text(); // Debugging
-            //console.log(text); // Debugging
-            //result.innerHTML = `<pre>${text}</pre>`; // Debugging
-
-            beenhere = 1;
-
-        } catch (error) {
-            result_qr_code_text.style.display = "none";
-            result_text.style.display = "none";
-            download.style.display = "none";
-
-            result_error.innerHTML = `CAUGHT ERROR: ${error}`;
-            result_error.style.display = "block";
-
-        }
-
-
+        formSubmitHandler(event);
     });
 
+    //submit.click(); // Debugging - Submit our form immediately
 
 })()
 </script>

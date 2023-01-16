@@ -24,7 +24,7 @@ from lib.apis import test_password_manager
 from lib.fastapi import tags_metadata, description
 
 
-app_version = "0.0.36"
+app_version = "0.0.37"
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",

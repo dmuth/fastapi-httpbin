@@ -80,4 +80,18 @@ favicon_path = "static/favicon.jpg"
 async def favicon(response: Response):
     return FileResponse(favicon_path)
 
+favicon_path = "img/logo.png"
+@app.get('/static/logo.png', summary = "Logo endpoint", tags = ["Images"],
+    response_class = FileResponse,
+    responses={
+        200: {
+            "content": {"image/jpeg": {}},
+            "description": "Return the logo.",
+        }
+    }
+    )
+async def favicon(response: Response):
+    return FileResponse(favicon_path)
+
+
 

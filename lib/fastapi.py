@@ -2,7 +2,7 @@
 #
 # Store our app version here.
 #
-app_version = "0.0.39"
+app_version = "0.0.40"
 
 tags_metadata = [
     {
@@ -61,6 +61,8 @@ tags_metadata = [
 
 
 description = """
+<a href="static/logo.png"><img src="static/logo.png" align="right" /></a>
+
 HTTP Endpoints for easy testing of your app.
 
 Built with the <a href="https://fastapi.tiangolo.com/">FastAPI framework</a>, 
@@ -76,7 +78,6 @@ this is heavily based on the original <a href="https://httpbin.org/">Httpbin</a>
 <p>
 
 Run locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>
-
 
 <a href="https://httpbin.dmuth.org/">Main Site</a> - Mirrors: 
 <a href="https://fly.httpbin.dmuth.org/">Fly</a>

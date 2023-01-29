@@ -10,7 +10,7 @@ Built with the [FastAPI Framework for Python](https://fastapi.tiangolo.com/), th
 Play with it in production at [https://httpbin.dmuth.org/](https://httpbin.dmuth.org/)  Also consider these add-ons I wrote which make use of the API:
 
 - [Dead Simple QR Code Generator](https://httpbin.dmuth.org/qrcode/)
-- [Test Password Managers like 1Password, LastPass, and BitWarden here](https://httpbin.dmuth.org/test-password-manager-form/)
+- [Test Password Managers like 1Password and BitWarden here](https://httpbin.dmuth.org/test-password-manager-form/)
 
 ## Differences between this app and Httpbin
 

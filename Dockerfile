@@ -16,7 +16,8 @@ COPY pytest.sh /app
 COPY lib/ /app/lib/
 COPY tests/ /app/tests/
 COPY private/ /app/private/
-COPY static/ app/static/
+COPY static/ /app/static/
+COPY img/ /app/img
 
 
 WORKDIR /app

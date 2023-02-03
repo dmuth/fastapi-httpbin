@@ -2,7 +2,7 @@
 #
 # Store our app version here.
 #
-app_version = "0.0.42"
+app_version = "0.0.43"
 
 tags_metadata = [
     {

@@ -80,7 +80,7 @@ favicon_path = "static/favicon.jpg"
 async def favicon(response: Response):
     return FileResponse(favicon_path)
 
-favicon_path = "img/logo.png"
+logo_path = "img/logo.png"
 @app.get('/static/logo.png', summary = "Logo endpoint", tags = ["Images"],
     response_class = FileResponse,
     responses={
@@ -90,8 +90,8 @@ favicon_path = "img/logo.png"
         }
     }
     )
-async def favicon(response: Response):
-    return FileResponse(favicon_path)
+async def logo(response: Response):
+    return FileResponse(logo_path)
 
 
 

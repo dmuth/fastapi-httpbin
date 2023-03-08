@@ -7,7 +7,9 @@ HTTP Endpoints for easy testing of your app.
 
 Built with the [FastAPI Framework for Python](https://fastapi.tiangolo.com/), this is heavily based on the original [Httpbin](https://httpbin.org/) website.
 
-Play with it in production at [https://httpbin.dmuth.org/](https://httpbin.dmuth.org/)  Also consider these add-ons I wrote which make use of the API:
+Play with it in production at [https://httpbin.dmuth.org/](https://httpbin.dmuth.org/)  Documentation for all endpoints is right on the front page of the site.  What are you waiting for? :-)
+
+Also consider these add-ons I wrote which make use of the API:
 
 - [Dead Simple QR Code Generator](https://httpbin.dmuth.org/qrcode/)
 - [Test Password Managers like 1Password and BitWarden here](https://httpbin.dmuth.org/test-password-manager-form/)
@@ -15,7 +17,7 @@ Play with it in production at [https://httpbin.dmuth.org/](https://httpbin.dmuth
 ## Differences between this app and Httpbin
 
 - 100% unit test coverage of all endpoints.
-- Ensured that documentation 100% matches the responses returned.
+- Ensured that [documentation](https://httpbin.dmuth.org/) 100% matches the responses returned.
 - Ensured that all values are now sanity checked
 - All endpoints with mandatory parameters now have examples in the documentation in order to reduce friction for test usage.
 - Fixed a few bugs found in the implementation of the `/cache` endpoints in Httpbin.

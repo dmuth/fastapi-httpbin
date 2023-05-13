@@ -11,19 +11,19 @@ pushd $(dirname $0)/.. > /dev/null
 
 
 echo "# "
-echo "# Deploying to Fly.io..."
-echo "# "
-fly deploy
-
-echo "# "
 echo "# Building Docker image..."
 echo "# "
 ./bin/docker-build.sh
 
 echo "# "
-echo "# Pushing Docker image..."
+echo "# Pushing Docker image to Docker Hub..."
 echo "# "
 ./bin/docker-push.sh
+
+echo "# "
+echo "# Deploying to Fly.io..."
+echo "# "
+fly deploy
 
 echo "# Done!"
 

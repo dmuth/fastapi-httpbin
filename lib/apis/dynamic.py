@@ -5,7 +5,7 @@
 from io import BytesIO
 import json
 from uuid import uuid4, UUID
-from time import sleep
+import asyncio
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
@@ -112,8 +112,9 @@ async def delay(request: Request,
         retval = {"type": "value_error.int.max_size", "message": f"Value {seconds} is > 10"}
         raise HTTPException(status_code = 422, detail = retval)
 
+
     if not debug:
-        sleep(seconds)
+        await asyncio.sleep(seconds)
 
     retval["message"] = f"Slept for {seconds} seconds before returning!"
     retval["timestamps"]["end"] = datetime.now(timezone.utc).isoformat()
@@ -184,7 +185,7 @@ async def streamer_rate(n, rate, debug):
                 buf = add_newline(buf)
                 yield(buf)
                 if not debug:
-                    sleep(1)
+                    await asyncio.sleep(1)
                 buf = ""
 
             #
@@ -252,7 +253,7 @@ async def streamer_rate_complete(n, rate, debug):
                 buf = add_newline(buf)
                 yield(buf)
                 if not debug:
-                    sleep(1)
+                    await asyncio.sleep(1)
                 buf = ""
                 num_loops_left -= 1
 

@@ -32,13 +32,15 @@ are automatically reloaded:
 - Directly
   - `pip install -r ./requirements.txt`
   - `PORT=9000 ./bin/dev.sh` - Run server in dev mode on port 9000, so that changes to the Python scripts cause them to be reloaded
-  - `./pytest.sh` - Run all unit tests
 - Or, in Docker if you'd prefer:
   - `./bin/docker-build.sh` - Build the Docker container
   - `./bin/docker-dev.sh` - Start the Docker container and spawn a bash shell so that scripts can be run from inside the container
+    - Then run `./pytest.sh`
+    - Or run `./bin/dev.sh`, however changes to files may not be caught.
 
 ## Deployment
 
+- Bump version number in `./lib/fastapi.py`.
 - Run the script `./bin/deploy.sh`.  This will run `fly deploy` to deploy the latest code on Fly.io, and `docker-build` followed by `docker-push` to push the latest Docker image to Docker Hub.
 
 

@@ -14,6 +14,9 @@ router = APIRouter()
 
 def core(response, codes):
 
+    # Convert any underscores to commas.
+    codes = codes.replace("_", ",")
+
     codes = codes.split(",")
 
     #
@@ -37,45 +40,45 @@ def core(response, codes):
 
 
 @router.get("/status/{codes}",
-    summary = "Return status code or random one if multiple given as comma-delimited list")
+    summary = "Return status code or random one if multiple given as comma-delimited list (Underscores are also permitted as delimiters)")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
+    codes: str = Path(min_length = 3, regex = "^[0-9,_]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
 
 
 @router.post("/status/{codes}",
-    summary = "Return status code or random one if multiple given as comma-delimited list")
+    summary = "Return status code or random one if multiple given as comma-delimited list (Underscores are also permitted as delimiters)")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
+    codes: str = Path(min_length = 3, regex = "^[0-9,_]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
 
 
 @router.put("/status/{codes}", 
-    summary = "Return status code or random one if multiple given as comma-delimited list")
+    summary = "Return status code or random one if multiple given as comma-delimited list (Underscores are also permitted as delimiters)")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
+    codes: str = Path(min_length = 3, regex = "^[0-9,_]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
 
 
 @router.patch("/status/{codes}", 
-    summary = "Return status code or random one if multiple given as comma-delimited list")
+    summary = "Return status code or random one if multiple given as comma-delimited list (Underscores are also permitted as delimiters)")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
+    codes: str = Path(min_length = 3, regex = "^[0-9,_]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)
 
 
 @router.delete("/status/{codes}", 
-    summary = "Return status code or random one if multiple given as comma-delimited list")
+    summary = "Return status code or random one if multiple given as comma-delimited list (Underscores are also permitted as delimiters)")
 async def get(response: Response, 
-    codes: str = Path(min_length = 3, regex = "^[0-9,]+$", example = "200,201,204")
+    codes: str = Path(min_length = 3, regex = "^[0-9,_]+$", example = "200,201,204")
     ):
     response = core(response, codes)
     return(response)

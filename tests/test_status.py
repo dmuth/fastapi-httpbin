@@ -30,8 +30,17 @@ def core(cb):
     response = client.get("/status/510")
     assert response.status_code == 510
 
+    response = client.get("/status/201,202")
+    assert response.status_code in [201, 202]
+
     response = client.get("/status/201,202,203,401,404")
     assert response.status_code in [201, 202, 203, 401, 404]
+
+    response = client.get("/status/211_212")
+    assert response.status_code in [211, 212]
+
+    response = client.get("/status/211_212_213_411_414")
+    assert response.status_code in [211, 212, 213, 411, 414]
 
     response = client.get("/status/1")
     assert response.json()["detail"][0]["type"] == "value_error.any_str.min_length"

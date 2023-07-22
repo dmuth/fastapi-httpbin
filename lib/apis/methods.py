@@ -3,6 +3,7 @@
 #
 
 import json
+from urllib.parse import parse_qs
 
 from fastapi import APIRouter
 from fastapi import FastAPI, Header, Request
@@ -47,9 +48,17 @@ async def get(request: Request):
 async def post(request: Request):
 
     data = data_default
+    content_type = request.headers.get("Content-Type", "application/x-www-form-urlencoded")
 
     try:
-        data = await request.json()
+        if content_type == "application/json":
+            data = await request.json()
+
+        else:
+            # Assume that it was a normal form submission
+            body = await request.body()
+            data = parse_qs(body)
+
     except json.decoder.JSONDecodeError as e:
         logger.warning(f"{__name__}:post(): Caught error deserializing JSON: {e}")
 

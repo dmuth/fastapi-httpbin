@@ -10,6 +10,8 @@ then
         echo "# "
         echo "# Run /mnt/bin/dev.sh' to start FastAPI in dev mode."
         echo "# "
+        echo "# If you ran on the dev container, your host filesystem and code are in /mnt/."
+        echo "# "
         exec $@
 fi
 

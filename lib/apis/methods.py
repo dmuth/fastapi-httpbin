@@ -40,6 +40,15 @@ def core(request: Request):
     response_class=PrettyJSONResponse)
 async def get(request: Request):
     retval = core(request)
+    retval["_comment"] = "If you want ONLY the GET method data, try the endpoint /get/args instead."
+    return(retval)
+
+
+@router.get("/get/args", summary = "JUST the request's GET parameters, without extra environment data.",
+    response_class=PrettyJSONResponse)
+async def get(request: Request):
+    retval = core(request)
+    retval = retval["args"]
     return(retval)
 
 

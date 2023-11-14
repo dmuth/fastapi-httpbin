@@ -15,6 +15,27 @@ def test_get():
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"
     assert response.json()["headers"]["host"] == "testserver"
+    assert len(response.json()["args"]) == 0
+    assert "_comment" in response.json()
+
+    response = client.get("/get?test1=test2&test3=test4")
+    assert response.status_code == 200
+    assert response.json()["args"]["test1"] == "test2"
+    assert len(response.json()["args"]) == 2
+
+
+def test_get_args():
+    response = client.get("/get/args")
+    assert response.status_code == 200
+    assert "headers" not in response.json()
+    assert "source" not in response.json()
+    assert "url" not in response.json()
+    assert len(response.json()) == 0
+
+    response = client.get("/get/args?test1=test2&test3=test4")
+    assert response.status_code == 200
+    assert response.json()["test1"] == "test2"
+    assert len(response.json()) == 2
 
 
 def test_post():

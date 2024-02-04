@@ -1,7 +1,7 @@
 name: CI
 
 env:
-   REGISTRY: caroltyk
+   REGISTRY: "caroltyk"
    IMAGE_NAME: ${{ github.repository }}
 
 on:
@@ -16,11 +16,17 @@ jobs:
          packages: write
       steps:
          -
+            name: Checkout
+            uses: actions/checkout@v4
+         -
             name: Set up QEMU
             uses: docker/setup-qemu-action@v3
          -
             name: Set up Docker Buildx
             uses: docker/setup-buildx-action@v3
+         -
+            name: Setup ORAS
+            uses: oras-project/setup-oras@v1
          -
             name: Extract metadata for the Docker image
             id: meta
@@ -40,3 +46,10 @@ jobs:
                push: true
                tags: ${{ steps.meta.outputs.tags }}
                labels: ${{ steps.meta.outputs.labels }}
+         -
+            name: Extract OpenAPI
+            run: python extract-openapi.py main:app --out openapi.json
+            shell: sh
+         -
+            name: Push the OpenAPI to OCI
+            run: oras push registry-1.docker.io/caroltyk/apis:fastapi-httpbin-$1 openapi.json:application/json

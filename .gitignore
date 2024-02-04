@@ -10,4 +10,7 @@ __pycache__/
 # Steve Jobs
 .DS_Store
 
+# venv
+venv/
 
+openapi.json

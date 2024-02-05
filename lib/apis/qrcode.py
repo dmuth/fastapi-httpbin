@@ -107,14 +107,17 @@ async def qrcode_get():
     return RedirectResponse(f"/qrcode/", status_code = 302)
 
 
-@router.post("/qr", include_in_schema = False)
-async def qr_post():
-    return RedirectResponse(f"/qrcode/", status_code = 302)
-
-
-@router.post("/qr-code", include_in_schema = False)
-async def qr_code_post():
-    return RedirectResponse(f"/qrcode/", status_code = 302)
+#
+# Commenting these out, because I don't think I'm actually using them with the latest revision.
+#
+#@router.post("/qr", include_in_schema = False)
+#async def qr_post():
+#    return RedirectResponse(f"/qrcode/", status_code = 302)
+#
+#
+#@router.post("/qr-code", include_in_schema = False)
+#async def qr_code_post():
+#    return RedirectResponse(f"/qrcode/", status_code = 302)
 
 
 

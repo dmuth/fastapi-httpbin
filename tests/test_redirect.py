@@ -56,7 +56,7 @@ def core(cb):
 
     response = cb("/redirect/cheetah", allow_redirects = False)
     assert response.status_code == 422
-    assert response.json()["detail"][0]["type"] == "type_error.integer"
+    assert response.json()["detail"][0]["type"] == "int_parsing"
 
     response = cb("/redirect/21", allow_redirects = False)
     assert response.status_code == 422

@@ -27,8 +27,8 @@ def core(request: Request):
     retval["args"] = request.query_params
     retval["headers"] = request.headers
     retval["source"] = {
-        "ip": request.client[0],
-        "port": request.client[1]
+        "ip": request.client.host,
+        "port": request.client.port
         }
     retval["url"] = request.url
 
@@ -38,6 +38,8 @@ def core(request: Request):
 @router.get("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
 async def get(request: Request):
+
+    import time
     retval = core(request)
     retval["data"] = data_default
     retval["verb"] = "GET"

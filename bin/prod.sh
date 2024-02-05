@@ -6,7 +6,10 @@
 # Errors are fatal
 set -e
 
-PORT=${PORT:=8000}
+export PORT=${PORT:=8000}
+
+export WEB_CONCURRENCY=3
+
 
 # Change to the parent directory of this script
 pushd $(dirname $0)/.. > /dev/null

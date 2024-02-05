@@ -31,7 +31,7 @@ def test_uuid_qrcode():
     assert response.status_code == 200
     assert response.headers["content-type"] == "image/png"
     response_body = b""
-    for chunk in response.iter_content():
+    for chunk in response.iter_bytes():
         response_body += chunk
     uuid_decoded = decode_qrcode(response_body)
     try:
@@ -43,7 +43,7 @@ def test_uuid_qrcode():
     assert response.status_code == 200
     assert response.headers["content-type"] == "image/png"
     response_body = b""
-    for chunk in response.iter_content():
+    for chunk in response.iter_bytes():
         response_body += chunk
     uuid_decoded = decode_qrcode(response_body)
     assert uuid_decoded == uuid

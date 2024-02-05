@@ -39,7 +39,7 @@ def test_cookies():
     assert response.json()["message"] == "3 cookies seen in request."
    
     cookies = ["cookie1"]
-    response = client.delete("/cookies", json = cookies)
+    response = client.request(method = "delete", url = "/cookies", json = cookies)
     assert response.status_code == 200
     assert response.json()["message"] == "1 cookie deleted."
     
@@ -49,12 +49,12 @@ def test_cookies():
     assert response.json()["message"] == "2 cookies seen in request."
 
     cookies = ["cookie2", "cookie3", "cookie4"]
-    response = client.delete("/cookies", json = cookies)
+    response = client.request(method = "delete", url = "/cookies", json = cookies)
     assert response.status_code == 200
     assert response.json()["message"] == "2 cookies deleted."
     
     cookies = ["cookie2", "cookie3", "cookie4"]
-    response = client.delete("/cookies", json = cookies)
+    response = client.request(method = "delete", url = "/cookies", json = cookies)
     assert response.status_code == 200
     assert response.json()["message"] == "0 cookies deleted."
     

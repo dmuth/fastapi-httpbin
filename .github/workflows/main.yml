@@ -46,13 +46,19 @@ jobs:
                username: ${{ secrets.DOCKERHUB_USERNAME }}
                password: ${{ secrets.DOCKERHUB_TOKEN }}
          -
-            name: Build and push
-            uses: docker/build-push-action@v5
-            with:
-               push: true
-               tags: ${{ steps.meta.outputs.tags }}
-               labels: ${{ steps.meta.outputs.labels }}
-               platforms: linux/amd64,linux/arm64, linux/arm64/v8
+            name: Build and test
+            run: docker build --label ${{ steps.meta.outputs.labels }} -t ${{ steps.meta.outputs.tags }} . --file ./Dockerfile
+         -
+            name: Push
+            run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-httpbin:{{ env.DOCKER_METADATA_OUTPUT_VERSION }}
+#         -
+#            name: Build and push
+#            uses: docker/build-push-action@v5
+#            with:
+#               push: true
+#               tags: ${{ steps.meta.outputs.tags }}
+#               labels: ${{ steps.meta.outputs.labels }}
+#               platforms: linux/amd64,linux/arm64, linux/arm64/v8
          -
             name: Extract OpenAPI
             run: python extract-openapi.py main:app --out openapi.json

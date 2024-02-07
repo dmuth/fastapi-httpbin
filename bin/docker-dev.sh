@@ -11,6 +11,7 @@ pushd $(dirname $0)/.. > /dev/null
 
 PORT=${PORT:=8000}
 
-docker run --rm -it -e PORT=${PORT} -p ${PORT}:${PORT} -v $(pwd):/mnt fastapi-httpbin bash
-
+docker run --rm -it -e PORT=${PORT} -p ${PORT}:${PORT} \
+    --name fastapi-httpbin-dev \
+    -v $(pwd):/mnt fastapi-httpbin bash
 

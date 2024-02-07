@@ -28,5 +28,11 @@ then
     TESTS="./tests"
 fi
 
-python3 -m pytest -s ${TESTS} $@
+#
+# We have to ignore deprecation warnings because it looks like the Swagger module
+# hasn't yet caught up with Pydantic wanting "examples" instead of "example".
+# Once Swagger is updated, I'll fix my code and stop ignoring deprecation warnings.
+#
+#python3 -m pytest -s ${TESTS} $@
+python3 -m pytest -W ignore::DeprecationWarning -s ${TESTS} $@ 
 

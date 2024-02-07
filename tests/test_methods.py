@@ -10,7 +10,19 @@ from main import app
 client = TestClient(app)
 
 
-def test_get():
+#
+# Set up a fake request client
+#
+def setup_test_client(mocker):
+    mock_client = mocker.patch("fastapi.Request.client")
+    mock_client.host = "testclient"
+    mock_client.port = "12345"
+
+
+def test_get(mocker):
+
+    setup_test_client(mocker)
+
     response = client.get("/get")
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"
@@ -24,7 +36,10 @@ def test_get():
     assert len(response.json()["args"]) == 2
 
 
-def test_get_args():
+def test_get_args(mocker):
+
+    setup_test_client(mocker)
+
     response = client.get("/get/args")
     assert response.status_code == 200
     assert "headers" not in response.json()
@@ -38,7 +53,9 @@ def test_get_args():
     assert len(response.json()) == 2
 
 
-def test_post():
+def test_post(mocker):
+
+    setup_test_client(mocker)
 
     headers_json = {"Content-Type": "application/json"}
     headers_form = {"Content-Type": "application/x-www-form-urlencoded"}
@@ -86,7 +103,9 @@ def test_post():
     assert data["press"][0] == " OK "
 
 
-def test_put():
+def test_put(mocker):
+
+    setup_test_client(mocker)
 
     data = {}
     response = client.put("/put", json = json.dumps(data))
@@ -123,7 +142,9 @@ def test_put():
     assert data[0]["cheetah"] == "chirp"
 
 
-def test_patch():
+def test_patch(mocker):
+
+    setup_test_client(mocker)
 
     data = {}
     response = client.patch("/patch", json = json.dumps(data))
@@ -160,7 +181,10 @@ def test_patch():
     assert data[0]["cheetah"] == "chirp"
 
 
-def test_delete():
+def test_delete(mocker):
+
+    setup_test_client(mocker)
+
     response = client.delete("/delete")
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"

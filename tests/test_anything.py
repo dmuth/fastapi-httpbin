@@ -10,7 +10,19 @@ from main import app
 client = TestClient(app)
 
 
-def test_anything_get():
+#
+# Set up a fake request client
+#
+def setup_test_client(mocker):
+    mock_client = mocker.patch("fastapi.Request.client")
+    mock_client.host = "testclient"
+    mock_client.port = "12345"
+
+
+
+def test_anything_get(mocker):
+
+    setup_test_client(mocker)
 
     response = client.get("/anything")
     assert response.status_code == 200
@@ -27,7 +39,9 @@ def test_anything_get():
     assert response.json()["verb"] == "GET"
 
 
-def test_anything_post():
+def test_anything_post(mocker):
+
+    setup_test_client(mocker)
 
     data = { "cheetah": "chirp", "goat": "bleat" }
 
@@ -46,7 +60,10 @@ def test_anything_post():
     assert response.json()["verb"] == "POST"
 
 
-def test_anything_put():
+def test_anything_put(mocker):
+
+    setup_test_client(mocker)
+
     data = { "cheetah": "chirp", "goat": "bleat" }
 
     response = client.put("/anything", json = json.dumps(data))
@@ -64,7 +81,10 @@ def test_anything_put():
     assert response.json()["verb"] == "PUT"
 
 
-def test_anything_patch():
+def test_anything_patch(mocker):
+
+    setup_test_client(mocker)
+
     data = { "cheetah": "chirp", "goat": "bleat" }
 
     response = client.patch("/anything", json = json.dumps(data))
@@ -82,7 +102,9 @@ def test_anything_patch():
     assert response.json()["verb"] == "PATCH"
 
 
-def test_anything_delete():
+def test_anything_delete(mocker):
+
+    setup_test_client(mocker)
 
     response = client.delete("/anything")
     assert response.status_code == 200

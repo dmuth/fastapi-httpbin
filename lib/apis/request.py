@@ -20,8 +20,8 @@ def core(request: Request):
     retval["args"] = request.query_params
     retval["headers"] = request.headers
     retval["source"] = {
-        "ip": request.client[0],
-        "port": request.client[1]
+        "ip": request.client.host,
+        "port": request.client.port
         }
     retval["url"] = request.url
 
@@ -48,7 +48,7 @@ def get_ip(headers, client):
         retval = headers["x-forwarded-for"]
 
     else:
-        retval = client[0]
+        retval = client.host
 
     return(retval)
 

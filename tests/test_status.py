@@ -43,10 +43,10 @@ def core(cb):
     assert response.status_code in [211, 212, 213, 411, 414]
 
     response = client.get("/status/1")
-    assert response.json()["detail"][0]["type"] == "value_error.any_str.min_length"
+    assert response.json()["detail"][0]["type"] == "string_too_short"
 
     response = client.get("/status/cheetah,goat")
-    assert response.json()["detail"][0]["type"] == "value_error.str.regex"
+    assert response.json()["detail"][0]["type"] == "string_pattern_mismatch"
 
     response = client.get("/status/200,2001,300")
     assert response.status_code == 422

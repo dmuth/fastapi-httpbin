@@ -54,8 +54,36 @@ jobs:
                labels: ${{ steps.meta.outputs.labels }}
                platforms: linux/amd64,linux/arm64, linux/arm64/v8
          -
-            name: Extract OpenAPI
-            run: python extract-openapi.py main:app --out openapi.json
+            name: Generate OpenAPI document
+            run: |
+               echo "# "
+               echo "# Generating OpenAPI document..."
+               echo "# "
+               python3 extract-openapi.py main:app --out openapi.json
+
          -
-            name: Push the OpenAPI to OCI
-            run: oras push registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/apis:fastapi-httpbin-${{ env.DOCKER_METADATA_OUTPUT_VERSION }} openapi.json:application/json
+            name: Convert to Tyk OAS API Definition
+            run: |
+               echo "# "
+               echo "# Converting to Tyk OAS API Definition..."
+               echo "# "
+               body=$(<openapi.json)
+               api_id=$(curl --location --request POST 'http://tyk-dashboard.org/api/apis/oas/import' \
+               --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
+               --header 'Content-Type: text/plain' \
+               --data-raw $body | jq -r '.ID')
+               sleep 1
+      
+               echo "# "
+               echo "# Temporary API ID $api_id ..."
+               echo "# "
+      
+               echo "# "
+               echo "# Retrieve API Definition JSON..."
+               echo "# "
+               curl --location --request GET "http://tyk-dashboard.org/api/apis/oas/$api_id" \
+               --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
+               --header 'Content-Type: text/plain' > apidefinition.json
+         -
+            name: Push the API Definition to OCI
+            run: oras push registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/apis:fastapi-httpbin-${{ env.DOCKER_METADATA_OUTPUT_VERSION }} apidefinition.json:application/json

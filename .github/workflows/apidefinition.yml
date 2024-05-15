@@ -1,0 +1,19 @@
+name: Generate, Test and Push API Definition
+
+on:
+   pull_request:
+   workflow_dispatch:
+
+jobs:
+   lint:
+      runs-on: ubuntu-latest
+      permissions:
+         contents: read
+         packages: write
+      steps:
+        - 
+         name: Lint API Definition
+         uses: stoplightio/spectral-action@latest
+         with:
+            file_glob: 'tyk_apidefinition.json'
+            spectral_ruleset: 'tykapi_spectral.yaml'

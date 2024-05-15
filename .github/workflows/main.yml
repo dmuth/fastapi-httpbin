@@ -5,12 +5,13 @@ on:
    workflow_dispatch:
 
 jobs:
-   prepare:
+   build-test-push:
       runs-on: ubuntu-latest
       permissions:
          contents: write
          packages: write
          pull-requests: write
+      continue-on-error: false
       steps:
          - 
             name: Add hosts to /etc/hosts

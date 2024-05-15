@@ -48,10 +48,17 @@ jobs:
                echo "# Converting to Tyk OAS API Definition..."
                echo "# "
                body=$(<openapi.json)
+               echo $body
+               curl --location --request POST 'http://tyk-dashboard.org/api/apis/oas/import' \
+               --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
+               --header 'Content-Type: text/plain' \
+               --data-raw $body | jq -r '.ID'
+               echo "1"
                api_id=$(curl --location --request POST 'http://tyk-dashboard.org/api/apis/oas/import' \
                --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
                --header 'Content-Type: text/plain' \
                --data-raw $body | jq -r '.ID')
+               echo $api_id
                sleep 1
       
                echo "# "

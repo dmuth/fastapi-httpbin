@@ -24,23 +24,6 @@ jobs:
             name: Setup ORAS
             uses: oras-project/setup-oras@v1
          -
-            name: Setup Python
-            uses: actions/setup-python@v2
-            with:
-               python-version: 3.10.5
-         -
-            name: Install dependencies
-            run: |
-               python -m pip install --upgrade pip
-               pip install -r requirements.txt
-         -
-            name: Generate OpenAPI document
-            run: |
-               echo "# "
-               echo "# Generating OpenAPI document..."
-               echo "# "
-               python3 extract-openapi.py main:app --out openapi.json
-         -
             name: Convert to Tyk OAS API Definition
             run: |
                #!/bin/bash

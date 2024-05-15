@@ -19,24 +19,26 @@ echo "# "
 echo "# Converting to Tyk OAS API Definition..."
 echo "# "
 body=$(<openapi.json)
-api_id=$(curl --location --request POST 'http://tyk-dashboard.org/api/apis/oas/import' \
-  --header 'Authorization: e2f234ac32ab443e78962ef941898722' \
-  --header 'Content-Type: text/plain' \
-  --data-raw $body | jq -r '.ID')
-sleep 1
+wget --method=POST http://tyk-dashboard.org/api/apis/oas/import --header='Authorization: e2f234ac32ab443e78962ef941898722' --header='Content-Type: text/plain' --body-data="$body" -O res.json
+api_id=$(cat res.json | jq -r '.ID')
 
 echo "# "
 echo "# Temporary API ID $api_id ..."
 echo "# "
-sleep 1
 
 echo "# "
 echo "# Retrieve API Definition JSON..."
 echo "# "
-curl --location --request GET 'http://tyk-dashboard.org/api/apis/oas/$api_id' \
-  --header 'Authorization: e2f234ac32ab443e78962ef941898722' \
-  --header 'Content-Type: text/plain' > apidefinition.json
-sleep 1
+wget --method=GET http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: e2f234ac32ab443e78962ef941898722' --header 'Content-Type: text/plain' -O apidefinition.json
+
+
+echo "# "
+echo "# Remove Temporary API $api_id ..."
+echo "# "
+wget --method=DELETE http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: e2f234ac32ab443e78962ef941898722' -O deleteres.json
+
+rm res.json
+rm deleteres.json
 
 echo "# "
 echo "# Pushing API Definition to Docker Hub..."

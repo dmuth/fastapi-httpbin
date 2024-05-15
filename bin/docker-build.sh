@@ -9,8 +9,8 @@ set -e
 # Change to the parent directory of this script
 pushd $(dirname $0)/.. > /dev/null
 
-docker build -t fastapi-httpbin . -f ./Dockerfile
+#docker build -t fastapi-httpbin . -f ./Dockerfile
 
-# docker build --platform="linux/amd64" -t fastapi-httpbin . -f ./Dockerfile
+docker build --platform="linux/amd64" -t fastapi-httpbin . -f ./Dockerfile
 
 

@@ -34,6 +34,7 @@ app = FastAPI(docs_url = "/", redoc_url = None,
     )
 
 app.openapi_version = '3.0.2'
+app.openapi_url = './openapi.json'
 
 #
 # Ordering of these in the Swagger docs is set in lib/fastapi.py

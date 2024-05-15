@@ -34,36 +34,5 @@ jobs:
                python -m pip install --upgrade pip
                pip install -r requirements.txt
          -
-            name: Generate OpenAPI document
-            run: |
-               echo "# "
-               echo "# Generating OpenAPI document..."
-               echo "# "
-               python3 extract-openapi.py main:app --out openapi.json
-         -
-            name: Convert to Tyk OAS API Definition
-            run: |
-               #!/bin/bash
-               echo "# "
-               echo "# Converting to Tyk OAS API Definition..."
-               echo "# "
-               body=$(<openapi.json)
-               api_id=$(curl --location --request POST 'http://tyk-dashboard.org/api/apis/oas/import' \
-               --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
-               --header 'Content-Type: text/plain' \
-               --data-raw $body | jq -r '.ID')
-               sleep 1
-      
-               echo "# "
-               echo "# Temporary API ID $api_id ..."
-               echo "# "
-      
-               echo "# "
-               echo "# Retrieve API Definition JSON..."
-               echo "# "
-               curl --location --request GET "http://tyk-dashboard.org/api/apis/oas/$api_id" \
-               --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
-               --header 'Content-Type: text/plain' > apidefinition.json
-         -
-            name: Push the API Definition to OCI
-            run: oras push registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/apis:fastapi-httpbin-${{ env.DOCKER_METADATA_OUTPUT_VERSION }} apidefinition.json:application/json
+            name: Deploy API
+            run: ./deployapi.sh latest

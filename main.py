@@ -47,7 +47,14 @@ with open(json_file_path, 'r') as file:
 
 # Parse JSON content
 try:
-    app.openapi_schema = json.loads(json_content)
+    openapi_schema = json.loads(json_content)
+
+    openapi_schema["info"]["description"] = description
+    openapi_schema["info"]["version"] = app_version
+    openapi_schema["tags"] = tags_metadata
+
+    app.openapi_schema = openapi_schema
+
     print("JSON content loaded successfully.")
 except json.JSONDecodeError as e:
     print("Error decoding JSON:", e)

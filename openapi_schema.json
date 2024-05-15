@@ -3,7 +3,7 @@
   "info" : {
     "title" : "FastAPI Httpbin",
     "description" : "\n<a href=\"static/logo.png\"><img src=\"static/logo.png\" align=\"right\" /></a>\n\nHTTP Endpoints for easy testing of your app.\n\nBuilt with the <a href=\"https://fastapi.tiangolo.com/\">FastAPI framework</a>, \nthis is heavily based on the original <a href=\"https://httpbin.org/\">Httpbin</a> website.\n\n<a href=\"/about\">About this project</a> - \n<a href=\"/roadmap\">Development Roadmap</a> -\n<a href=\"/qrcode/\">Dead Simple QR Code Generator</a> -\n<a href=\"/test-password-manager-form/\">Form for testing Password Managers like 1Password and BitWarden</a>\n<p>\n\n<a href=\"https://github.com/dmuth/fastapi-httpbin\">GitHub repo</a>\n<p>\n\nRun locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>\n\n<a href=\"https://httpbin.dmuth.org/\">Main Site</a> - Mirrors: \n<a href=\"https://fly.httpbin.dmuth.org/\">Fly</a>\n<a href=\"https://railway.httpbin.dmuth.org/\">Railway</a>\n<a href=\"https://render.httpbin.dmuth.org/\">Render</a>\n\n",
-    "version" : "1.0.0"
+    "version" : "0.0.48"
   },
   "servers" : [ {
     "url" : "http://0.0.0.0:8000"

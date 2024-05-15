@@ -5,7 +5,7 @@ on:
    workflow_dispatch:
 
 jobs:
-   build-test-push:
+   prepare:
       runs-on: ubuntu-latest
       permissions:
          contents: write
@@ -25,9 +25,6 @@ jobs:
          -
             name: Set up Docker Buildx
             uses: docker/setup-buildx-action@v3
-         -
-            name: Setup ORAS
-            uses: oras-project/setup-oras@v1
          -
             name: Setup Python
             uses: actions/setup-python@v2
@@ -51,14 +48,6 @@ jobs:
                username: ${{ secrets.DOCKERHUB_USERNAME }}
                password: ${{ secrets.DOCKERHUB_TOKEN }}
          -
-            name: Build and push
-            uses: docker/build-push-action@v5
-            with:
-               push: true
-               tags: ${{ steps.meta.outputs.tags }}
-               labels: ${{ steps.meta.outputs.labels }}
-               platforms: linux/amd64
-         -
             name: Generating OpenAPI document
             run: python3 extract-openapi.py main:app --out openapi.json
          -
@@ -76,7 +65,7 @@ jobs:
                echo "# "
                echo "# Retrieve API Definition JSON..."
                echo "# "
-               wget --method=GET http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: ${{ secrets.TYK_APIKEY }}' --header 'Content-Type: text/plain' -O apidefinition.json
+               wget --method=GET http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: ${{ secrets.TYK_APIKEY }}' --header 'Content-Type: text/plain' -O tyk_apidefinition.json
 
                echo "# "
                echo "# Remove Temporary API $api_id ..."
@@ -85,6 +74,20 @@ jobs:
 
                rm res.json
                rm deleteres.json
+         - 
+            name: Lint API Definition
+            uses: stoplightio/spectral-action@latest
+            with:
+               file_glob: 'tyk_apidefinition.json'
+               spectral_ruleset: 'tykapi_spectral.yaml'
+         -
+            name: Build
+            uses: docker/build-push-action@v5
+            with:
+               push: true
+               tags: ${{ steps.meta.outputs.tags }}
+               labels: ${{ steps.meta.outputs.labels }}
+               platforms: linux/amd64
          -
             name: Commit files
             id: commit
@@ -92,7 +95,7 @@ jobs:
             run: |
                git config --local user.email "action@github.com"
                git config --local user.name "github-actions"
-               git add apidefinition.json
+               git add tyk_apidefinition.json
                if [-z "$(git status --porcelain)"]; then
                   echo "::set-output name=push::false"
                else
@@ -106,5 +109,8 @@ jobs:
             with:
                github_token: ${{ secrets.GITHUB_TOKEN }}
          -
+            name: Setup ORAS
+            uses: oras-project/setup-oras@v1
+         -
             name: Push the API Definition to OCI
-            run: oras push registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/apis:fastapi-httpbin-${{ env.DOCKER_METADATA_OUTPUT_VERSION }} apidefinition.json:application/json
+            run: oras push registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/apis:fastapi-httpbin-${{ env.DOCKER_METADATA_OUTPUT_VERSION }} tyk_apidefinition.json:application/json

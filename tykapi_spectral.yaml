@@ -1,0 +1,10 @@
+extends: "spectral:oas" 
+rules:
+  x-tyk-api-gateway-exists:
+    description: "Check if '.x-tyk-api-gateway' exists in the OpenAPI Specification."
+    severity: error
+    recommended: true
+    given: "$"
+    then:
+      field: "x-tyk-api-gateway"
+      function: truthy

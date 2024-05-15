@@ -32,4 +32,4 @@ jobs:
                pip install -r requirements.txt
          -
             name: Deploy API
-            run: ./deployapi.sh latest
+            run: ./bin/deployapi.sh latest

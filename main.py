@@ -24,6 +24,8 @@ from lib.apis import meta
 
 from lib.fastapi import tags_metadata, description, app_version
 
+import json
+
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
@@ -35,6 +37,20 @@ app = FastAPI(docs_url = "/", redoc_url = None,
 
 app.openapi_version = '3.0.2'
 app.openapi_url = './openapi.json'
+
+# Assuming your JSON file is named 'schema.json'
+json_file_path = './openapi_schema.json'
+
+# Read content from the JSON file
+with open(json_file_path, 'r') as file:
+    json_content = file.read()
+
+# Parse JSON content
+try:
+    app.openapi_schema = json.loads(json_content)
+    print("JSON content loaded successfully.")
+except json.JSONDecodeError as e:
+    print("Error decoding JSON:", e)
 
 #
 # Ordering of these in the Swagger docs is set in lib/fastapi.py

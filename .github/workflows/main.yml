@@ -66,7 +66,7 @@ jobs:
             run: |
                #!/bin/bash
                body=$(<openapi.json)
-               wget --method=POST http://tyk-dashboard.org/api/apis/oas/import --header='Authorization: e2f234ac32ab443e78962ef941898722' --header='Content-Type: text/plain' --body-data="$body" -O res.json
+               wget --method=POST http://tyk-dashboard.org/api/apis/oas/import --header='Authorization: ${{ secrets.TYK_APIKEY }}' --header='Content-Type: text/plain' --body-data="$body" -O res.json
                api_id=$(cat res.json | jq -r '.ID')
 
                echo "# "
@@ -96,7 +96,7 @@ jobs:
                if [-z "$(git status --porcelain)"]; then
                   echo "::set-output name=push::false"
                else
-                  git commit -m "Add changes" -a
+                  git commit -m "API Definition updated" -a
                   echo "::set-output name=push::true"
                fi
          - 

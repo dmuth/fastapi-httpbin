@@ -9,6 +9,13 @@ set -e
 # Change to the parent directory of this script
 pushd $(dirname $0)/.. > /dev/null
 
+if test "$1"
+then
+    tag=$1
+else
+    tag=latest
+fi
+
 
 echo "# "
 echo "# Building Docker image..."
@@ -18,12 +25,14 @@ echo "# "
 echo "# "
 echo "# Pushing Docker image to Docker Hub..."
 echo "# "
-./bin/docker-push.sh
+./bin/docker-push.sh $tag
 
-echo "# "
-echo "# Deploying to Fly.io..."
-echo "# "
-fly deploy
+#echo "# "
+#echo "# Deploying to Fly.io..."
+#echo "# "
+#fly deploy
+
+./bin/deployapi.sh $tag
 
 echo "# Done!"
 

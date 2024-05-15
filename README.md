@@ -30,6 +30,7 @@ To run FastAPI Httpbin in development mode so that changes to the underlying Pyt
 are automatically reloaded:
 
 - Directly
+  - `source venv/bin/activate`
   - `pip install -r ./requirements.txt`
   - `PORT=9000 ./bin/dev.sh` - Run server in dev mode on port 9000, so that changes to the Python scripts cause them to be reloaded
 - Or, in Docker if you'd prefer:
@@ -44,8 +45,7 @@ are automatically reloaded:
 ## Deployment
 
 - Bump version number in `./lib/fastapi.py`.
-- Run the script `./bin/deploy.sh`.  This will run `fly deploy` to deploy the latest code on Fly.io, and `docker-build` followed by `docker-push` to push the latest Docker image to Docker Hub.
-
+- Run the script `./bin/deploy.sh`.  This will run `docker-build` followed by `docker-push` to push the latest Docker image to Docker Hub with `latest` tag. It will then generate latest OpenAPI document and publish it to Docker Hub same `latest` tag too.
 
 ## In production
 

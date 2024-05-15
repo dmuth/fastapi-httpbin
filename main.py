@@ -33,6 +33,8 @@ app = FastAPI(docs_url = "/", redoc_url = None,
     openapi_tags = tags_metadata
     )
 
+app.openapi_version = '3.0.2'
+
 #
 # Ordering of these in the Swagger docs is set in lib/fastapi.py
 #

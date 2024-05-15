@@ -11,6 +11,10 @@ jobs:
          contents: read
          packages: write
       steps:
+         - 
+            name: Add hosts to /etc/hosts
+            run: |
+              sudo echo "${{ secrets.TYK_DASHBOARD_URL }} tyk-dashboard.org" | sudo tee -a /etc/hosts 
          -
             name: Checkout
             uses: actions/checkout@v4
@@ -54,37 +58,32 @@ jobs:
                labels: ${{ steps.meta.outputs.labels }}
                platforms: linux/amd64
          -
-            name: Generate OpenAPI document
-            run: |
-               echo "# "
-               echo "# Generating OpenAPI document..."
-               echo "# "
-               python3 extract-openapi.py main:app --out openapi.json
-
+            name: Generating OpenAPI document
+            run: python3 extract-openapi.py main:app --out openapi.json
          -
             name: Convert to Tyk OAS API Definition
             run: |
                #!/bin/bash
-               echo "# "
-               echo "# Converting to Tyk OAS API Definition..."
-               echo "# "
                body=$(<openapi.json)
-               api_id=$(curl --location --request POST 'http://tyk-dashboard.org/api/apis/oas/import' \
-               --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
-               --header 'Content-Type: text/plain' \
-               --data-raw $body | jq -r '.ID')
-               sleep 1
-      
+               wget --method=POST http://tyk-dashboard.org/api/apis/oas/import --header='Authorization: e2f234ac32ab443e78962ef941898722' --header='Content-Type: text/plain' --body-data="$body" -O res.json
+               api_id=$(cat res.json | jq -r '.ID')
+
                echo "# "
                echo "# Temporary API ID $api_id ..."
                echo "# "
-      
+
                echo "# "
                echo "# Retrieve API Definition JSON..."
                echo "# "
-               curl --location --request GET "http://tyk-dashboard.org/api/apis/oas/$api_id" \
-               --header 'Authorization: ${{ secrets.TYK_APIKEY }}' \
-               --header 'Content-Type: text/plain' > apidefinition.json
+               wget --method=GET http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: e2f234ac32ab443e78962ef941898722' --header 'Content-Type: text/plain' -O apidefinition.json
+
+               echo "# "
+               echo "# Remove Temporary API $api_id ..."
+               echo "# "
+               wget --method=DELETE http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: e2f234ac32ab443e78962ef941898722' -O deleteres.json
+
+               rm res.json
+               rm deleteres.json
          -
             name: Push the API Definition to OCI
             run: oras push registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/apis:fastapi-httpbin-${{ env.DOCKER_METADATA_OUTPUT_VERSION }} apidefinition.json:application/json

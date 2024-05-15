@@ -11,7 +11,7 @@ jobs:
          contents: read
          packages: write
       steps:
-         - 
+        - 
            name: Add hosts to /etc/hosts
            run: |
              sudo echo "${{ secrets.TYK_DASHBOARD_URL }} tyk-dashboard.org" | sudo tee -a /etc/hosts 

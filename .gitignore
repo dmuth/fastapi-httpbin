@@ -12,5 +12,3 @@ __pycache__/
 
 # venv
 venv/
-
-openapi.json

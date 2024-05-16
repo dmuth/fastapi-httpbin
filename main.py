@@ -50,8 +50,8 @@ try:
     openapi_schema = json.loads(json_content)
 
     openapi_schema["info"]["description"] = description
-    openapi_schema["info"]["version"] = app_version
-    openapi_schema["tags"] = tags_metadata
+    # openapi_schema["info"]["version"] = app_version
+    # openapi_schema["tags"] = tags_metadata
 
     app.openapi_schema = openapi_schema
 

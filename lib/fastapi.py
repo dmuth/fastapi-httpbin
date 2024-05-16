@@ -63,26 +63,16 @@ tags_metadata = [
 description = """
 <a href="static/logo.png"><img src="static/logo.png" align="right" /></a>
 
-HTTP Endpoints for easy testing of your app.
+HTTP Endpoints app for Tyk OAS APIOps demo
 
+Adapted from <a href="https://github.com/dmuth/fastapi-httpbin">fastapi-httpbin</a> project.
 Built with the <a href="https://fastapi.tiangolo.com/">FastAPI framework</a>, 
 this is heavily based on the original <a href="https://httpbin.org/">Httpbin</a> website.
 
-<a href="/about">About this project</a> - 
-<a href="/roadmap">Development Roadmap</a> -
-<a href="/qrcode/">Dead Simple QR Code Generator</a> -
-<a href="/test-password-manager-form/">Form for testing Password Managers like 1Password and BitWarden</a>
 <p>
 
-<a href="https://github.com/dmuth/fastapi-httpbin">GitHub repo</a>
+<a href="https://github.com/caroltyk/fastapi-httpbin">GitHub repo</a>
 <p>
-
-Run locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>
-
-<a href="https://httpbin.dmuth.org/">Main Site</a> - Mirrors: 
-<a href="https://fly.httpbin.dmuth.org/">Fly</a>
-<a href="https://railway.httpbin.dmuth.org/">Railway</a>
-<a href="https://render.httpbin.dmuth.org/">Render</a>
 
 """
 

@@ -66,17 +66,21 @@ jobs:
                echo "# "
                echo "# Retrieve API Definition JSON..."
                echo "# "
-               wget --method=GET http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: ${{ secrets.TYK_APIKEY }}' --header 'Content-Type: text/plain' -O tyk_apidefinition.json
+               wget --method=GET http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: ${{ secrets.TYK_APIKEY }}' --header 'Content-Type: text/plain' -O res.json
 
-               (cat tyk_apidefinition.json | jq '.') > tyk_apidefinition.json
+               cat res.json | jq '.' > tyk_apidefinition.json
 
                echo "# "
                echo "# Remove Temporary API $api_id ..."
                echo "# "
-               wget --method=DELETE http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: ${{ secrets.TYK_APIKEY }}' -O deleteres.json
+               wget --method=DELETE http://tyk-dashboard.org/api/apis/oas/$api_id --header 'Authorization: ${{ secrets.TYK_APIKEY }}' -O res.json
 
                rm res.json
-               rm deleteres.json
+
+               echo "# "
+               echo "# Generated API Definition ..."
+               echo "# "
+               cat tyk_apidefinition.json
          - 
             name: Lint API Definition
             uses: stoplightio/spectral-action@v0.8.11

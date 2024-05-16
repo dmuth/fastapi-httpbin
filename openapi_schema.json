@@ -3,7 +3,7 @@
   "info" : {
     "title" : "FastAPI Httpbin",
     "description" : "\n<a href=\"static/logo.png\"><img src=\"static/logo.png\" align=\"right\" /></a>\n\nHTTP Endpoints for easy testing of your app.\n\nBuilt with the <a href=\"https://fastapi.tiangolo.com/\">FastAPI framework</a>, \nthis is heavily based on the original <a href=\"https://httpbin.org/\">Httpbin</a> website.\n\n<a href=\"/about\">About this project</a> - \n<a href=\"/roadmap\">Development Roadmap</a> -\n<a href=\"/qrcode/\">Dead Simple QR Code Generator</a> -\n<a href=\"/test-password-manager-form/\">Form for testing Password Managers like 1Password and BitWarden</a>\n<p>\n\n<a href=\"https://github.com/dmuth/fastapi-httpbin\">GitHub repo</a>\n<p>\n\nRun locally in Docker: <tt><b>docker run -p 80:80 dmuth1/fastapi-httpbin</b></tt>\n\n<a href=\"https://httpbin.dmuth.org/\">Main Site</a> - Mirrors: \n<a href=\"https://fly.httpbin.dmuth.org/\">Fly</a>\n<a href=\"https://railway.httpbin.dmuth.org/\">Railway</a>\n<a href=\"https://render.httpbin.dmuth.org/\">Render</a>\n\n",
-    "version" : "0.1.0"
+    "version" : "0.2.0"
   },
   "servers" : [ {
     "url" : "http://0.0.0.0:8000"
@@ -27,10 +27,88 @@
           }
         }
       }
-    }
+    },
+    "/status/{codes}" : {
+      "get" : {
+        "tags" : [ "Status Codes" ],
+        "summary" : "Return status code or random one if multiple given as comma-delimited list (Underscores are also permitted as delimiters)",
+        "operationId" : "get_status__codes__get",
+        "parameters" : [ {
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 3,
+            "pattern" : "^[0-9,_]+$",
+            "title" : "Codes"
+          },
+          "example" : "200,201,204",
+          "name" : "codes",
+          "in" : "path"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful Response",
+            "content" : {
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Validation Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   },
   "components" : {
     "schemas" : {
+      "HTTPValidationError" : {
+        "properties" : {
+          "detail" : {
+            "items" : {
+              "$ref" : "#/components/schemas/ValidationError"
+            },
+            "type" : "array",
+            "title" : "Detail"
+          }
+        },
+        "type" : "object",
+        "title" : "HTTPValidationError"
+      },
+      "ValidationError" : {
+        "properties" : {
+          "loc" : {
+            "items" : {
+              "anyOf" : [ {
+                "type" : "string"
+              }, {
+                "type" : "integer"
+              } ]
+            },
+            "type" : "array",
+            "title" : "Location"
+          },
+          "msg" : {
+            "type" : "string",
+            "title" : "Message"
+          },
+          "type" : {
+            "type" : "string",
+            "title" : "Error Type"
+          }
+        },
+        "type" : "object",
+        "required" : [ "loc", "msg", "type" ],
+        "title" : "ValidationError"
+      }
     }
   },
   "tags" : [ {

@@ -1,0 +1,45 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "FastAPI Httpbin",
+    "description": "\n<a href=\"static/logo.png\"><img src=\"static/logo.png\" align=\"right\" /></a>\n\nHTTP Endpoints app for Tyk OAS APIOps demo\n\nAdapted from <a href=\"https://github.com/dmuth/fastapi-httpbin\">fastapi-httpbin</a> project.\nBuilt with the <a href=\"https://fastapi.tiangolo.com/\">FastAPI framework</a>, \nthis is heavily based on the original <a href=\"https://httpbin.org/\">Httpbin</a> website.\n\n<p>\n\n<a href=\"https://github.com/caroltyk/fastapi-httpbin\">GitHub repo</a>\n<p>\n\n",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "http://0.0.0.0:8000"
+    }
+  ],
+  "paths": {
+    "/get": {
+      "get": {
+        "tags": [
+          "HTTP Methods"
+        ],
+        "summary": "The request's GET parameters.",
+        "operationId": "get_get_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  },
+  "tags": [
+    {
+      "name": "HTTP Methods",
+      "description": "Testing different HTTP verbs."
+    }
+  ]
+}

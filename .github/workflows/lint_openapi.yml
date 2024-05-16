@@ -1,7 +1,6 @@
-name: Generate, Test and Push API Definition
+name: Lint and Test OpenAPI document
 
 on:
-   pull_request:
    workflow_dispatch:
 
 jobs:
@@ -15,5 +14,4 @@ jobs:
          name: Lint API Definition
          uses: stoplightio/spectral-action@latest
          with:
-            file_glob: 'tyk_apidefinition.json'
-            spectral_ruleset: 'tykapi_spectral.yaml'
+            file_glob: 'openapi_schema.json'

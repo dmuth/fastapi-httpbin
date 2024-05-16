@@ -37,10 +37,13 @@ jobs:
             name: Generating OpenAPI document
             run: python3 extract-openapi.py main:app --out openapi.json
          - 
-            name: Lint API Definition
-            uses: stoplightio/spectral-action@v0.8.11
+            name: Lint API Definition with Spectral
+            uses: stoplightio/spectral-action@latest
             with:
                file_glob: 'openapi.json'
+         -
+            name: Lint API Definition with Redocly
+            run: docker run --rm -v $PWD:/spec redocly/cli lint openapi.json
          -
             name: Commit files
             id: commit

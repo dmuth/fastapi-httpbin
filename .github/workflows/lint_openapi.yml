@@ -1,7 +1,7 @@
 name: Lint and Test OpenAPI document
 
 on:
-   workflow_dispatch:
+   pull_request: 
 
 jobs:
    lint:
@@ -10,15 +10,25 @@ jobs:
       - 
          name: Checkout
          uses: actions/checkout@v4
-      - 
-         name: Setup node
-         uses: actions/setup-node@v3
+      -
+         name: Setup Python
+         uses: actions/setup-python@v2
          with:
-            node-version: 20.10.0
-            cache: 'npm'
+            python-version: 3.10.5
+            cache: pip
+      -
+         name: Install dependencies
+         run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+      -
+         name: Generating OpenAPI document
+         run: python3 extract-openapi.py main:app --out openapi.json
       - 
-         name: Install Spectral
-         run: npm install -g @stoplight/spectral-cli
-      - 
-         name: Lint API Definition
-         run: spectral lint openapi.json --ruleset .spectral.yaml
+         name: Lint API Definition with Spectral
+         uses: stoplightio/spectral-action@latest
+         with:
+            file_glob: 'openapi.json'
+      -
+         name: Lint API Definition with Redocly
+         run: docker run --rm -v $PWD:/spec redocly/cli lint openapi.json

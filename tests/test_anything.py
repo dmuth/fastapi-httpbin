@@ -29,14 +29,41 @@ def test_anything_get(mocker):
     assert response.json()["source"]["ip"] == "testclient"
     assert response.json()["verb"] == "GET"
 
+    response = client.get("/any")
+    assert response.status_code == 200
+    assert response.json()["source"]["ip"] == "testclient"
+    assert response.json()["verb"] == "GET"
+
     assert response.headers["x-fastapi-httpbin-version"] != None
     assert response.headers["x-website"] == "https://httpbin.dmuth.org/"
+    #
+    # An empty string is returned by the underlying platform.node() call if
+    # a hostname cannot be determined, but I don't ever expect that to be 
+    # an issue in Docker/testing.
+    #
+    assert response.headers["x-app-hostname"] != None
+    assert response.headers["x-app-hostname"] != ""
 
     response = client.get("/anything?test=test2")
     assert response.status_code == 200
     assert response.json()["source"]["ip"] == "testclient"
     assert response.json()["args"]["test"] == "test2"
     assert response.json()["verb"] == "GET"
+
+
+def test_anything_head(mocker):
+
+    setup_test_client(mocker)
+
+    response = client.head("/anything")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/json"
+    assert response.text == ""
+
+    response = client.head("/any")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/json"
+    assert response.text == ""
 
 
 def test_anything_post(mocker):

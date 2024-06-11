@@ -1,4 +1,6 @@
 
+import platform
+
 from typing import Union
 
 from fastapi import FastAPI, Request, Response
@@ -64,6 +66,7 @@ async def add_process_time_header(request: Request, call_next):
     response = await call_next(request)
     response.headers["X-FastAPI-Httpbin-version"] = app_version
     response.headers["X-Website"] = "https://httpbin.dmuth.org/"
+    response.headers["X-app-hostname"] = platform.node()
     return response
 
 

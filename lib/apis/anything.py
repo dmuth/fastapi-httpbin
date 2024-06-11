@@ -37,9 +37,14 @@ def core(request: Request):
 
 @router.get("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
+@router.head("/anything", summary = "Returns anything that is passed into the request.",
+    response_class=PrettyJSONResponse)
+@router.get("/any", summary = "Returns anything that is passed into the request.",
+    response_class=PrettyJSONResponse, include_in_schema = False)
+@router.head("/any", summary = "Returns anything that is passed into the request.",
+    response_class=PrettyJSONResponse, include_in_schema = False)
 async def get(request: Request):
 
-    import time
     retval = core(request)
     retval["data"] = data_default
     retval["verb"] = "GET"
@@ -48,6 +53,8 @@ async def get(request: Request):
 
 @router.post("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
+@router.post("/any", summary = "Returns anything that is passed into the request.",
+    response_class=PrettyJSONResponse, include_in_schema = False)
 async def post(request: Request):
 
     data = data_default
@@ -65,6 +72,8 @@ async def post(request: Request):
 
 @router.put("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
+@router.put("/any", summary = "Returns anything that is passed into the request.",
+    response_class=PrettyJSONResponse, include_in_schema = False)
 async def put(request: Request):
 
     data = data_default
@@ -82,6 +91,8 @@ async def put(request: Request):
 
 @router.patch("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
+@router.patch("/any", summary = "Returns anything that is passed into the request.",
+    response_class=PrettyJSONResponse, include_in_schema = False)
 async def patch(request: Request):
 
     data = data_default
@@ -99,6 +110,8 @@ async def patch(request: Request):
 
 @router.delete("/anything", summary = "Returns anything that is passed into the request.",
     response_class=PrettyJSONResponse)
+@router.delete("/any", summary = "Returns anything that is passed into the request.",
+    response_class=PrettyJSONResponse, include_in_schema = False)
 async def delete(request: Request):
 
     data = data_default
@@ -111,6 +124,5 @@ async def delete(request: Request):
     retval["data"] = data
     retval["verb"] = "DELETE"
     return(retval)
-
 
 

@@ -30,7 +30,7 @@ def core(request: Request):
         "ip": request.client.host,
         "port": request.client.port
         }
-    retval["url"] = request.url
+    retval["url"] = str(request.url)
 
     return(retval)
 

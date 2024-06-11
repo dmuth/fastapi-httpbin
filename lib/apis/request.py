@@ -10,24 +10,6 @@ from . import PrettyJSONResponse
 router = APIRouter()
 
 
-#
-# Our core function to return the same data for each request.
-#
-def core(request: Request):
-
-    retval = {}
-
-    retval["args"] = request.query_params
-    retval["headers"] = request.headers
-    retval["source"] = {
-        "ip": request.client.host,
-        "port": request.client.port
-        }
-    retval["url"] = request.url
-
-    return(retval)
-
-
 @router.get("/headers", summary = "Return the headers sent in the request.",
     response_class=PrettyJSONResponse)
 async def get(request: Request):

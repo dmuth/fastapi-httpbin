@@ -44,7 +44,9 @@ are automatically reloaded:
 ## Deployment
 
 - Bump version number in `./lib/fastapi.py`.
-- Run the script `./bin/deploy.sh`.  This will run `fly deploy` to deploy the latest code on Fly.io, and `docker-build` followed by `docker-push` to push the latest Docker image to Docker Hub.
+- `./bin/docker-build.sh` - Build the Docker container
+- `./bin/deploy.sh` - This will run `fly deploy` to deploy the container on Fly.io.
+- `./bin/docker-push.sh` - This will push the Docker image to Docker Hub
 
 
 ## In production

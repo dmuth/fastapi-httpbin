@@ -1,0 +1,6 @@
+
+# Ignore all SSL keys.
+*.pem
+*.key
+*.crt
+

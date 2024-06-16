@@ -57,6 +57,12 @@ are automatically reloaded:
 
 ## FAQ: Are there any bugs?
 
+### How about Kubernetes Support?
+
+Look in [k8s/README.md](k8s/README.md) for Kubernetes instructions.  I built that out using
+k3s with k3d, but those files should work reasonably well in a full blown k8s environment.
+
+
 ### Docker-in-Vagrant Issues
 
 If you are [running Docker from Vagrant](https://github.com/dmuth/docker-in-vagrant), the app won't

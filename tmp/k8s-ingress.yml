@@ -1,0 +1,29 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: httpbin-ingress
+  labels:
+    app: httpbin
+    component: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - httpbin.k8s.orb.local
+    secretName: httpbin-secret
+  rules:
+  - host: httpbin.k8s.orb.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: httpbin-service-clusterip
+            port:
+              number: 80
+
+

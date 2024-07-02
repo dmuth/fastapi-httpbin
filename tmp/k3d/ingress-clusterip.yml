@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx
+  name: httpbin-clusterip
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
@@ -12,7 +12,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: nginx
+            name: httpbin-clusterip
             port:
               number: 80
 

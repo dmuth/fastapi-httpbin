@@ -21,7 +21,7 @@ This doc contains commands on how to stand up FastAPI Httpbin in a Kubernetes cl
     - Labels in k8s are like tags, and can be used to select many resources at once.
   - `kubectl get pods,deployment -l app=httpbin` - Show just pods and deployments that match our app's label.
 - Stand up a service - A service is an interface for a group of pods
-  - `kubectl apply -f k8s-service-nodeport.yml` - Create the service
+  - `kubectl apply -f k8s-service-clusterip.yml` - Create the service
   - `kubectl get service -l app=httpbin` - List the service just created.
     - Note that "external IP" may be stuck at "<pending>".
 - Stand up a different type of service
@@ -36,13 +36,13 @@ This doc contains commands on how to stand up FastAPI Httpbin in a Kubernetes cl
   - Now upload the files as a "secret" in k8s and then label it:
     - `kubectl create secret tls httpbin-secret --key httpbin.k8s.orb.local-key.pem --cert httpbin.k8s.orb.local.pem`
     - `kubectl label secret httpbin-secret app=httpbin`
-  - `kubectl get secret -l` - View the secret listing
-  - `kubectl get secret -l -o yaml` - View the secret listing with extra details
+  - `kubectl get secret` - View the secret listing
+  - `kubectl get secret -o yaml` - View the secret listing with extra details
 - Stand up an Ingress point.
   - Ingress is used for the outside world to talk to your service.
   - Install Nginx ingress controller
     - `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml`
-  - `kubectl apply -f ingress.yml` - Create our ingress
+  - `kubectl apply -f k8s-ingress.yml` - Create our ingress
   - `kubectl get ingress` - Show our ingress.
 - View what we made
   - `kubectl get all -l app=httpbin` - This will show everything we creted with our labels

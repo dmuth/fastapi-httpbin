@@ -2,7 +2,30 @@
 
 # k3d Deployment
 
-## With Ingress
+## Httpbin
+
+- Create the cluster (with both sets of ports open)
+  - `k3d cluster create -p "8081:80@loadbalancer" -p "8082:30080@agent:0" --agents 2`
+- Create deployment
+  - `kubectl apply -f deployment.yml`
+- Getting traffic in
+  - ClusterIP (Preferred, goes through a load balancer)
+    - `kubectl apply -f service-clusterip.yml`
+    - `kubectl apply -f ingress-clusterip.yml`
+    - `curl localhost:8081/`
+  - NodePort (less preferred, connects to a specific Kubernetes node)
+    - `kubectl apply -f service-nodeport.yml`
+    - `curl localhost:8082/`
+- Monitor the logs
+  - `stern .* --tail 1`
+- Delete the cluster
+  - `k3d cluster delete`
+
+
+
+## Stock instructions
+
+### With Ingress
 
 - Create the cluster
   - `k3d cluster create -p "8081:80@loadbalancer" --agents 2`
@@ -22,7 +45,7 @@
   - `k3d cluster delete`
 
 
-## With NodePort
+### With NodePort
 
 - Create the cluster
   - `k3d cluster create mycluster -p "8082:30080@agent:0" --agents 2`

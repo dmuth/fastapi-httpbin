@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin
+  labels:
+    app: httpbin
+    component: deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: httpbin
+  template:
+    metadata:
+      labels:
+        app: httpbin
+        component: pod
+    spec:
+      containers:
+      - name: httpbin
+        image: dmuth1/fastapi-httpbin
+        ports:
+        - containerPort: 80
+
+

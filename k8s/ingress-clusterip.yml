@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: httpbin-clusterip
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+
+#
+# It looks like Traefik provides its own TLS, and even if I uncomment
+# the below configuration, it doesn't serve up my own certs.
+#
+# I might come back to this later, as since my goal is just to play around
+# with k3s/k3d.
+#
+#  tls:
+#  - hosts:
+#    - httpbin2.localdomain
+#    secretName: fastapi-httpbin-tls
+
+  rules:
+  - host: httpbin.localdomain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: httpbin-clusterip
+            port:
+              # The port on the service that we're forwarding to.
+              number: 80
+
+  - host: httpbin2.localdomain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: httpbin-clusterip2
+            port:
+              # The port on the service that we're forwarding to.
+              number: 80
+

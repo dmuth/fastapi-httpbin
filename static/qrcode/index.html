@@ -130,6 +130,13 @@ Just QR Codes when you want them.
     <div id="borderHelp" class="form-text">How much space around the QR code? (Max: 20)</div>
   </div>
 
+  <div class="mb-3">
+    <label for="transparent_background" class="form-label">Transparent Background?:</label><br/>
+    <input type="checkbox" name="transparent_background" id="transparent_background" aria-describedby="borderHelp"
+            >
+    <div id="borderHelp" class="form-text">Advanced option.  Turn on if you want a transparent background in the generated QR Code.</div>
+  </div>
+
   <button type="submit" class="btn btn-primary" id="submit">Generate QR Code</button>
   <a class="btn btn-primary bi-download" role="button" id="download" style="display: none; "
     > Download QR Code</a>
@@ -222,6 +229,7 @@ Yep!  I've built a few things you may find interesting:
 
 <ul>
 <li><a href="https://diceware.dmuth.org/">Diceware Password Generator</a></li>
+<li><a href="https://www.ispecookay.com/">Is PECO Okay?</a> - Stats on the Philadelphia power grid.</li>
 <li><a href="https://septastats.com/">SEPTA Stats</a> - Stats on Philadelphia Public Transit</li>
 <li><a href="https://github.com/dmuth/splunk-lab">Splunk Lab</a> - Stand up a Splunk instance in 30 seconds</a>
 <li><a href="https://github.com/dmuth/tarsplit">Tarsplit</a> - Split a tarball on file boundaries</li>
@@ -248,12 +256,13 @@ If you wish to support my efforts financially, please consider
 <a href="https://github.com/sponsors/dmuth">sponsoring me on GitHub</a>.  Monthly tiers start as low as $1!
 </p>
 
-<p>
-If you just want to show support, please consider
-<a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20free%20QR%20Code%20generator,%20made%20by%20@dmuth!%0A%0Ahttps://httpbin.dmuth.org/qrcode/%0A" 
-    >sharing this app with a Tweet</a>.
+<h2>How can I contact you?</h2>
 
-</p>
+Email to <b>doug.muth AT gmail.com</b> and <b>dmuth AT dmuth.org</b> will work just fine.
+
+<br/>
+<br/>
+<br/>
 
 </div><!-- /col -->
 </div><!-- /row -->
@@ -268,6 +277,7 @@ If you just want to show support, please consider
 let beenhere = 0;
 let form = document.getElementById("form1");
 let url = document.getElementById("url");
+let checkbox = document.getElementById("transparent_background");
 let slider_box_size = document.getElementById("box_size");
 let slider_border = document.getElementById("border");
 let action = form.action;
@@ -427,6 +437,7 @@ async function formSubmitHandler(event) {
     let url_length = url_value.length;
     let box_size_value = slider_box_size.value;
     let border_value = slider_border.value;
+    let transparent_background_value = transparent_background.checked;
 
     //
     // Don't actually submit the form, because we don't
@@ -451,7 +462,8 @@ async function formSubmitHandler(event) {
     let data = {
         "url": url_value,
         "box_size": box_size_value,
-        "border": border_value
+        "border": border_value,
+        "transparent_background": transparent_background_value,
         }
     //console.log("DATA", data); // Debugging
 

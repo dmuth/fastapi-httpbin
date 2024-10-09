@@ -33,20 +33,37 @@ are automatically reloaded:
   - `pip install -r ./requirements.txt`
   - `PORT=9000 ./bin/dev.sh` - Run server in dev mode on port 9000, so that changes to the Python scripts cause them to be reloaded
 - Or, in Docker if you'd prefer:
-  - `./bin/docker-build.sh` - Build the Docker container
-  - `./bin/docker-dev.sh` - Start the Docker container and spawn a bash shell so that scripts can be run from inside the container.
+  - Build the Docker container
+    - `./bin/docker-build.sh` 
+  - Start the Docker container and spawn a bash shell so that scripts can be run from inside the container.
+    - `./bin/docker-dev.sh` 
+  - Now that you're inside the container:
     - Note that the host directory lives in `/mnt/`.
+      - `cd /mnt`
     - Then run `./pytest.sh`
       - Run `./pytest.sh -v` to view individual test names as they run
       - Run `./pytest.sh -k NAME` to limit tests to a specific test by name
     - Or run `./bin/dev.sh`, however changes to files may not be caught.
+      - Access the website at [http://localhost:8000/](http://localhost:8000/)
+    - Updating dependencies
+      - Remove versions from `requirements.txt`
+      - `./bin/docker-build.sh && ./bin/docker-dev.sh`
+        - This will re-download the latest requirements
+      - `cd /mnt`
+      - `./pytest.sh -v`
+        - Make sure unit tests pass
+      - `pip freeze > ./requirements.txt`
+        - Save the latest versions to the requirements file
 
 ## Deployment
 
 - Bump version number in `./lib/fastapi.py`.
-- `./bin/docker-build.sh` - Build the Docker container
-- `./bin/deploy.sh` - This will run `fly deploy` to deploy the container on Fly.io.
-- `./bin/docker-push.sh` - This will push the Docker image to Docker Hub
+- `./bin/docker-build.sh` 
+  - Build the Docker container
+- `./bin/deploy.sh` 
+  - This will run `fly deploy` to deploy the container on Fly.io.
+- `./bin/docker-push.sh` 
+  - This will push the Docker image to Docker Hub
 
 
 ## In production

@@ -3,10 +3,14 @@ FROM python:3.12
 
 RUN python -m pip install --upgrade pip
 
+#
+# This is used by the OpenCV module for image manipulation.
+#
+RUN apt update && apt install -y libgl1-mesa-glx
+
 COPY requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
-RUN apt update && apt install -y libgl1-mesa-glx
 
 COPY bin /app/bin
 COPY bin/entrypoint.sh /

@@ -29,6 +29,15 @@
         padding-left: 10px;
     }
 
+    input[type=checkbox] {
+        width:1.25em; 
+        height:1.25em;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
     </style>
 
   </head>
@@ -114,7 +123,7 @@ Just QR Codes when you want them.
     <label for="box_size" class="form-label">Box Size:</label><br/>
     <input type="range" name="box_size" id="box_size" class="range" aria-describedby="box_sizeHelp"
             value="10" min="1" max="20" 
-            onchange="slideChangeHander(this);"
+            onchange="slideChangeHandler(this);"
             >
     <output class="output">10</output>
     <div id="box_sizeHelp" class="form-text">How big should the QR Code be?  (Max: 20)</div>
@@ -124,16 +133,17 @@ Just QR Codes when you want them.
     <label for="border" class="form-label">Border:</label><br/>
     <input type="range" name="border" id="border" class="range" aria-describedby="borderHelp"
             value="4" min="4" max="20" 
-            onchange="slideChangeHander(this);"
+            onchange="slideChangeHandler(this);"
             >
     <output class="output">4</output>
     <div id="borderHelp" class="form-text">How much space around the QR code? (Max: 20)</div>
   </div>
 
   <div class="mb-3">
-    <label for="transparent_background" class="form-label">Transparent Background?:</label><br/>
     <input type="checkbox" name="transparent_background" id="transparent_background" aria-describedby="borderHelp"
+            onchange="checkboxChangeHandler(this);"
             >
+    <label for="transparent_background" class="form-label">Transparent Background?</label>
     <div id="borderHelp" class="form-text">Advanced option.  Turn on if you want a transparent background in the generated QR Code.</div>
   </div>
 
@@ -500,7 +510,16 @@ async function formSubmitHandler(event) {
 // Handle a slider change, which basically just submits the form 
 // so we get a QR Code.
 //
-function slideChangeHander(e) {
+function slideChangeHandler(e) {
+    e.nextElementSibling.value = e.value
+    submit.click();
+}
+
+//
+// Handle a checkbox change, which basically just submits the form 
+// so we get a QR Code.
+//
+function checkboxChangeHandler(e) {
     e.nextElementSibling.value = e.value
     submit.click();
 }

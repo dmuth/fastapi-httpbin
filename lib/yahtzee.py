@@ -57,6 +57,9 @@ class Score:
         return(retval)
 
 
+    #
+    # Is this hand full house?
+    #
     def is_full_house(self, counts):
 
         retval = False
@@ -81,42 +84,34 @@ class Score:
     #
     def score(self, dice):
 
-        retval = []
+        retval = {}
 
         data = self.analyze_dice(dice)
 
         if 1 in data["dice"]:
-            retval.append({"hand": Hand.ones, 
-                "score": data["dice"][1]* 1})
+            retval[Hand.ones] = data["dice"][1] * 1
 
         if 2 in data["dice"]:
-            retval.append({"hand": Hand.twos, 
-                "score": data["dice"][2]* 2})
+            retval[Hand.twos] = data["dice"][2] * 2
 
         if 3 in data["dice"]:
-            retval.append({"hand": Hand.threes, 
-                "score": data["dice"][3]* 3})
+            retval[Hand.threes] = data["dice"][3] * 3
 
         if 4 in data["dice"]:
-            retval.append({"hand": Hand.fours, 
-                "score": data["dice"][4]* 4})
+            retval[Hand.fours] = data["dice"][4] * 4
 
         if 5 in data["dice"]:
-            retval.append({"hand": Hand.fives, 
-                "score": data["dice"][5]* 5})
+            retval[Hand.fives] = data["dice"][5] * 5
 
         if 6 in data["dice"]:
-            retval.append({"hand": Hand.sixes, 
-                "score": data["dice"][6]* 6})
+            retval[Hand.sixes] = data["dice"][6] * 6
 
         score = self.is_full_house(data["dice"])
         if score:
-            retval.append({"hand": Hand.full_house, "score": 25})
+            retval[Hand.full_house] = 25
 
         # We always get Chance
-        retval.append({"hand": Hand.chance, "score": sum(dice)})
-
-
+        retval[Hand.chance]= sum(dice)
     
         return(retval)
 

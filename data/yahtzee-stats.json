@@ -1,0 +1,80 @@
+{
+    "ones": {
+        "count": 4651,
+        "total": 6480,
+        "average": 1.39,
+        "percent": 59.81
+    },
+    "yahtzee": {
+        "count": 6,
+        "total": 300,
+        "average": 50.0,
+        "percent": 0.08
+    },
+    "chance": {
+        "count": 7776,
+        "total": 136080,
+        "average": 17.5,
+        "percent": 100.0
+    },
+    "twos": {
+        "count": 4651,
+        "total": 12960,
+        "average": 2.79,
+        "percent": 59.81
+    },
+    "four_of_a_kind": {
+        "count": 150,
+        "total": 2625,
+        "average": 17.5,
+        "percent": 1.93
+    },
+    "threes": {
+        "count": 4651,
+        "total": 19440,
+        "average": 4.18,
+        "percent": 59.81
+    },
+    "fours": {
+        "count": 4651,
+        "total": 25920,
+        "average": 5.57,
+        "percent": 59.81
+    },
+    "fives": {
+        "count": 4651,
+        "total": 32400,
+        "average": 6.97,
+        "percent": 59.81
+    },
+    "sixes": {
+        "count": 4651,
+        "total": 38880,
+        "average": 8.36,
+        "percent": 59.81
+    },
+    "three_of_a_kind": {
+        "count": 1500,
+        "total": 26250,
+        "average": 17.5,
+        "percent": 19.29
+    },
+    "full_house": {
+        "count": 300,
+        "total": 7500,
+        "average": 25.0,
+        "percent": 3.86
+    },
+    "small_straight": {
+        "count": 1200,
+        "total": 36000,
+        "average": 30.0,
+        "percent": 15.43
+    },
+    "large_straight": {
+        "count": 240,
+        "total": 9600,
+        "average": 40.0,
+        "percent": 3.09
+    }
+}

@@ -4,93 +4,121 @@ from enum import Enum, auto
 import random
 
 class Hand(Enum):
+    ones = auto()
+    twos = auto()
+    threes = auto()
+    fours = auto()
     fives = auto()
     sixes = auto()
     full_house = auto()
     chance = auto()
 
 # Roll a die
-def roll_die():
-    retval = random.randint(1, 6)
-    return(retval)
+#def roll_die():
+#    retval = random.randint(1, 6)
+#    return(retval)
 
 # Roll 5 dice
-def roll_dice():
-    retval = []
-    for i in range(5):
-        retval.append(roll_die())
-    retval.sort()
-    return(retval)
+#def roll_dice():
+#    retval = []
+#    for i in range(5):
+#        retval.append(roll_die())
+#    retval.sort()
+#    return(retval)
 
-#
-# Count how many we have of each roll
-# We can assume the sort are sorted.
-#
-def count_dice(dice):
-    retval = {}
+class Score:
 
-    for i in dice:
-        if not i in retval:
-            retval[i] = 0
-        retval[i] += 1
+    #
+    # Count how many we have of each roll
+    #
+    def analyze_dice(self, dice):
 
-    return(retval)
+        retval = {
+            "max": None,
+            "min": None,
+            "span": None,
+            "num_unique": None,
+            "dice": {}
+            }
 
-def is_full_house(counts):
+        dice.sort()
 
-    retval = 0
+        # Get unique dice counts
+        for i in dice:
+            if not i in retval["dice"]:
+                retval["dice"][i] = 0
+            retval["dice"][i] += 1
+
+        retval["max"] = max(dice)
+        retval["min"] = min(dice)
+        retval["span"] = retval["max"] - retval["min"]
+        retval["num_unique"] = len(set(dice))
+
+        return(retval)
+
+
+    def is_full_house(self, counts):
+
+        retval = False
     
-    three = 0
-    two = 0
+        three = 0
+        two = 0
 
-    for key, value in counts.items():
-        if value == 3:
-            three = key * value
-        if value == 2:
-            two = key * value
+        for key, value in counts.items():
+            if value == 3:
+                three = key * value
+            if value == 2:
+                two = key * value
 
-    if two and three:
-        retval = two + three
+        if two and three:
+            retval = True
         
-    return(retval)
+        return(retval)
     
 
-#
-# Figure out what posible hands we can have, and their score.
-#
-def classify(dice):
+    #
+    # Figure out what posible hands we can have, and their score.
+    #
+    def score(self, dice):
 
-    retval = []
+        retval = []
 
-    counts = count_dice(dice)
+        data = self.analyze_dice(dice)
 
-    if 5 in counts:
-        retval.append({"hand": Hand.fives, "score": counts[5]* 5})
-    if 6 in counts:
-        retval.append({"hand": Hand.sixes, "score": counts[6]* 6})
+        if 1 in data["dice"]:
+            retval.append({"hand": Hand.ones, 
+                "score": data["dice"][1]* 1})
 
-    score = is_full_house(counts)
-    if score:
-        retval.append({"hand": Hand.full_house, "score": score})
+        if 2 in data["dice"]:
+            retval.append({"hand": Hand.twos, 
+                "score": data["dice"][2]* 2})
+
+        if 3 in data["dice"]:
+            retval.append({"hand": Hand.threes, 
+                "score": data["dice"][3]* 3})
+
+        if 4 in data["dice"]:
+            retval.append({"hand": Hand.fours, 
+                "score": data["dice"][4]* 4})
+
+        if 5 in data["dice"]:
+            retval.append({"hand": Hand.fives, 
+                "score": data["dice"][5]* 5})
+
+        if 6 in data["dice"]:
+            retval.append({"hand": Hand.sixes, 
+                "score": data["dice"][6]* 6})
+
+        score = self.is_full_house(data["dice"])
+        if score:
+            retval.append({"hand": Hand.full_house, "score": 25})
+
+        # We always get Chance
+        retval.append({"hand": Hand.chance, "score": sum(dice)})
+
 
     
-    # We always get Chance
-    retval.append({"hand": Hand.chance, "score": sum(dice)})
+        return(retval)
 
-
-    
-    return(retval)
-
-dice = roll_dice()
-print(classify([1,2,3,4,5]))
-print(classify([1,2,3,4,6]))
-print(classify([1,1,2,2,3]))
-print(classify([4,4,4,5,5]))
-print(classify([5,5,5,6,6]))
-print(classify([4,4,6,6,6]))
-print(classify([5,5,6,6,6]))
-
-
-print(classify(dice))
 
 

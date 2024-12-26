@@ -3,7 +3,8 @@
 # This script creates all possible Yahtzee rolls
 #
 
-
+from enum import Enum
+import json
 import sys
 from pathlib import Path
 
@@ -61,26 +62,54 @@ def calculate_stats(stats):
     return(stats)
 
 
+#
+# Write our stats out to a file.
+#
+def write_file(stats, filename):
+
+    # The key name is an enum, so we need to stringify that.
+    stats_string = { key.name: value for key, value in stats.items() }
+
+    with open(filename, "w") as file:
+        json.dump(stats_string, file, indent = 4)
+
+
+#
+# Read our file and turn keys back into Enums
+#
+def read_file(filename):
+
+    with open(filename, "r") as file:
+        stats = json.load(file)
+
+    stats = {Score[key]: value for key, value in stats.items()}
+
+    return(stats)
+
+
 def main():
 
     hand = Hand()
     stats = {}
 
+    filename = "data/yahtzee-stats.json"
+
     # Perform all our dice rolls
     for roll in rolls():
         stats = update_stats(hand, stats, roll)
 
-    # Now calculate additional stats
     stats = calculate_stats(stats)
 
+    write_file(stats, filename)
 
-#
-# TODO:
-# X score each roll
-# X Save in stats
-# X Calculate percent chance (7776 possible rolls)
-# X Calculate average value
-# 
+    # 
+    # Now read our file back in and turn the key back 
+    # into an enum.  This is mostly for proof of concept purposes
+    # as I am writing this, with this code to be later integrated
+    # into the FastAPI app.
+    #
+    stats = read_file(filename)
+
 
 main()
 

@@ -20,21 +20,14 @@ class Score(Enum):
 
     chance = auto()
 
-# Roll a die
-#def roll_die():
-#    retval = random.randint(1, 6)
-#    return(retval)
-
-# Roll 5 dice
-#def roll_dice():
-#    retval = []
-#    for i in range(5):
-#        retval.append(roll_die())
-#    retval.sort()
-#    return(retval)
-
 
 class Hand:
+
+    stats = {}
+
+    def __init__(self, stats):
+        self.stats = stats
+
 
     #
     # Count how many we have of each roll
@@ -157,44 +150,48 @@ class Hand:
         data = self.analyze_dice(dice)
 
         if 1 in data["dice"]:
-            retval[Score.ones] = data["dice"][1] * 1
+            retval[Score.ones] = {"score": data["dice"][1] * 1 }
 
         if 2 in data["dice"]:
-            retval[Score.twos] = data["dice"][2] * 2
+            retval[Score.twos] = {"score": data["dice"][2] * 2 }
 
         if 3 in data["dice"]:
-            retval[Score.threes] = data["dice"][3] * 3
+            retval[Score.threes] = {"score": data["dice"][3] * 3 }
 
         if 4 in data["dice"]:
-            retval[Score.fours] = data["dice"][4] * 4
+            retval[Score.fours] = {"score": data["dice"][4] * 4 }
 
         if 5 in data["dice"]:
-            retval[Score.fives] = data["dice"][5] * 5
+            retval[Score.fives] = {"score": data["dice"][5] * 5 }
 
         if 6 in data["dice"]:
-            retval[Score.sixes] = data["dice"][6] * 6
+            retval[Score.sixes] = {"score": data["dice"][6] * 6 }
 
         if self.is_three_of_a_kind(data["dice"]):
-            retval[Score.three_of_a_kind] = sum(dice)
+            retval[Score.three_of_a_kind] = {"score": sum(dice) }
 
         if self.is_four_of_a_kind(data["dice"]):
-            retval[Score.four_of_a_kind] = sum(dice)
+            retval[Score.four_of_a_kind] = {"score": sum(dice) }
 
         if self.is_full_house(data["dice"]):
-            retval[Score.full_house] = 25
+            retval[Score.full_house] = {"score": 25 }
 
         if self.is_small_straight(data):
-            retval[Score.small_straight] = 30
+            retval[Score.small_straight] = {"score": 30 }
 
         if self.is_large_straight(data):
-            retval[Score.large_straight] = 40
+            retval[Score.large_straight] = {"score": 40 }
 
         if self.is_yahtzee(data):
-            retval[Score.yahtzee] = 50
+            retval[Score.yahtzee] = {"score": 50 }
 
         # We always get Chance
-        retval[Score.chance]= sum(dice)
+        retval[Score.chance]= {"score": sum(dice) }
     
+        for key, value in retval.items():
+            retval[key]["average"] = self.stats[key]["average"]
+            retval[key]["percent"] = self.stats[key]["percent"]
+
         return(retval)
 
 

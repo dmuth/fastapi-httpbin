@@ -3,7 +3,7 @@
 from enum import Enum, auto
 import random
 
-class Hand(Enum):
+class Score(Enum):
     ones = auto()
     twos = auto()
     threes = auto()
@@ -34,7 +34,7 @@ class Hand(Enum):
 #    return(retval)
 
 
-class Score:
+class Hand:
 
     #
     # Count how many we have of each roll
@@ -157,43 +157,43 @@ class Score:
         data = self.analyze_dice(dice)
 
         if 1 in data["dice"]:
-            retval[Hand.ones] = data["dice"][1] * 1
+            retval[Score.ones] = data["dice"][1] * 1
 
         if 2 in data["dice"]:
-            retval[Hand.twos] = data["dice"][2] * 2
+            retval[Score.twos] = data["dice"][2] * 2
 
         if 3 in data["dice"]:
-            retval[Hand.threes] = data["dice"][3] * 3
+            retval[Score.threes] = data["dice"][3] * 3
 
         if 4 in data["dice"]:
-            retval[Hand.fours] = data["dice"][4] * 4
+            retval[Score.fours] = data["dice"][4] * 4
 
         if 5 in data["dice"]:
-            retval[Hand.fives] = data["dice"][5] * 5
+            retval[Score.fives] = data["dice"][5] * 5
 
         if 6 in data["dice"]:
-            retval[Hand.sixes] = data["dice"][6] * 6
+            retval[Score.sixes] = data["dice"][6] * 6
 
         if self.is_three_of_a_kind(data["dice"]):
-            retval[Hand.three_of_a_kind] = sum(dice)
+            retval[Score.three_of_a_kind] = sum(dice)
 
         if self.is_four_of_a_kind(data["dice"]):
-            retval[Hand.four_of_a_kind] = sum(dice)
+            retval[Score.four_of_a_kind] = sum(dice)
 
         if self.is_full_house(data["dice"]):
-            retval[Hand.full_house] = 25
+            retval[Score.full_house] = 25
 
         if self.is_small_straight(data):
-            retval[Hand.small_straight] = 30
+            retval[Score.small_straight] = 30
 
         if self.is_large_straight(data):
-            retval[Hand.large_straight] = 40
+            retval[Score.large_straight] = 40
 
         if self.is_yahtzee(data):
-            retval[Hand.yahtzee] = 50
+            retval[Score.yahtzee] = 50
 
         # We always get Chance
-        retval[Hand.chance]= sum(dice)
+        retval[Score.chance]= sum(dice)
     
         return(retval)
 

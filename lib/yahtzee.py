@@ -10,7 +10,14 @@ class Hand(Enum):
     fours = auto()
     fives = auto()
     sixes = auto()
+
+    three_of_a_kind = auto()
+    four_of_a_kind = auto()
     full_house = auto()
+    small_straight = auto()
+    large_straight = auto()
+    yahtzee = auto()
+
     chance = auto()
 
 # Roll a die
@@ -25,6 +32,7 @@ class Hand(Enum):
 #        retval.append(roll_die())
 #    retval.sort()
 #    return(retval)
+
 
 class Score:
 
@@ -57,6 +65,24 @@ class Score:
         return(retval)
 
 
+    def is_three_of_a_kind(self, counts):
+
+        retval = False
+
+        for key, value in counts.items():
+            if value == 3:
+                return(True)
+
+
+    def is_four_of_a_kind(self, counts):
+
+        retval = False
+
+        for key, value in counts.items():
+            if value == 4:
+                return(True)
+
+
     #
     # Is this hand full house?
     #
@@ -78,6 +104,48 @@ class Score:
         
         return(retval)
     
+
+    #
+    # Is this a small straight?  Since we only have three
+    # possibilities, it just makes sense to hard code them.
+    #
+    def is_small_straight(self, data):
+
+        dice = data["dice"]
+
+        if 1 in dice and 2 in dice and 3 in dice and 4 in dice:
+            return(True)
+
+        if 2 in dice and 3 in dice and 4 in dice and 5 in dice:
+            return(True)
+
+        if 3 in dice and 4 in dice and 5 in dice and 6 in dice:
+            return(True)
+
+        return(False)
+
+    #
+    # Is this a large straight?  We only have two 
+    # possibilities to check for.
+    #
+    def is_large_straight(self, data):
+        dice = data["dice"]
+
+        if 1 in dice and 2 in dice and 3 in dice and 4 in dice and 5 in dice:
+            return(True)
+
+        if 2 in dice and 3 in dice and 4 in dice and 5 in dice and 6 in dice:
+            return(True)
+
+        return(False)
+
+    def is_yahtzee(self, data):
+
+        if data["num_unique"] == 1:
+            return(True)
+
+        return(False)
+
 
     #
     # Figure out what posible hands we can have, and their score.
@@ -106,9 +174,23 @@ class Score:
         if 6 in data["dice"]:
             retval[Hand.sixes] = data["dice"][6] * 6
 
-        score = self.is_full_house(data["dice"])
-        if score:
+        if self.is_three_of_a_kind(data["dice"]):
+            retval[Hand.three_of_a_kind] = sum(dice)
+
+        if self.is_four_of_a_kind(data["dice"]):
+            retval[Hand.four_of_a_kind] = sum(dice)
+
+        if self.is_full_house(data["dice"]):
             retval[Hand.full_house] = 25
+
+        if self.is_small_straight(data):
+            retval[Hand.small_straight] = 30
+
+        if self.is_large_straight(data):
+            retval[Hand.large_straight] = 40
+
+        if self.is_yahtzee(data):
+            retval[Hand.yahtzee] = 50
 
         # We always get Chance
         retval[Hand.chance]= sum(dice)

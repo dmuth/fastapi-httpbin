@@ -5,7 +5,7 @@
 from io import BytesIO
 import random
 
-from fastapi import APIRouter, FastAPI, Header, Response, Query, Path, HTTPException, Form
+from fastapi import APIRouter, FastAPI, Header, Response, Query, Path, HTTPException, Form, Depends
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
@@ -13,17 +13,13 @@ from pydantic import BaseModel, Field
 router = APIRouter()
 
 
-
-@router.post("/yahtzee/form", summary = "Analyzes a Yahtzee dice roll",
-    response_class=Response
+@router.post("/yahtzee/form", summary = "Analyzes a Yahtzee dice roll"
     )
-async def yahtzee_post_form(url: str = Form(),
-    box_size: int = Form(), 
-    border: int = Form(),
-    transparent_background: bool = Form(False),
+async def yahtzee_post_form(
     ):
     retval = {}
-    return retval
+    print("TEST", router.state.persistent_data)
+    return(retval)
 
 
 #

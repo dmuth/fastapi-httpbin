@@ -1,5 +1,4 @@
 
-from functools import lru_cache
 from pathlib import Path
 import json
 import platform
@@ -30,17 +29,6 @@ from lib.apis import yahtzee
 
 from lib.fastapi import tags_metadata, description, app_version
 
-#
-# Path and function to load our Yahtzee data file.
-# The lru_cache ensures that the file is cached in RAM.
-#
-yahtzee_data_file = Path(__file__).parent / "data" / "yahtzee-stats.json"
-
-@lru_cache(maxsize=1)
-def get_yahtzee_data():
-    with open(yahtzee_data_file, "r") as f:
-        return json.load(f)
-
 
 app = FastAPI(docs_url = "/", redoc_url = None,
     title = "FastAPI Httpbin",
@@ -49,6 +37,16 @@ app = FastAPI(docs_url = "/", redoc_url = None,
     swagger_ui_parameters = {"docExpansion":"none"},
     openapi_tags = tags_metadata
     )
+
+
+@app.on_event("startup")
+async def get_yahtzee_data():
+
+    yahtzee_data_file = Path(__file__).parent / "data" / "yahtzee-stats.json"
+
+    with open(yahtzee_data_file, "r") as f:
+        app.state.persistent_data = json.load(f)
+
 
 #
 # Ordering of these in the Swagger docs is set in lib/fastapi.py

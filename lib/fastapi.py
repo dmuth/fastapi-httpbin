@@ -2,7 +2,7 @@
 #
 # Store our app version here.
 #
-app_version = "0.0.53"
+app_version = "0.0.54"
 
 tags_metadata = [
     {
@@ -24,6 +24,10 @@ tags_metadata = [
     {
         "name": "QR Codes",
         "description": "Generate QR Codes."
+    },
+    {
+        "name": "Yahtzee",
+        "description": "Analyze Yahtzee dice rolls"
     },
     {
         "name": "Dynamic Data",

@@ -1,4 +1,7 @@
 
+from functools import lru_cache
+from pathlib import Path
+import json
 import platform
 
 from typing import Union
@@ -23,8 +26,20 @@ from lib.apis import dynamic
 from lib.apis import qrcode
 from lib.apis import test_password_manager
 from lib.apis import meta
+from lib.apis import yahtzee
 
 from lib.fastapi import tags_metadata, description, app_version
+
+#
+# Path and function to load our Yahtzee data file.
+# The lru_cache ensures that the file is cached in RAM.
+#
+yahtzee_data_file = Path(__file__).parent / "data" / "yahtzee-stats.json"
+
+@lru_cache(maxsize=1)
+def get_yahtzee_data():
+    with open(yahtzee_data_file, "r") as f:
+        return json.load(f)
 
 
 app = FastAPI(docs_url = "/", redoc_url = None,
@@ -45,6 +60,7 @@ app.include_router(response.router, tags = ["Responses"])
 app.include_router(response_formats.router, tags = ["Response Formats"])
 app.include_router(redirect_final.router, tags = ["Redirects"])
 app.include_router(qrcode.router, tags = ["QR Codes"])
+app.include_router(yahtzee.router, tags = ["Yahtzee"])
 app.include_router(redirect.router, tags = ["Redirects"])
 app.include_router(anything.router, tags = ["Anything"])
 app.include_router(cookies.router, tags = ["Cookies"])

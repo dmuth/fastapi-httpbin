@@ -115,7 +115,7 @@ async def qrcode_post_form(url: str = Form(),
 # sounds weird, it's because it is.  That is maybe the sole issue I have with FastAPI.
 #
 class QRCode(BaseModel):
-    url: str = Field(min_length = 10, max_length = 1000)
+    url: str = Field(min_length = 4, max_length = 1024)
     box_size: int = Field(default = 10, gt = 0, le = 20)
     border: int = Field(default = 4, gt = 0, le = 20)
     transparent_background: bool = Form(False)

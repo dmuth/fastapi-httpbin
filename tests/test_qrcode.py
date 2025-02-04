@@ -41,10 +41,40 @@ def test_qrcode_post():
     uuid_decoded = decode_qrcode(response_body)
     assert uuid_decoded == url
 
+    # Test small border
     data = {"url": url, "box_size": 10, "border": 2}
     response = client.post("/qrcode/json", json = data)
     assert response.status_code == 422
     assert response.json()["detail"]["type"] == "value_error.int.min_size"
+
+
+def test_qrcode_post_size():
+
+    url = "1234567890"
+
+    data = {"url": url, "box_size": 10, "border": 4}
+    response = client.post("/qrcode/json", json = data)
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/png"
+    response_body = b""
+    for chunk in response.iter_bytes():
+        response_body += chunk
+
+    uuid_decoded = decode_qrcode(response_body)
+    assert uuid_decoded == url
+
+    url = "1234"
+
+    data = {"url": url, "box_size": 10, "border": 4}
+    response = client.post("/qrcode/json", json = data)
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/png"
+    response_body = b""
+    for chunk in response.iter_bytes():
+        response_body += chunk
+
+    uuid_decoded = decode_qrcode(response_body)
+    assert uuid_decoded == url
 
 
 def test_qrcode_get():

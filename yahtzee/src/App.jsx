@@ -59,11 +59,9 @@ function App() {
           {dice.map((value, idx) => (
             <Col key={idx}>
               <div
-                className={`border rounded p-3 display-1 ${held[idx] ? 'bg-warning' : 'bg-light'}`}
-                style={{ width: '80px', margin: '0 auto', cursor: 'pointer' }}
+                className={`die_border rounded p-3 display-1 ${held[idx] ? 'bg-warning' : 'bg-light'}`}
                 onClick={() => toggleHold(idx)}
               >
-                {DICE_EMOJIS[value - 1]}
                 <Die
                   value={value}
                   held={held[idx]}

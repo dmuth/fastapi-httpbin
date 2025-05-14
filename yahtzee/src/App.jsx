@@ -55,11 +55,11 @@ function App() {
       <Container className="text-center pt-3">
         <h1>Yahtzee for Time Travelers</h1>
 
-        <Row className="mb-4">
+        <Row className="mb-4 justify-content-center">
           {dice.map((value, idx) => (
-            <Col key={idx}>
+            <Col key={idx} xs="auto"  >
               <div
-                className={`die_border rounded p-3 display-1 ${held[idx] ? 'bg-warning' : 'bg-light'}`}
+                className={`die_border rounded p-2 ${held[idx] ? 'dice-held' : ''}`}
                 onClick={() => toggleHold(idx)}
               >
                 <Die

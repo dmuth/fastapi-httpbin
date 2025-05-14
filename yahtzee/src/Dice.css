@@ -1,4 +1,12 @@
 
+.die_border {
+  cursor: "pointer";
+}
+
+.dice-held {
+  background-color: #228B22;
+}
+
 .die {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -12,6 +20,10 @@
   cursor: pointer;
   position: relative;
   gap: 4px;
+}
+
+.die:hover {
+  box-shadow: 0 0 6px 3px black;
 }
 
 .dot {

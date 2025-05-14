@@ -1,5 +1,7 @@
 // src/App.jsx
-import './App.css'; // <- Add this if it’s missing
+import './App.css';
+import './Dice.css';
+import Die from './Die';
 
 import { useState } from 'react';
 import { Container, Row, Col, Alert, Button } from 'react-bootstrap';
@@ -62,6 +64,11 @@ function App() {
                 onClick={() => toggleHold(idx)}
               >
                 {DICE_EMOJIS[value - 1]}
+                <Die
+                  value={value}
+                  held={held[idx]}
+                  onClick={() => toggleHold(idx)}
+                  />
               </div>
             </Col>
           ))}

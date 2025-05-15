@@ -5,7 +5,7 @@ import './Dice.css';
 
 function Die({ value, held, onClick }) {
   return (
-    <div className={`die die${value} ${held ? 'dice-held' : ''}`} onClick={onClick}>
+    <div className={`die die${value}`} onClick={onClick}>
       <span className="dot"></span>
       <span className="dot"></span>
       <span className="dot"></span>

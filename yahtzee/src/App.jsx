@@ -1,40 +1,26 @@
 // src/App.jsx
 import './App.css';
 import './Dice.css';
-import Die from './Die';
-import Scorecard from './Scorecard';
 
 import { useState } from 'react';
 import { Container, Row, Col, Alert, Button } from 'react-bootstrap';
 import { Navbar, Nav } from 'react-bootstrap';
 
+import Die from './Die';
+import Scorecard from './Scorecard';
+import { useGameState } from './useGameState';
+
 
 function App() {
-
-  const [dice, setDice] = useState([1, 1, 1, 1, 1]);
-  const [held, setHeld] = useState([false, false, false, false, false]);
-  const [rollsLeft, setRollsLeft] = useState(3);
-
-  const rollDice = () => {
-    if (rollsLeft === 0) return;
-
-    const newDice = dice.map((die, i) => (held[i] ? die : Math.floor(Math.random() * 6) + 1));
-    setDice(newDice);
-    setRollsLeft(r => r - 1);
-  };
-
-  const toggleHold = (index) => {
-    const newHeld = [...held];
-    newHeld[index] = !newHeld[index];
-    setHeld(newHeld);
-  };
-
-  const startNewTurn = () => {
-    setHeld([false, false, false, false, false]);
-    setRollsLeft(3);
-    setDice([1, 1, 1, 1, 1]); // optional: clear values for visual feedback
-  };
-
+  
+  const {
+    dice,
+    held,
+    rollsLeft,
+    rollDice,
+    toggleHold,
+    startNewTurn
+  } = useGameState();
 
   return (
       <>

@@ -2,6 +2,7 @@
 import './App.css';
 import './Dice.css';
 import Die from './Die';
+import Scorecard from './Scorecard';
 
 import { useState } from 'react';
 import { Container, Row, Col, Alert, Button } from 'react-bootstrap';
@@ -50,7 +51,7 @@ function App() {
         </Container>
       </Navbar>
 
-      <Container className="text-center pt-3">
+      <Container className="text-center pt-3 mt-3">
         <h1>Yahtzee for Time Travelers</h1>
 
         <Row className="mb-4 justify-content-center">
@@ -89,8 +90,10 @@ function App() {
         <Row className="mb-4 pt-3">
         <h4 className="mb-3">Rolls left: {rollsLeft}</h4>
         </Row>
-
       </Container>
+
+      <Scorecard />
+
     </>
 
   );

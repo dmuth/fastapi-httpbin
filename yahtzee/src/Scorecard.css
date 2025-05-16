@@ -1,0 +1,55 @@
+
+.scorecard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .scorecard-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.scorecard {
+  max-width: 400px;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scorecard-grid {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  gap: 8px;
+  align-items: center;
+}
+
+.scorecard-grid > div {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.scorecard-grid .header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.subtotal-label,
+.bonus-label {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.subtotal-box,
+.bonus-box {
+  background-color: #f8f9fa;
+}
+

@@ -6,7 +6,9 @@ RUN python -m pip install --upgrade pip
 #
 # This is used by the OpenCV module for image manipulation.
 #
-RUN apt update && apt install -y libgl1-mesa-glx
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libgl1 \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
@@ -31,5 +33,3 @@ EXPOSE 80/tcp
 ENV PORT=80
 
 ENTRYPOINT [ "/entrypoint.sh" ]
-
-
